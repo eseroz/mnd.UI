@@ -22,11 +22,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using mnd.UI.Modules.TeklifModule;
+using mnd.Logic.Model.Stok;
 
 namespace mnd.UI.Modules._SatisModule
 {
     public class SiparisViewModel : MyDxViewModelBase
     {
+        private List<DonemGrup> donemGrupListesi;
+        private List<Donem> donemListesi;
+        private List<NakliyeDurumTip> nakliyeDurumTipleri;
+
         public bool _isFormLoaded;
 
         private UnitOfWork uow = new UnitOfWork();
@@ -39,7 +45,7 @@ namespace mnd.UI.Modules._SatisModule
         public KayitModu KalemKayitModu { get; set; }
 
         public DelegateCommand<bool> SiparisYeniCommand => new DelegateCommand<bool>(SiparisYeni, b => SiparisKayitModu != KayitModu.Add);
-
+        public List<NakliyeDurumTip> NakliyeDurumTipleri { get => nakliyeDurumTipleri; set => SetProperty(ref nakliyeDurumTipleri, value); }
         public string KalemEklePanel { get => kalemEklePanel; set => SetProperty(ref kalemEklePanel, value); }
         public DelegateCommand<string> SiparisEditCommand => new DelegateCommand<string>(SiparisEdit, true);
         //public DelegateCommand SiparisKopyalaCommand => new DelegateCommand(SiparisKopyala, () => SiparisKayitModu != KayitModu.Add);
@@ -55,6 +61,8 @@ namespace mnd.UI.Modules._SatisModule
         public DelegateCommand KalemVazgecCommand => new DelegateCommand(KalemVazgec, canVazgec);
         //public DelegateCommand KalemSilCommand => new DelegateCommand(KalemSil, canKalemSil);
 
+        public List<DonemGrup> DonemGrupListesi { get => donemGrupListesi; set => SetProperty(ref donemGrupListesi, value); }
+        public List<Donem> DonemListesi { get => donemListesi; set => SetProperty(ref donemListesi, value); }
 
         private void SiparisEdit(string siparisKod)
         {
@@ -88,7 +96,32 @@ namespace mnd.UI.Modules._SatisModule
 
         public bool YurtDisiSatisMi => SeciliSiparis.SatisTipKod == "YD";
 
+        private void DonemDoldur()
+        {
+            DonemListesi = new List<Donem>();
+            DonemListesi.Add(new Donem { DonemAdi = "1. Çeyrek", DonemGrupAdi = "Çeyreklik" });
+            DonemListesi.Add(new Donem { DonemAdi = "2. Çeyrek", DonemGrupAdi = "Çeyreklik" });
+            DonemListesi.Add(new Donem { DonemAdi = "3. Çeyrek", DonemGrupAdi = "Çeyreklik" });
+            DonemListesi.Add(new Donem { DonemAdi = "4. Çeyrek", DonemGrupAdi = "Çeyreklik" });
 
+            DonemListesi.Add(new Donem { DonemAdi = "Ocak", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Şubat", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Mart", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Nisan", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Mayıs", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Haziran", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Temmuz", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Ağustos", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Eylül", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Ekim", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Kasım", DonemGrupAdi = "Aylık" });
+            DonemListesi.Add(new Donem { DonemAdi = "Aralık", DonemGrupAdi = "Aylık" });
+
+            for (int i = 1; i < 53; i++)
+            {
+                DonemListesi.Add(new Donem { DonemAdi = i + ". Hafta", DonemGrupAdi = "Spot" });
+            }
+        }
         public DelegateCommand<Language> TeyitFormYazdirTrCommand => new DelegateCommand<Language>(x => SiparisTeyitFormuYazdir(Language.TR));
         public DelegateCommand<Language> TeyitFormYazdirEnCommand => new DelegateCommand<Language>(x => SiparisTeyitFormuYazdir(Language.EN));
 
@@ -173,11 +206,10 @@ namespace mnd.UI.Modules._SatisModule
             //if(_seciliTeklif !=null) SeciliTeklif = _seciliTeklif;
 
             //if(_teklifService!=null) TeklifService = _teklifService;
-
+          
             _isFormLoaded = false;
             IsEditableForm = true;
         }
-
 
         private void FormLoaded()
         {
@@ -185,11 +217,11 @@ namespace mnd.UI.Modules._SatisModule
         }
 
 
-
+        public ObservableCollection<TBLIHRSTK> Urunler { get => urunler; set { SetProperty(ref urunler, value); } }
         public void Load(Siparis siparis)
         {
-            KalemEklePanel = "Hidden";
-               uow = new UnitOfWork(); // reload işleminden kurtulmak için başka yerden de çağrılıyor çünkü
+
+            uow = new UnitOfWork(); // reload işleminden kurtulmak için başka yerden de çağrılıyor çünkü
 
             var uowLookUp = new UnitOfWork();
 
@@ -200,6 +232,7 @@ namespace mnd.UI.Modules._SatisModule
             SatisTipleri = uowLookUp.SiparisLookUpRepo.SatisTipleriGetir();
             DovizTipleri = uowLookUp.SiparisLookUpRepo.DovizTipleriGetir();
             TeslimTipleri = uowLookUp.SiparisLookUpRepo.TeslimTipleriGetir();
+
 
             if (siparis.SiparisKod == null)
             {
@@ -216,6 +249,18 @@ namespace mnd.UI.Modules._SatisModule
             }
 
             SeciliSiparis.PropertyChanged += SeciliSiparis_PropertyChanged;
+
+            NakliyeDurumTipleri = new List<NakliyeDurumTip>();
+            NakliyeDurumTipleri.Add(new NakliyeDurumTip { NakliyeDurumTipAdi = "Dahil" });
+            NakliyeDurumTipleri.Add(new NakliyeDurumTip { NakliyeDurumTipAdi = "Hariç" });
+            DonemGrupListesi = new List<DonemGrup>();
+
+            DonemGrupListesi.Add(new DonemGrup { DonemGrupAdi = "Çeyreklik" });
+            DonemGrupListesi.Add(new DonemGrup { DonemGrupAdi = "Aylık" });
+            DonemGrupListesi.Add(new DonemGrup { DonemGrupAdi = "Yıllık" });
+            DonemGrupListesi.Add(new DonemGrup { DonemGrupAdi = "Spot" });
+
+            DonemDoldur();
         }
 
         public CariKart SeciliMusteri
@@ -421,12 +466,14 @@ namespace mnd.UI.Modules._SatisModule
         private CariKart _seciliMusteri;
         private ObservableCollection<LmeBaglama> _lmeBaglamaListe;
         private string kalemEklePanel;
+        private ObservableCollection<TBLIHRSTK> urunler;
 
         private void YeniKalem()
         {
+
             KalemEklePanel = "Visible";
-            //KalemVM = new KalemViewModel();
-            //KalemVM.KayitModu = KayitModu.Add;
+            KalemVM = new KalemViewModel();
+            KalemVM.KayitModu = KayitModu.Add;
 
             //KalemVM.DovizTipKod = DovizTipleri.First(c => c.DovizTipKod == SeciliSiparis.TakipDovizTipKod).Simge;
             //if (KapasitiftenSiparisMi)
@@ -438,7 +485,7 @@ namespace mnd.UI.Modules._SatisModule
             //}
             //else
             //{
-            //KalemVM.TempKalem = SeciliSiparis.KalemOluştur();
+            KalemVM.TempKalem = SeciliSiparis.KalemOluştur();
             //}
 
             KalemLookUpYukle(kalemVM);
@@ -594,7 +641,8 @@ namespace mnd.UI.Modules._SatisModule
             //vmKalem.KulceTipleri = uow2.SiparisKalemRepo.KulcePrimTipleriGetir();
             vmKalem.BirimTipleri = uow2.SiparisKalemRepo.BirimTipleriGetir();
 
-            vmKalem.Urunler = uow2.SiparisKalemRepo.UrunleriGetir();
+            vmKalem.Urunler = new ObservableCollection<TBLIHRSTK>(LookupTables.Default.Urunler);
+            //vmKalem.Urunler = uow2.SiparisKalemRepo.UrunleriGetir();
             //vmKalem.SertlikTipleri = uow2.SiparisKalemRepo.SertlikTipleriGetir();
             vmKalem.AmbalajTipleri = uow2.SiparisKalemRepo.AmbalajTipleriGetir();
 

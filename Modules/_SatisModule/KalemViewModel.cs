@@ -3,8 +3,11 @@ using mnd.Common.Helpers;
 using mnd.Logic.Model;
 using mnd.Logic.Model._Ref;
 using mnd.Logic.Model.Satis;
+using mnd.Logic.Model.Stok;
 using mnd.Logic.Model.Uretim;
 using mnd.UI.AppModules.AppModule;
+using mnd.UI.Modules.TeklifModule.Services;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -82,7 +85,7 @@ namespace mnd.UI.Modules._SatisModule
         public string DovizTipKod { get => _dovizTipKod; set => _dovizTipKod = value; }
 
 
-        public Urun SeciliUrun
+        public TBLIHRSTK SeciliUrun
         {
             get => _seciliUrun;
             set
@@ -117,10 +120,10 @@ namespace mnd.UI.Modules._SatisModule
         #region LookUpdata Properties
 
 
-        private ObservableCollection<Urun> urunler;
-        private Urun _seciliUrun;
+        private ObservableCollection<TBLIHRSTK> urunler;
+        private TBLIHRSTK _seciliUrun;
 
-        public ObservableCollection<Urun> Urunler
+        public ObservableCollection<TBLIHRSTK> Urunler
         {
             get => urunler;
             set => SetProperty(ref urunler, value);
@@ -200,6 +203,7 @@ namespace mnd.UI.Modules._SatisModule
 
         public KalemViewModel(SiparisKalem kalem)
         {
+
             FormulSecCommand = new DelegateCommand<string>(formulSec);
             TempKalem = kalem;
 

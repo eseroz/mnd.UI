@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using DevExpress.Mvvm;
+using mnd.Logic.Model.Stok;
 using mnd.Logic.Model.Uretim;
 using mnd.Logic.Persistence;
 using mnd.UI.Helper;
@@ -8,9 +10,9 @@ namespace mnd.UI.Modules.KaliteModule
 {
     public class UrunListViewModel : MyDxViewModelBase
     {
-        private ObservableCollection<Urun> urunler;
+        private ObservableCollection<TBLIHRSTK> urunler;
 
-        public ObservableCollection<Urun> Urunler
+        public ObservableCollection<TBLIHRSTK> Urunler
         {
             get => urunler;
             set => SetProperty(ref urunler, value);
@@ -20,9 +22,10 @@ namespace mnd.UI.Modules.KaliteModule
 
         public DelegateCommand KaydetCommand => new DelegateCommand(Kaydet);
 
-        public DelegateCommand<Urun> NewItemAddedCommand => new DelegateCommand<Urun>(NewItemRowUpdated, c => true);
+        public DelegateCommand<TBLIHRSTK> NewItemAddedCommand => new DelegateCommand<TBLIHRSTK>(NewItemRowUpdated, c => true);
 
-        private void NewItemRowUpdated(Urun obj)
+
+        private void NewItemRowUpdated(TBLIHRSTK obj)
         {
             uow.KaliteRepo.UrunEkle(obj);
         }

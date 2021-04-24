@@ -164,14 +164,14 @@
                 <Button Padding="3" controlHelpers:VisibilityHelpler.IsVisible="{DXBinding 'YurtDisiSatisMi'}"
                     Command="{Binding TeyitFormYazdirEnCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Height="23" Source="pack://application:,,,/Pandap;component/Content/Images/en.JPG" />
+                        <Image Height="23" Source="pack://application:,,,/MNDApp;component/Content/Images/en.JPG" />
                         <TextBlock VerticalAlignment="Center" Text=" Teyit Formu EN" />
                     </StackPanel>
                 </Button>
                 <Button controlHelpers:VisibilityHelpler.IsVisible="{DXBinding '!YurtDisiSatisMi'}"
                     Padding="3" Command="{Binding TeyitFormYazdirTrCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Height="23" Source="pack://application:,,,/Pandap;component/Content/Images/tr.JPG" />
+                        <Image Height="23" Source="pack://application:,,,/MNDApp;component/Content/Images/tr.JPG" />
                         <TextBlock VerticalAlignment="Center" Text=" Teyit Formu TR" />
                     </StackPanel>
                 </Button>
@@ -193,43 +193,44 @@
                 </Grid.RowDefinitions>
 
                 <Grid materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="5,5,4.8,4.6">
-                    <StackPanel Name="SiparişBilgi" DataContext="{Binding SeciliSiparis}">
-                        <StackPanel.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="TextAlignment" Value="Right" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                            </Style>
+                    <StackPanel>
+                        <StackPanel Name="SiparişBilgi" DataContext="{Binding SeciliSiparis}">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="TextAlignment" Value="Right" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
 
-                            <Style TargetType="DockPanel">
-                                <Setter Property="Margin" Value="0,3" />
-                            </Style>
-                        </StackPanel.Resources>
-                        <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                            <DockPanel>
-                                <TextBlock Width="100" Text="Sipariş No : " />
-                                <dxe:TextEdit IsReadOnly="True" IsTabStop="False" ShowBorder="False" FontSize="13" Width="200"
+                                <Style TargetType="DockPanel">
+                                    <Setter Property="Margin" Value="0,3" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                                <DockPanel>
+                                    <TextBlock Width="100" Text="Sipariş No : " />
+                                    <dxe:TextEdit IsReadOnly="True" IsTabStop="False" ShowBorder="False" FontSize="13" Width="200"
                                   Text="{Binding SiparisKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="DarkRed" />
-                            </DockPanel>
-                            <DockPanel>
-                                <TextBlock Text="Tarih : " />
-                                <StackPanel Orientation="Horizontal">
-                                    <dxe:TextEdit ShowBorder="False" IsReadOnly="True" Width="100"
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Tarih : " />
+                                    <StackPanel Orientation="Horizontal">
+                                        <dxe:TextEdit ShowBorder="False" IsReadOnly="True" Width="100"
                                   EditValue="{Binding SiparisTarih, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   FontWeight="Bold" Foreground="DarkRed" DisplayFormatString="d" />
-                                </StackPanel>
-                            </DockPanel>
-                            <!--<DockPanel controlHelpers:VisibilityHelpler.IsVisible="{Binding KapasitiftenYeniMi}">
+                                    </StackPanel>
+                                </DockPanel>
+                                <!--<DockPanel controlHelpers:VisibilityHelpler.IsVisible="{Binding KapasitiftenYeniMi}">
                                 <TextBlock Text="Kapasitif Kod: " FontWeight="Bold" Foreground="DarkRed" />
                                 <Button Style="{StaticResource MyLinkButton1}" 
                                         Command="{Binding DataContext.SiparisEditCommand,ElementName=siparisform}" CommandParameter="{Binding IlgiliKapasitifSiparisKod}"
                                         Content="{Binding IlgiliKapasitifSiparisKod}" />
                             </DockPanel>-->
-                        </StackPanel>
-                        <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
-                            <DockPanel>
-                                <TextBlock Width="100" Text="Müşteri : " />
-                                <dxg:LookUpEdit Width="400" HorizontalAlignment="Left" AutoPopulateColumns="False"
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+                                <DockPanel>
+                                    <TextBlock Width="100" Text="Müşteri : " />
+                                    <dxg:LookUpEdit Width="400" HorizontalAlignment="Left" AutoPopulateColumns="False"
                             DisplayMember="CariIsim"
                             EditValue="{Binding CariKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             SelectedItem="{Binding DataContext.SeciliMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged,
@@ -237,86 +238,87 @@
                             ItemsSource="{Binding DataContext.Musteriler, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             ValueMember="CariKod">
 
-                                    <dxg:LookUpEdit.StyleSettings>
-                                        <dxg:SearchLookUpEditStyleSettings />
-                                    </dxg:LookUpEdit.StyleSettings>
-                                    <dxg:LookUpEdit.PopupContentTemplate>
-                                        <ControlTemplate>
-                                            <dxg:GridControl x:Name="PART_GridControl">
-                                                <dxg:GridControl.View>
-                                                    <dxg:TableView SearchPanelCriteriaOperatorType="And" AutoWidth="False" />
-                                                </dxg:GridControl.View>
-                                                <dxg:GridColumn Width="100" FieldName="CariKod" />
-                                                <dxg:GridColumn Width="*" FieldName="CariIsim" />
-                                                <dxg:GridColumn Width="30" FieldName="UlkeKod" />
-                                                <dxg:GridColumn Width="50" FieldName="PlasiyerKod" />
-                                            </dxg:GridControl>
-                                        </ControlTemplate>
-                                    </dxg:LookUpEdit.PopupContentTemplate>
-                                </dxg:LookUpEdit>
+                                        <dxg:LookUpEdit.StyleSettings>
+                                            <dxg:SearchLookUpEditStyleSettings />
+                                        </dxg:LookUpEdit.StyleSettings>
+                                        <dxg:LookUpEdit.PopupContentTemplate>
+                                            <ControlTemplate>
+                                                <dxg:GridControl x:Name="PART_GridControl">
+                                                    <dxg:GridControl.View>
+                                                        <dxg:TableView SearchPanelCriteriaOperatorType="And" AutoWidth="False" />
+                                                    </dxg:GridControl.View>
+                                                    <dxg:GridColumn Width="100" FieldName="CariKod" />
+                                                    <dxg:GridColumn Width="*" FieldName="CariIsim" />
+                                                    <dxg:GridColumn Width="30" FieldName="UlkeKod" />
+                                                    <dxg:GridColumn Width="50" FieldName="PlasiyerKod" />
+                                                </dxg:GridControl>
+                                            </ControlTemplate>
+                                        </dxg:LookUpEdit.PopupContentTemplate>
+                                    </dxg:LookUpEdit>
 
-                                <DockPanel Margin="-70,0,0,0">
-                                    <TextBlock HorizontalAlignment="Left" Margin="0" Padding="0" Text="{Binding SatisTipKod}" />
+                                    <DockPanel Margin="-70,0,0,0">
+                                        <TextBlock HorizontalAlignment="Left" Margin="0" Padding="0" Text="{Binding SatisTipKod}" />
+                                    </DockPanel>
                                 </DockPanel>
-                            </DockPanel>
 
-                            <DockPanel Margin="10,0,0,0">
-                                <TextBlock HorizontalAlignment="Left" Text="Müş.Sip. No: " />
-                                <dxe:TextEdit Width="100" EditValue="{Binding FirmaSiparisNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                            </DockPanel>
+                                <DockPanel Margin="10,0,0,0">
+                                    <TextBlock HorizontalAlignment="Left" Text="Müş.Sip. No: " />
+                                    <dxe:TextEdit Width="100" EditValue="{Binding FirmaSiparisNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </DockPanel>
 
-                            <DockPanel Height="25" Margin="10,0,0,0" Background="LightPink">
-                                <TextBlock Padding="2" HorizontalAlignment="Left" Text="Sevk Haftası : " />
-                                <UniformGrid Rows="1">
-                                    <dxe:TextEdit EditValue="{Binding SevkYil,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    <dxe:SpinEdit EditValue="{Binding SevkHafta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
-                                </UniformGrid>
-                            </DockPanel>
+                                <DockPanel Height="25" Margin="10,0,0,0" Background="LightPink">
+                                    <TextBlock Padding="2" HorizontalAlignment="Left" Text="Sevk Haftası : " />
+                                    <UniformGrid Rows="1">
+                                        <dxe:TextEdit EditValue="{Binding SevkYil,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <dxe:SpinEdit EditValue="{Binding SevkHafta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
+                                    </UniformGrid>
+                                </DockPanel>
 
-                            <DockPanel Height="25" Margin="10,0,0,0" Background="LightPink">
-                                <TextBlock Padding="2" HorizontalAlignment="Left" Text="Teslim Haftası : " />
-                                <UniformGrid Rows="1">
-                                    <dxe:TextEdit EditValue="{Binding TeslimYil,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    <dxe:SpinEdit EditValue="{Binding TeslimHafta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
-                                </UniformGrid>
-                            </DockPanel>
+                                <DockPanel Height="25" Margin="10,0,0,0" Background="LightPink">
+                                    <TextBlock Padding="2" HorizontalAlignment="Left" Text="Teslim Haftası : " />
+                                    <UniformGrid Rows="1">
+                                        <dxe:TextEdit EditValue="{Binding TeslimYil,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <dxe:SpinEdit EditValue="{Binding TeslimHafta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
+                                    </UniformGrid>
+                                </DockPanel>
 
 
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <DockPanel>
-                                <TextBlock Width="100" Text="Ödeme Şekli : " />
-                                <dxe:ComboBoxEdit AutoComplete="True"
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <DockPanel>
+                                    <TextBlock Width="100" Text="Ödeme Şekli : " />
+                                    <dxe:ComboBoxEdit AutoComplete="True"
                             Width="200"
                             DisplayMember="Aciklama"
                             EditValue="{Binding OdemeTipKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             ItemsSource="{Binding DataContext.OdemeTipleri, ElementName=siparisform}"
                             ValueMember="OdemeTipKod" />
-                            </DockPanel>
-                            <DockPanel>
-                                <TextBlock Margin="8,0,0,0" HorizontalAlignment="Left" Text="Ödeme Not : " />
-                                <dxe:TextEdit Width="200"
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Margin="8,0,0,0" HorizontalAlignment="Left" Text="Ödeme Not : " />
+                                    <dxe:TextEdit Width="200"
                                   EditValue="{Binding OdemeAciklama,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                            </DockPanel>
-                            <DockPanel Width="290">
-                                <TextBlock Width="120" Text="Teslim Şekli / Yeri : " />
-                                <dxe:ComboBoxEdit AutoComplete="True"
+                                </DockPanel>
+                                <DockPanel Width="290">
+                                    <TextBlock Width="120" Text="Teslim Şekli / Yeri : " />
+                                    <dxe:ComboBoxEdit AutoComplete="True"
                             DisplayMember="Aciklama"
                             EditValue="{Binding TeslimTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             ItemsSource="{Binding DataContext.TeslimTipleri, 
                                     RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             ValueMember="TeslimTipKod" />
 
-                                <dxe:TextEdit Margin="5,0" EditValue="{Binding TeslimSehir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            </DockPanel>
-                            <DockPanel>
-                                <TextBlock Width="120" Text="Fatura Döviz C. : " />
-                                <dxe:ComboBoxEdit Width="70" AutoComplete="True"
+                                    <dxe:TextEdit Margin="5,0" EditValue="{Binding TeslimSehir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Width="120" Text="Fatura Döviz C. : " />
+                                    <dxe:ComboBoxEdit Width="70" AutoComplete="True"
                             DisplayMember="Aciklama"
                             EditValue="{Binding FaturaDovizTipKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             ItemsSource="{Binding DataContext.DovizTipleri, RelativeSource={RelativeSource AncestorType=UserControl}}"
                             ValueMember="DovizTipKod" />
-                            </DockPanel>
+                                </DockPanel>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top" Margin="0,10,0,0">
                             <ToolBarTray Background="White" VerticalAlignment="Center" IsEnabled="{Binding IsEditableForm, Mode=TwoWay}" Margin="0,0">
@@ -324,7 +326,7 @@
                                     <Button Padding="8" Command="{Binding KalemYeniCommand}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{dx:DXImage Image=ShowDetail_16x16.png}" />
-                                            <TextBlock VerticalAlignment="Center" Text="Yeni Kaledm" />
+                                            <TextBlock VerticalAlignment="Center" Text="Yeni Kalem" />
                                         </StackPanel>
                                     </Button>
 
@@ -374,119 +376,11 @@
                             <ContentControl Content="{Binding KalemVM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </StackPanel>
+                 
                 </Grid>
 
-                <!--<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth1" Padding="0" Grid.Row="1"  Visibility="{Binding KalemEklePanel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <DockPanel Name="KalemEkle">
-                        <StackPanel Margin="8">
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <DockPanel Name="lookupUrunKod" HorizontalAlignment="Left" Width="300" Margin="0,0,0,5">
-                                        <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Ürün Kod :" Width="130" TextAlignment="Right"/>
-                                        <dxg:LookUpEdit Height="25" AutoPopulateColumns="False" 
-                            EditValue="{Binding SeciliTeklifKalem.UrunKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
-                            DisplayMember="UrunKod" ValueMember="UrunKod"
-                            FontSize="12"                           
-                            SelectedItem="{Binding SeciliUrun, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            ItemsSource="{Binding Urunler}"
-                            PopupMinWidth="500" PopupMinHeight="400">
 
-                                            <dxg:LookUpEdit.PopupContentTemplate>
-                                                <ControlTemplate>
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="*" />
-                                                            <RowDefinition Height="auto" />
-                                                        </Grid.RowDefinitions>
-
-                                                        <dxg:GridControl Grid.Row="0" MaxHeight="500" x:Name="PART_GridControl">
-                                                            <dxg:GridControl.Resources>
-                                                                <Style TargetType="dxg:GridColumn">
-                                                                    <Setter Property="FilterPopupMode" Value="Excel" />
-                                                                    <Setter Property="AutoFilterCriteria" Value="Contains" />
-                                                                </Style>
-                                                            </dxg:GridControl.Resources>
-                                                            <dxg:GridControl.View>
-                                                                <dxg:TableView ShowAutoFilterRow="True" AutoWidth="True">
-                                                                    <dxg:TableView.ColumnHeaderTemplate>
-                                                                        <DataTemplate>
-                                                                            <TextBlock Height="30" HorizontalAlignment="Center" TextAlignment="Center"
-                                                            TextWrapping="Wrap" Text="{Binding ''}" />
-                                                                        </DataTemplate>
-                                                                    </dxg:TableView.ColumnHeaderTemplate>
-                                                                </dxg:TableView>
-                                                            </dxg:GridControl.View>
-                                                            <dxg:GridColumn ColumnFilterMode="DisplayText" Header="Ürün Kodu" Width="60" FieldName="UrunKod" />
-                                                            <dxg:GridColumn Header="Ürün Adı" FieldName="UrunAdiEN" />
-                                                            <dxg:GridColumn Header="Ağırlık(gr.)" Width="50" FieldName="GR" />
-                                                        </dxg:GridControl>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </dxg:LookUpEdit.PopupContentTemplate>
-                                        </dxg:LookUpEdit>
-                                    </DockPanel>
-                                    <DockPanel  HorizontalAlignment="Right" >
-                                        <TextBlock VerticalAlignment="Center" TextAlignment="Right"  FontWeight="Bold" Text="Ürün Adı :" Width="100" />
-                                        <TextBox Width="500" Text="{Binding SeciliUrun.UrunAdiEN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                    </DockPanel>
-
-
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                    <DockPanel x:Name="naklye">
-                                        <TextBlock Width="130" Text="Nakliye (Freight) :" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Right" />
-                                        <ComboBox Width="170"  ItemsSource="{Binding NakliyeDurumTipleri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              SelectedValue="{Binding SeciliTeklifKalem.NakliyeDurumTip}"
-                                            DisplayMemberPath="NakliyeDurumTipAdi"
-                                            SelectedValuePath="NakliyeDurumTipAdi" />
-                                    </DockPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center" TextAlignment="Right" FontWeight="Bold" Text="Birim Fiyatı :" Width="100"/>
-                                        <TextBox Width="100" Text="{Binding SeciliTeklifKalem.SatisFiyati, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}" HorizontalContentAlignment="Left" FontWeight="Bold" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" >
-                                        <TextBlock VerticalAlignment="Center" TextAlignment="Right" FontWeight="Bold" Text="Miktar(Koli) :" Width="100"/>
-                                        <TextBox Width="100" Text="{Binding SeciliTeklifKalem.Miktar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  FontWeight="Bold"  HorizontalContentAlignment="Left"  />
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <TextBlock  VerticalAlignment="Center" TextAlignment="Right" FontWeight="Bold" Text="Tutar :" Width="100" />
-                                        <TextBox Width="100" Text="{Binding SeciliTeklifKalem.Tutar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}"  FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  />
-                                    </StackPanel>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <DockPanel>
-                                    <TextBlock Width="130" VerticalAlignment="Center" Text="Teslim Yıl :" FontWeight="Bold" TextAlignment="Right"/>
-                                    <TextBox Width="170" HorizontalAlignment="Left" Background="White" Text="{Binding SeciliTeklifKalem.TeslimYil}"/>
-
-                                </DockPanel>
-
-                                <DockPanel Margin="5">
-                                    <TextBlock Text="Dönem Grup :" VerticalAlignment="Center" Width="100" FontWeight="Bold" TextAlignment="Right" />
-                                    <ComboBox ItemsSource="{Binding DonemGrupListesi}" Background="White" 
-                               DisplayMemberPath="DonemGrupAdi"
-                                  SelectedValue="{Binding SeciliTeklifKalem.DonemGrup}"
-                                 SelectedValuePath="DonemGrupAdi" Width="100"
-                                  />
-                                </DockPanel>
-
-                                <DockPanel>
-                                    <TextBlock Text="Dönem :" VerticalAlignment="Center" Width="90"  FontWeight="Bold" TextAlignment="Right"/>
-                                    <ComboBox ItemsSource="{Binding DonemListesi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Background="White" 
-                                  DisplayMemberPath="DonemAdi"
-                                 SelectedValue="{Binding SeciliTeklifKalem.Donem}"  SelectedValuePath="DonemAdi" Width="100"/>
-                                </DockPanel>
-
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Width="150">
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="100" Width="100" Margin="0,0,5,10">Ekle</Button>
-                        </StackPanel>
-                    </DockPanel>
-                </materialDesign:Card>-->
-
-                <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth1" Padding="0" Grid.Row="1" Grid.RowSpan="2" Margin="0,7.8,-0.2,-0.2">
+                <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth1" Padding="0" Grid.Row="1" Grid.RowSpan="2" Margin="0">
                     <DockPanel Name="Kalemler" Margin="0">
 
                         <dxg:GridControl AllowLiveDataShaping="True" MaxHeight="1500" SelectionMode="Cell"
