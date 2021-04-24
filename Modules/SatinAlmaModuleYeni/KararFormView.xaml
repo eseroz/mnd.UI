@@ -1,0 +1,966 @@
+﻿<UserControl x:Class="mnd.UI.Modules.SatinAlmaModuleYeni.KararFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:mnd.UI.Modules.SatinAlmaModuleYeni"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:converters="clr-namespace:mnd.UI.Converters"
+               xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+
+             xmlns:dxsps="http://schemas.devexpress.com/winfx/2008/xaml/spreadsheet"
+             xmlns:mesajModule="clr-namespace:mnd.UI.GyModules.MesajModule"
+
+             mc:Ignorable="d"
+
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+
+             d:DesignHeight="634.8" d:DesignWidth="890">
+
+
+   
+    <dxmvvm:Interaction.Behaviors>
+
+        <dxmvvm:EventToCommand SourceName="g1"  Command="{Binding FirmaCustomTotalCommand}"  EventName="CustomSummary" PassEventArgsToCommand="True" />
+        <dxmvvm:EventToCommand SourceName="tableView1" EventName="KeyUp" CommandParameter="{x:Reference Name=tableView1}" Command="{Binding UpdateSelectedEntityCommand}" />
+
+        <dxmvvm:EventToCommand EventName="Loaded"  Command="{Binding FormLoadedCommand}" />
+        <dxmvvm:EventToCommand EventName="Unloaded" Command="{Binding FormUnLoadedCommand}" />
+
+        <dxmvvm:EventToCommand EventName="Closing" PassEventArgsToCommand="True" Command="{Binding ClosingCommand}" />
+
+        <dxmvvm:CurrentWindowService />
+        <dx:DXMessageBoxService />
+
+        <dxmvvm:WindowService  WindowShowMode="Dialog">
+            <dxmvvm:WindowService.WindowStyle>
+                <Style TargetType="{x:Type dx:DXWindow}">
+                    <Setter Property="Width" Value="{Binding ConverterParameter=0\,80, Converter={converters:RatioConverter}, Source={x:Static SystemParameters.PrimaryScreenWidth}}" />
+                    <Setter Property="Height" Value="{Binding ConverterParameter=0\,9, Converter={converters:RatioConverter}, Source={x:Static SystemParameters.PrimaryScreenHeight}}" />
+                </Style>
+            </dxmvvm:WindowService.WindowStyle>
+        </dxmvvm:WindowService>
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Kaydet" />
+                </StackPanel>
+            </Button>
+        </ToolBar>
+
+        <md:Card VerticalAlignment="Stretch" Margin="5" Grid.Row="2">
+            <dxg:GridControl Name="g1"   AllowLiveDataShaping="True"  ItemsSource="{Binding KararFormModel.TabloTeklifSatirlari}" MaxHeight="5000">
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="{x:Type dxg:GridColumnHeader}">
+                        <Setter Property="Background" Value="Black" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                    </Style>
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView  Name="tableView1"
+                                               ShowTotalSummary="True"  AutoWidth="False"
+                                               ShowGroupPanel="False">
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock   Text="{Binding}" TextAlignment="Center"
+                                           VerticalAlignment="Stretch" FontWeight="DemiBold" Height="30"
+                                         TextWrapping="Wrap" HorizontalAlignment="Right" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Miktar" SummaryType="Sum" DisplayFormat="n0" />
+
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Firma1_DataModel.ToplamFiyat" SummaryType="Custom" DisplayFormat="n2" />
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Firma2_DataModel.ToplamFiyat" SummaryType="Custom" DisplayFormat="n2" />
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Firma3_DataModel.ToplamFiyat" SummaryType="Custom" DisplayFormat="n2" />
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Firma4_DataModel.ToplamFiyat" SummaryType="Custom" DisplayFormat="n2" />
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Firma5_DataModel.ToplamFiyat" SummaryType="Custom" DisplayFormat="n2" />
+
+                    <dxg:GridSummaryItem Alignment="Default"  FieldName="MinimumFiyat" SummaryType="Sum" DisplayFormat="n0" />
+                    <dxg:GridSummaryItem Alignment="Default"  FieldName="OrtalamaFiyat" SummaryType="Sum" DisplayFormat="n0" />
+                </dxg:GridControl.TotalSummary>
+
+                <dxg:GridControl.Bands>
+                    <dxg:GridControlBand AllowMoving="False" Name="StokBilgileri" HorizontalHeaderContentAlignment="Stretch">
+
+                        <dxg:GridControlBand.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+
+                                    <StackPanel>
+
+                                        <DockPanel Height="25" Margin="5">
+                                            <TextBlock  Width="120" Text="Teklif No :" VerticalAlignment="Center" />
+                                            <TextBlock FontWeight="Bold" Padding="4" Background="LightGray"  Width="100" HorizontalAlignment="Left"
+                                                    Text="{Binding DataContext.SeciliTeklif.TalepId,RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                        </DockPanel>
+
+                                        <DockPanel Height="25" Margin="5">
+                                            <TextBlock  Width="120" HorizontalAlignment="Right" Text="Teklif Tarih : " VerticalAlignment="Center" />
+                                            <TextBlock FontWeight="Bold" Padding="4" Background="LightGray" HorizontalAlignment="Left" Width="100"
+                                                    Text="{Binding DataContext.SeciliTeklif.TalepTarihi,RelativeSource={RelativeSource AncestorType=UserControl}
+                                                    ,StringFormat=d}" />
+                                        </DockPanel>
+
+                                        <DockPanel Height="25" Margin="5">
+                                            <TextBlock  Width="120" Height="30" TextWrapping="WrapWithOverflow"
+                                                        Text="Ortak Döviz Cinsi : " />
+                                            <ComboBox ItemsSource="{Binding DataContext.DovizCinsleri,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        SelectedValue="{Binding OrtakDovizCinsi,UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="100" md:HintAssist.Hint="Döviz Cinsi"  Style="{x:Null}">
+                                            </ComboBox>
+                                        </DockPanel>
+                                    </StackPanel>
+
+                                    <ToggleButton Height="100" Width="110"
+                                            mesajModule:VisibilityHelpler.IsVisible="{Binding DataContext.TedarikciEklenebilirMi,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            Margin="20,0,30,0" IsEnabled="{Binding SarjYapabilirmi}" Name="SarjToggle"
+                                           Style="{StaticResource MaterialDesignRaisedAccentButton}">
+                                        <StackPanel HorizontalAlignment="Stretch" Margin="0">
+                                            <TextBlock TextAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" Text=" + Tedarikçi Ekle" TextWrapping="Wrap"
+
+                                                           VerticalAlignment="Center" />
+                                            <Popup StaysOpen="false"  IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                                PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}}">
+
+                                                <StackPanel Background="WhiteSmoke">
+                                                    <Button Command="{Binding Path=(dxg:GridControl.ActiveView).DataContext.TedarikciEkleCommand,RelativeSource={RelativeSource Self}}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Tüm Tedarikçilerden" />
+                                                        </StackPanel>
+                                                    </Button>
+
+                                                  
+                                                    <Button Command="{Binding Path=(dxg:GridControl.ActiveView).DataContext.TedarikciTanimlaCommand,RelativeSource={RelativeSource Self}}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Tanımlı Olmayan Tedarikçi Ekle" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Popup>
+                                        </StackPanel>
+                                    </ToggleButton>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridControlBand.HeaderTemplate>
+
+                        <dxg:GridColumn  Width="45" MaxWidth="45" Header="Id" FieldName="KalemId">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                        <Button  Style="{StaticResource MyMesajButton}" Tag="{Binding RowData.Row}" />
+                                        <TextBlock FontWeight="Thin" Margin="4,4" Text="{Binding RowData.Row.KalemId}" />
+
+
+                                       
+                                        <ToggleButton Margin="0,20,0,0"
+                                                          Background="Red"
+                                                          Content="X"
+                                                          IsChecked="{Binding RowData.Row.YoneticiKalemIptalMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          />
+                                        <TextBlock HorizontalAlignment="Center" Text="İptal" FontWeight="Thin" Margin="4,4"/>
+
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn Header="Stok Detay" Width="280">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+
+                                    <StackPanel Margin="10,4">
+
+                                        <DockPanel Margin="0,0,0,5">
+                                            <TextBlock Foreground="Red" FontWeight="Bold"  Text="{Binding RowData.Row.StokKod}" />
+                                            <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding RowData.Row.StokAd, StringFormat= - {0}}" />
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Width="80" Text="İş Merkezi" />
+                                            <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.IsMerkezi, StringFormat= : {0}}" />
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Width="80" Text="Talep Eden" />
+                                            <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.TalepEdenAdSoyad, StringFormat= : {0}}" />
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Width="80" Text="İstenilen Tar." />
+                                            <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.IstenilenTarih, StringFormat= : {0:d}}" />
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Width="80" Text="Açıklama  " />
+                                            <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.Aciklama, StringFormat= : {0:d}}" />
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Width="80" Text="Güncel Stok " />
+                                            <TextBlock Foreground="Red" FontWeight="Bold"
+                                                           Text="{Binding RowData.Row.GuncelStokMiktari, StringFormat= : {0}}" />
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <Button Height="20" Padding="0"  MinWidth="100"   FontSize="12"
+                                                         FontWeight="Bold" Style="{DynamicResource MaterialDesignFlatButton}"
+                                                        Command="{Binding DataContext.OncekiFiyatlariGosterCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding Path=RowData.Row.StokKod}">
+
+                                                <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal">
+                                                    <md:PackIcon  VerticalAlignment="Center" Kind="Magnify" />
+                                                    <TextBlock Text="{Binding RowData.Row.SonAlimFiyat,StringFormat=SF : {0:n2} - }" />
+                                                    <TextBlock Text="{Binding RowData.Row.SonAlimFirmaAd}" />
+                                                </StackPanel>
+                                            </Button>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn Header="Miktar / Birimi" Width="70">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderThickness="1" BorderBrush="WhiteSmoke">
+
+                                        <StackPanel>
+                                            <StackPanel Margin="0,40,0,0">
+                                                <dxe:TextEdit HorizontalContentAlignment="Center"  FontWeight="Bold" HorizontalAlignment="Stretch" AllowNullInput="True"
+                                                               Text="{Binding RowData.Row.Miktar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                                <TextBlock HorizontalAlignment="Center" Text="{Binding RowData.Row.OlcuBirimi}" />
+
+                                             
+
+                                            </StackPanel>
+
+                                       
+                                            
+                                        </StackPanel>
+                                      
+
+                                    </Border>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+                    </dxg:GridControlBand>
+
+                    <!--Firma Sutunlar-->
+
+                    <dxg:GridControlBand AllowMoving="False" Visible="{Binding FirmaSutunVisible1,UpdateSourceTrigger=PropertyChanged}" 
+                                         HorizontalHeaderContentAlignment="Stretch"
+                                          Header="{Binding KararFormModel.TabloTeklifSutunlari[0].CariAd}">
+                        <dxg:GridControlBand.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                                    <Grid >
+                                      
+                                        <TextBlock Foreground="#FF2B7AD2"  TextWrapping="Wrap" HorizontalAlignment="Left" Height="35" FontSize="15" 
+                                                   Text="{Binding}"
+                                                         FontWeight="Bold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                            <Setter  Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <Button Margin="2"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                                Panel.ZIndex="1000" Background="WhiteSmoke"
+                                                Style="{StaticResource MaterialDesignFlatButton}" Width="18" Height="18"  FontWeight="DemiBold" FontSize="14" 
+                                            Padding="0" Foreground="Red" 
+                                        Content="x" Command="{Binding DataContext.FirmaSilCommand,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[0]
+                                        ,RelativeSource={RelativeSource AncestorType=UserControl}
+
+                                        }" />
+                                    </Grid>
+                                   
+
+                                    <DockPanel  HorizontalAlignment="Stretch">
+                                        <ComboBox DockPanel.Dock="Left" ItemsSource="{Binding DataContext.DovizCinsleri,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[0].DovizTip,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     md:HintAssist.Hint="Döviz Cinsi">
+                                        </ComboBox>
+
+                                        <Button  Style="{StaticResource MyMesajButton}"
+                                                 Tag="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[0],
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+
+                                    <ComboBox IsEditable="True" HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.VadeListe,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[0].OdemeSekli,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+
+                                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.NakliyeDurumlari,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[0].NakliyeDurum,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridControlBand.HeaderTemplate>
+
+                        <dxg:GridColumn AllowMoving="False" FieldName="Firma1_DataModel.ToplamFiyat" Width="{Binding FirmaSutunGenisligi,UpdateSourceTrigger=PropertyChanged}"
+                                        HorizontalHeaderContentAlignment="Center" AllowResizing="True"
+                                        Header="{Binding OrtakDovizCinsi,StringFormat=Birim Fiyat / Toplam {0}}">
+
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderThickness="1" BorderBrush="DarkBlue">
+                                        <StackPanel>
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit AllowNullInput="True" MaskType="Numeric"   DisplayFormatString="N2"
+                                                              EditValue="{Binding RowData.Row.Firma1_DataModel.BirimFiyat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                                <dxe:TextEdit IsReadOnly="True" Background="LightGray"  DisplayFormatString="n2"
+                                                     EditValue="{Binding RowData.Row.Firma1_DataModel.ToplamFiyat,Mode=OneWay,NotifyOnSourceUpdated=True,
+                                                    UpdateSourceTrigger=PropertyChanged}" />
+                                            </UniformGrid>
+
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit NullText="Marka" EditValue="{Binding RowData.Row.Firma1_DataModel.Marka}" />
+                                                <dxe:DateEdit NullText="Teslim Tarihi" EditValue="{Binding RowData.Row.Firma1_DataModel.TeslimTarihi}" DisplayFormatString="d" />
+                                            </UniformGrid>
+
+                                            <UniformGrid
+                                                    mesajModule:VisibilityHelpler.IsVisible="{Binding DataContext.TercihlerAktifMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                    Margin="3" Columns="2" Rows="2">
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.SatinAlmaYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma1_DataModel.SatinAlmaTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.KararYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma1_DataModel.YoneticiTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <TextBlock HorizontalAlignment="Center" Text="S.Alma" />
+                                                <TextBlock HorizontalAlignment="Center" Text="Yönetici" />
+                                            </UniformGrid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+
+                            <dxg:GridColumn.TotalSummaryContentStyle>
+                                <Style TargetType="{x:Type dxg:TotalSummaryContentPresenter}">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel>
+
+                                                    <DockPanel Margin="0,5,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal" VerticalAlignment="Center" Text="İndirim : " />
+                                                        <TextBox Padding="0"  HorizontalContentAlignment="Right" Width="70"
+                                                            Text="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[0].IndirimMiktari,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DockPanel>
+
+                                                    <DockPanel Margin="0,10,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal"  VerticalAlignment="Center"  Text="Toplam : " />
+                                                        <TextBlock  FontSize="14" VerticalAlignment="Bottom"  FontWeight="Bold" TextAlignment="Right" Width="70"
+                                                                        Text="{Binding Column.TotalSummaryText,Mode=OneWay}" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </dxg:GridColumn.TotalSummaryContentStyle>
+                        </dxg:GridColumn>
+                    </dxg:GridControlBand>
+
+                    <dxg:GridControlBand AllowMoving="False" Visible="{Binding FirmaSutunVisible2,UpdateSourceTrigger=PropertyChanged}"  HorizontalHeaderContentAlignment="Stretch"
+                                          Header="{Binding KararFormModel.TabloTeklifSutunlari[1].CariAd}">
+                        <dxg:GridControlBand.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                                    <Grid >
+
+                                        <TextBlock Foreground="#FF2B7AD2"  TextWrapping="Wrap" HorizontalAlignment="Left" Height="35" FontSize="15" 
+                                                   Text="{Binding}"
+                                                         FontWeight="Bold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                            <Setter  Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <Button Margin="2"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                                Panel.ZIndex="1000" Background="WhiteSmoke"
+                                                Style="{StaticResource MaterialDesignFlatButton}" Width="18" Height="18"  FontWeight="DemiBold" FontSize="14" 
+                                            Padding="0" Foreground="Red" 
+                                        Content="x" Command="{Binding DataContext.FirmaSilCommand,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[1]
+                                        ,RelativeSource={RelativeSource AncestorType=UserControl}
+
+                                        }" />
+                                    </Grid>
+
+
+
+
+                                    <DockPanel  HorizontalAlignment="Stretch">
+                                        <ComboBox DockPanel.Dock="Left" ItemsSource="{Binding DataContext.DovizCinsleri,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[1].DovizTip,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     md:HintAssist.Hint="Döviz Cinsi">
+                                        </ComboBox>
+
+                                        <Button  Style="{StaticResource MyMesajButton}"
+                                                 Tag="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[1],
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+
+                                    <ComboBox IsEditable="True" HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.VadeListe,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[1].OdemeSekli,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+
+                                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.NakliyeDurumlari,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[1].NakliyeDurum,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridControlBand.HeaderTemplate>
+
+                        <dxg:GridColumn AllowMoving="False" FieldName="Firma2_DataModel.ToplamFiyat" Width="{Binding FirmaSutunGenisligi,UpdateSourceTrigger=PropertyChanged}"
+                                        HorizontalHeaderContentAlignment="Center" AllowResizing="True"
+                                        Header="{Binding OrtakDovizCinsi,StringFormat=Birim Fiyat / Toplam {0}}">
+
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderThickness="1" BorderBrush="DarkBlue">
+                                        <StackPanel>
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit AllowNullInput="True" MaskType="Numeric"   DisplayFormatString="n2"
+                                                              EditValue="{Binding RowData.Row.Firma2_DataModel.BirimFiyat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                                <dxe:TextEdit IsReadOnly="True" Background="LightGray"  DisplayFormatString="n2"
+                                                                  EditValue="{Binding RowData.Row.Firma2_DataModel.ToplamFiyat,Mode=OneWay,NotifyOnSourceUpdated=True}" />
+                                            </UniformGrid>
+
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit NullText="Marka" EditValue="{Binding RowData.Row.Firma2_DataModel.Marka}" />
+                                                <dxe:DateEdit NullText="Teslim Tarihi" EditValue="{Binding RowData.Row.Firma2_DataModel.TeslimTarihi}" DisplayFormatString="d" />
+                                            </UniformGrid>
+
+                                            <UniformGrid
+                                                    mesajModule:VisibilityHelpler.IsVisible="{Binding DataContext.TercihlerAktifMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                    Margin="3" Columns="2" Rows="2">
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.SatinAlmaYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma2_DataModel.SatinAlmaTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.KararYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma2_DataModel.YoneticiTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <TextBlock HorizontalAlignment="Center" Text="S.Alma" />
+                                                <TextBlock HorizontalAlignment="Center" Text="Yönetici" />
+                                            </UniformGrid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+
+                            <dxg:GridColumn.TotalSummaryContentStyle>
+                                <Style TargetType="{x:Type dxg:TotalSummaryContentPresenter}">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel>
+
+                                                    <DockPanel Margin="0,5,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal" VerticalAlignment="Center" Text="İndirim : " />
+                                                        <TextBox Padding="0"  HorizontalContentAlignment="Right" Width="70"
+                                                            Text="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[1].IndirimMiktari,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DockPanel>
+
+                                                    <DockPanel Margin="0,10,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal"  VerticalAlignment="Center"  Text="Toplam : " />
+                                                        <TextBlock FontSize="14" VerticalAlignment="Bottom"  FontWeight="Bold" TextAlignment="Right" Width="70"
+                                                                        Text="{Binding Column.TotalSummaryText,Mode=OneWay}" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </dxg:GridColumn.TotalSummaryContentStyle>
+                        </dxg:GridColumn>
+                    </dxg:GridControlBand>
+
+                    <dxg:GridControlBand AllowMoving="False" Visible="{Binding FirmaSutunVisible3,UpdateSourceTrigger=PropertyChanged}"  HorizontalHeaderContentAlignment="Stretch"
+                                          Header="{Binding KararFormModel.TabloTeklifSutunlari[2].CariAd}">
+                        <dxg:GridControlBand.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                                    <Grid >
+
+                                        <TextBlock Foreground="#FF2B7AD2"  TextWrapping="Wrap" HorizontalAlignment="Left" Height="35" FontSize="15" 
+                                                   Text="{Binding}"
+                                                         FontWeight="Bold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                            <Setter  Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <Button Margin="2"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                                Panel.ZIndex="1000" Background="WhiteSmoke"
+                                                Style="{StaticResource MaterialDesignFlatButton}" Width="18" Height="18"  FontWeight="DemiBold" FontSize="14" 
+                                            Padding="0" Foreground="Red" 
+                                        Content="x" Command="{Binding DataContext.FirmaSilCommand,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[2]
+                                        ,RelativeSource={RelativeSource AncestorType=UserControl}
+
+                                        }" />
+                                    </Grid>
+
+
+                                    <DockPanel  HorizontalAlignment="Stretch">
+                                        <ComboBox DockPanel.Dock="Left" ItemsSource="{Binding DataContext.DovizCinsleri,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[2].DovizTip,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     md:HintAssist.Hint="Döviz Cinsi">
+                                        </ComboBox>
+
+                                        <Button  Style="{StaticResource MyMesajButton}"
+                                                 Tag="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[2],
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+
+                                    <ComboBox IsEditable="True" HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.VadeListe,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[2].OdemeSekli,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+
+                                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.NakliyeDurumlari,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[2].NakliyeDurum,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridControlBand.HeaderTemplate>
+
+                        <dxg:GridColumn AllowMoving="False" FieldName="Firma3_DataModel.ToplamFiyat" Width="{Binding FirmaSutunGenisligi,UpdateSourceTrigger=PropertyChanged}"
+                                        HorizontalHeaderContentAlignment="Center" AllowResizing="True"
+                                        Header="{Binding OrtakDovizCinsi,StringFormat=Birim Fiyat / Toplam {0}}">
+
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderThickness="1" BorderBrush="DarkBlue">
+                                        <StackPanel>
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit AllowNullInput="True" MaskType="Numeric"  DisplayFormatString="n2"
+                                                              EditValue="{Binding RowData.Row.Firma3_DataModel.BirimFiyat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                                <dxe:TextEdit IsReadOnly="True" Background="LightGray"  DisplayFormatString="n2"
+                                                                  EditValue="{Binding RowData.Row.Firma3_DataModel.ToplamFiyat,Mode=OneWay,NotifyOnSourceUpdated=True}" />
+                                            </UniformGrid>
+
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit NullText="Marka" EditValue="{Binding RowData.Row.Firma3_DataModel.Marka}" />
+                                                <dxe:DateEdit NullText="Teslim Tarihi" EditValue="{Binding RowData.Row.Firma3_DataModel.TeslimTarihi}" DisplayFormatString="d" />
+                                            </UniformGrid>
+
+                                            <UniformGrid
+                                                    mesajModule:VisibilityHelpler.IsVisible="{Binding DataContext.TercihlerAktifMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                    Margin="3" Columns="2" Rows="2">
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.SatinAlmaYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma3_DataModel.SatinAlmaTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.KararYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma3_DataModel.YoneticiTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <TextBlock HorizontalAlignment="Center" Text="S.Alma" />
+                                                <TextBlock HorizontalAlignment="Center" Text="Yönetici" />
+                                            </UniformGrid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+
+                            <dxg:GridColumn.TotalSummaryContentStyle>
+                                <Style TargetType="{x:Type dxg:TotalSummaryContentPresenter}">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel>
+
+                                                    <DockPanel Margin="0,5,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal" VerticalAlignment="Center" Text="İndirim : " />
+                                                        <TextBox Padding="0"  HorizontalContentAlignment="Right" Width="70"
+                                                            Text="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[2].IndirimMiktari,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DockPanel>
+
+                                                    <DockPanel Margin="0,10,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal"  VerticalAlignment="Center"  Text="Toplam : " />
+                                                        <TextBlock FontSize="14" VerticalAlignment="Bottom"  FontWeight="Bold" TextAlignment="Right" Width="70"
+                                                                        Text="{Binding Column.TotalSummaryText,Mode=OneWay}" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </dxg:GridColumn.TotalSummaryContentStyle>
+                        </dxg:GridColumn>
+                    </dxg:GridControlBand>
+
+                    <dxg:GridControlBand AllowMoving="False" Visible="{Binding FirmaSutunVisible4,UpdateSourceTrigger=PropertyChanged}"  HorizontalHeaderContentAlignment="Stretch"
+                                          Header="{Binding KararFormModel.TabloTeklifSutunlari[3].CariAd}">
+                        <dxg:GridControlBand.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                                    <Grid >
+
+                                        <TextBlock Foreground="#FF2B7AD2"  TextWrapping="Wrap" HorizontalAlignment="Left" Height="35" FontSize="15" 
+                                                   Text="{Binding}"
+                                                         FontWeight="Bold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                            <Setter  Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <Button Margin="2"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                                Panel.ZIndex="1000" Background="WhiteSmoke"
+                                                Style="{StaticResource MaterialDesignFlatButton}" Width="18" Height="18"  FontWeight="DemiBold" FontSize="14" 
+                                            Padding="0" Foreground="Red" 
+                                        Content="x" Command="{Binding DataContext.FirmaSilCommand,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[3]
+                                        ,RelativeSource={RelativeSource AncestorType=UserControl}
+
+                                        }" />
+                                    </Grid>
+
+                                    <DockPanel  HorizontalAlignment="Stretch">
+                                        <ComboBox DockPanel.Dock="Left" ItemsSource="{Binding DataContext.DovizCinsleri,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[3].DovizTip,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     md:HintAssist.Hint="Döviz Cinsi">
+                                        </ComboBox>
+
+                                        <Button  Style="{StaticResource MyMesajButton}"
+                                                 Tag="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[3],
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+
+                                    <ComboBox IsEditable="True" HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.VadeListe,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[3].OdemeSekli,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+
+                                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.NakliyeDurumlari,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[3].NakliyeDurum,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridControlBand.HeaderTemplate>
+
+                        <dxg:GridColumn AllowMoving="False" FieldName="Firma4_DataModel.ToplamFiyat" Width="{Binding FirmaSutunGenisligi,UpdateSourceTrigger=PropertyChanged}"
+                                        HorizontalHeaderContentAlignment="Center" AllowResizing="True"
+                                        Header="{Binding OrtakDovizCinsi,StringFormat=Birim Fiyat / Toplam {0}}">
+
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderThickness="1" BorderBrush="DarkBlue">
+                                        <StackPanel>
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit AllowNullInput="True" MaskType="Numeric"  DisplayFormatString="n2"
+                                                              EditValue="{Binding RowData.Row.Firma4_DataModel.BirimFiyat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                                <dxe:TextEdit IsReadOnly="True" Background="LightGray"  DisplayFormatString="n2"
+                                                                  EditValue="{Binding RowData.Row.Firma4_DataModel.ToplamFiyat,Mode=OneWay,NotifyOnSourceUpdated=True}" />
+                                            </UniformGrid>
+
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit NullText="Marka" EditValue="{Binding RowData.Row.Firma4_DataModel.Marka}" />
+                                                <dxe:DateEdit NullText="Teslim Tarihi" EditValue="{Binding RowData.Row.Firma4_DataModel.TeslimTarihi}" DisplayFormatString="d" />
+                                            </UniformGrid>
+
+                                            <UniformGrid
+                                                    mesajModule:VisibilityHelpler.IsVisible="{Binding DataContext.TercihlerAktifMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                    Margin="3" Columns="2" Rows="2">
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.SatinAlmaYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma4_DataModel.SatinAlmaTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.KararYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma4_DataModel.YoneticiTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <TextBlock HorizontalAlignment="Center" Text="S.Alma" />
+                                                <TextBlock HorizontalAlignment="Center" Text="Yönetici" />
+                                            </UniformGrid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+
+                            <dxg:GridColumn.TotalSummaryContentStyle>
+                                <Style TargetType="{x:Type dxg:TotalSummaryContentPresenter}">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel>
+
+                                                    <DockPanel Margin="0,5,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal" VerticalAlignment="Center" Text="İndirim : " />
+                                                        <TextBox Padding="0"  HorizontalContentAlignment="Right" Width="70"
+                                                            Text="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[3].IndirimMiktari,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DockPanel>
+
+                                                    <DockPanel Margin="0,10,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal"  VerticalAlignment="Center"  Text="Toplam : " />
+                                                        <TextBlock FontSize="14" VerticalAlignment="Bottom"  FontWeight="Bold" TextAlignment="Right" Width="70"
+                                                                        Text="{Binding Column.TotalSummaryText,Mode=OneWay}" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </dxg:GridColumn.TotalSummaryContentStyle>
+                        </dxg:GridColumn>
+                    </dxg:GridControlBand>
+
+                    <dxg:GridControlBand AllowMoving="False" Visible="{Binding FirmaSutunVisible5,UpdateSourceTrigger=PropertyChanged}"  HorizontalHeaderContentAlignment="Stretch"
+                                          Header="{Binding KararFormModel.TabloTeklifSutunlari[4].CariAd}">
+                        <dxg:GridControlBand.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                                    <Grid >
+
+                                        <TextBlock Foreground="#FF2B7AD2"  TextWrapping="Wrap" HorizontalAlignment="Left" Height="35" FontSize="15" 
+                                                   Text="{Binding}"
+                                                         FontWeight="Bold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                                                            <Setter  Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <Button Margin="2"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                                Panel.ZIndex="1000" Background="WhiteSmoke"
+                                                Style="{StaticResource MaterialDesignFlatButton}" Width="18" Height="18"  FontWeight="DemiBold" FontSize="14" 
+                                            Padding="0" Foreground="Red" 
+                                        Content="x" Command="{Binding DataContext.FirmaSilCommand,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[4]
+                                        ,RelativeSource={RelativeSource AncestorType=UserControl}
+
+                                        }" />
+                                    </Grid>
+
+
+                                    <DockPanel  HorizontalAlignment="Stretch">
+                                        <ComboBox DockPanel.Dock="Left" ItemsSource="{Binding DataContext.DovizCinsleri,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[4].DovizTip,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     md:HintAssist.Hint="Döviz Cinsi">
+                                        </ComboBox>
+
+                                        <Button  Style="{StaticResource MyMesajButton}"
+                                                 Tag="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[4],
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+
+                                    <ComboBox IsEditable="True" HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.VadeListe,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[4].OdemeSekli,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+
+                                    <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding DataContext.NakliyeDurumlari,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      SelectedValue="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[4].NakliyeDurum,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </ComboBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridControlBand.HeaderTemplate>
+
+                        <dxg:GridColumn AllowMoving="False" FieldName="Firma5_DataModel.ToplamFiyat" Width="{Binding FirmaSutunGenisligi,UpdateSourceTrigger=PropertyChanged}"
+                                        HorizontalHeaderContentAlignment="Center" AllowResizing="True"
+                                        Header="{Binding OrtakDovizCinsi,StringFormat=Birim Fiyat / Toplam {0}}">
+
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderThickness="1" BorderBrush="DarkBlue">
+                                        <StackPanel>
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit AllowNullInput="True" MaskType="Numeric"  DisplayFormatString="n2"
+                                                              EditValue="{Binding RowData.Row.Firma5_DataModel.BirimFiyat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                                <dxe:TextEdit IsReadOnly="True" Background="LightGray"  DisplayFormatString="n2"
+                                                                  EditValue="{Binding RowData.Row.Firma5_DataModel.ToplamFiyat,Mode=OneWay,NotifyOnSourceUpdated=True}" />
+                                            </UniformGrid>
+
+                                            <UniformGrid Margin="3" Columns="2">
+                                                <dxe:TextEdit NullText="Marka" EditValue="{Binding RowData.Row.Firma5_DataModel.Marka}" />
+                                                <dxe:DateEdit NullText="Teslim Tarihi" EditValue="{Binding RowData.Row.Firma5_DataModel.TeslimTarihi}" DisplayFormatString="d" />
+                                            </UniformGrid>
+
+                                            <UniformGrid
+                                                    mesajModule:VisibilityHelpler.IsVisible="{Binding DataContext.TercihlerAktifMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                    Margin="3" Columns="2" Rows="2">
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.SatinAlmaYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma5_DataModel.SatinAlmaTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <ToggleButton
+                                                          IsEnabled="{Binding DataContext.KararYoneticiAktifMi,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                                                          Content="-"
+                                                          Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                          IsChecked="{Binding RowData.Row.Firma5_DataModel.YoneticiTercihiMi,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                          ToolTip="MaterialDesignActionAccentToggleButton" />
+
+                                                <TextBlock HorizontalAlignment="Center" Text="S.Alma" />
+                                                <TextBlock HorizontalAlignment="Center" Text="Yönetici" />
+                                            </UniformGrid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+
+                            <dxg:GridColumn.TotalSummaryContentStyle>
+                                <Style TargetType="{x:Type dxg:TotalSummaryContentPresenter}">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel>
+
+                                                    <DockPanel Margin="0,5,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal" VerticalAlignment="Center" Text="İndirim : " />
+                                                        <TextBox Padding="0"  HorizontalContentAlignment="Right" Width="70"
+                                                            Text="{Binding DataContext.KararFormModel.TabloTeklifSutunlari[4].IndirimMiktari,
+                                                            RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DockPanel>
+
+                                                    <DockPanel Margin="0,10,10,0"  HorizontalAlignment="Right">
+                                                        <TextBlock FontWeight="Normal"  VerticalAlignment="Center"  Text="Toplam : " />
+                                                        <TextBlock FontSize="14" VerticalAlignment="Bottom"  FontWeight="Bold" TextAlignment="Right" Width="70"
+                                                                        Text="{Binding Column.TotalSummaryText,Mode=OneWay}" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </dxg:GridColumn.TotalSummaryContentStyle>
+                        </dxg:GridColumn>
+                    </dxg:GridControlBand>
+                </dxg:GridControl.Bands>
+            </dxg:GridControl>
+        </md:Card>
+    </Grid>
+</UserControl>

@@ -1,0 +1,330 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.KaliteModule.RedMalzemeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:local="clr-namespace:mnd.UI.Modules.KaliteModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DesignHeight="595"
+    d:DesignWidth="735"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService />
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+        <dxmvvm:EventToCommand Command="{Binding FormUnLoadedCommand}" EventName="Unloaded" />
+
+        <dxmvvm:EventToCommand
+            Command="{Binding ClosingCommand}"
+            EventName="Closing"
+            PassEventArgsToCommand="True" />
+
+        <dx:DXMessageBoxService />
+
+        <dxmvvm:WindowService WindowShowMode="Dialog">
+            <dxmvvm:WindowService.WindowStyle>
+                <Style TargetType="dx:DXWindow">
+                    <Setter Property="Width" Value="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={converters:RatioConverter}, ConverterParameter='0,80'}" />
+                    <Setter Property="Height" Value="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={converters:RatioConverter}, ConverterParameter='0,9'}" />
+                </Style>
+            </dxmvvm:WindowService.WindowStyle>
+        </dxmvvm:WindowService>
+
+    </dxmvvm:Interaction.Behaviors>
+
+
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+        </Grid.Resources>
+
+        <Border
+            Name="TempGorusmeKisi"
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Panel.ZIndex="100"
+            controlHelpers:VisibilityHelpler.IsVisible="{Binding IsOpenKisiEkleForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Visibility="Collapsed">
+
+            <Border.Background>
+                <SolidColorBrush Opacity=".8" Color="Black" />
+            </Border.Background>
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="White">
+
+                <StackPanel Width="200" Margin="20">
+                    <TextBox
+                        Name="txt1"
+                        md:HintAssist.Hint="Ad Soyad"
+                        Text="{Binding TempCariGorusmeKisi.AdSoyad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox md:HintAssist.Hint="Email" Text="{Binding TempCariGorusmeKisi.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox md:HintAssist.Hint="Tel" Text="{Binding TempCariGorusmeKisi.Tel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <ComboBox
+                        Height="28"
+                        HorizontalAlignment="Stretch"
+                        md:HintAssist.Hint="Ünvan"
+                        DisplayMemberPath="UnvanTr"
+                        ItemsSource="{Binding Unvanlar}"
+                        SelectedValue="UnvanTr"
+                        Text="{Binding TempCariGorusmeKisi.Unvan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button
+                        Margin="5"
+                        Command="{Binding KisiEkleCancelCommand}"
+                        Content="İptal"
+                        Style="{DynamicResource MaterialDesignFlatButton}" />
+                    <Button
+                        Width="100"
+                        Margin="5"
+                        Command="{Binding KisiEkleOkCommand}"
+                        Content="Ekle" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+
+        <ToolBar
+            Grid.Row="0"
+            MinHeight="50"
+            ClipToBounds="False"
+            FocusManager.IsFocusScope="False"
+            Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Command="{Binding YeniTeklifCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="FileDocument" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Yeni" />
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="ContentSave" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Kaydet" />
+                </StackPanel>
+            </Button>
+
+
+        </ToolBar>
+
+        <md:Card
+            Grid.Row="1"
+            Margin="4"
+            Padding="4"
+            VerticalAlignment="Top">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Width" Value="125" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Margin" Value="0,0,10,0" />
+                        <Setter Property="TextAlignment" Value="Right" />
+                    </Style>
+                </Grid.Resources>
+
+
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Top">
+
+                    <StackPanel Orientation="Horizontal">
+                        <DockPanel>
+                            <TextBlock VerticalAlignment="Center" Text="Sıra No :" />
+                            <TextBox
+                                Width="200"
+                                HorizontalAlignment="Left"
+                                Background="LightGray"
+                                IsReadOnly="True"
+                                Text="{Binding SeciliRedMalzeme.Id}" />
+                        </DockPanel>
+
+                        <DockPanel Margin="0,5">
+                            <TextBlock VerticalAlignment="Center" Text="Tarih :" />
+                            <TextBox
+                                Width="200"
+                                HorizontalAlignment="Left"
+                                Background="LightGray"
+                                IsReadOnly="True"
+                                Text="{Binding SeciliRedMalzeme.Tarih}" />
+                        </DockPanel>
+                    </StackPanel>
+
+
+               
+
+
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                       
+
+                        <DockPanel>
+                            <TextBlock VerticalAlignment="Center" Text="Kart No :" />
+                            <TextBox
+                                Width="200"
+                                Background="WhiteSmoke"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="Red"
+                                Text="{Binding SeciliRedMalzeme.KartNo}" />
+                        </DockPanel>
+
+                        <DockPanel>
+                            <TextBlock VerticalAlignment="Center" Text="Üretim Emri Kod :" />
+                            <TextBox
+                                Width="200"
+                                Background="WhiteSmoke"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="Red"
+                                Text="{Binding SeciliRedMalzeme.UretimEmriKod}" />
+                        </DockPanel>
+
+                    </StackPanel>
+
+                    <DockPanel Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="Müşteri :" />
+                        <TextBox Background="White" Text="{Binding SeciliRedMalzeme.Musteri}" />
+                    </DockPanel>
+
+
+                    <DockPanel Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="Vardiya :" />
+                        <TextBox Background="White" Text="{Binding SeciliRedMalzeme.Vardiya}" />
+                    </DockPanel>
+
+
+                    <DockPanel Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="Operatör :" />
+                        <TextBox Background="White" Text="{Binding SeciliRedMalzeme.Operator}" />
+                    </DockPanel>
+
+
+
+                    <DockPanel Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="Kalite Teknisyeni :" />
+                        <TextBox Background="White" Text="{Binding SeciliRedMalzeme.KaliteTeknisyeni}" />
+                    </DockPanel>
+
+
+
+
+                    <dx:UniformStackPanel Margin="0,30,0,5" Background="LightGray">
+                     
+
+                        <DockPanel Margin="5">
+                            <TextBlock VerticalAlignment="Center" Text="Bobin No :" />
+                            <TextBox
+                                Width="100"
+                                Background="White"
+                                Text="{Binding SeciliRedMalzeme.BobinNo}" />
+                        </DockPanel>
+
+                        <DockPanel Margin="5">
+                            <TextBlock VerticalAlignment="Center" Text="Malzeme No :" />
+                            <TextBox
+                                Width="100"
+                                Background="White"
+                                Text="{Binding SeciliRedMalzeme.MalzemeNo}" />
+                        </DockPanel>
+                    </dx:UniformStackPanel>
+
+
+
+                    <dx:UniformStackPanel Background="LightGray">
+                        <DockPanel Margin="5">
+                            <TextBlock VerticalAlignment="Center" Text="En :" />
+                            <TextBox
+                                Width="100"
+                                Background="White"
+                                Text="{Binding SeciliRedMalzeme.En}" />
+                        </DockPanel>
+
+                        <DockPanel Margin="5">
+                            <TextBlock VerticalAlignment="Center" Text="Alaşım :" />
+                            <TextBox
+                                Width="100"
+                                Background="White"
+                                Text="{Binding SeciliRedMalzeme.Alasim}" />
+                        </DockPanel>
+
+                        <DockPanel Margin="5">
+                            <TextBlock VerticalAlignment="Center" Text="Kondüsyon :" />
+                            <TextBox
+                                Width="100"
+                                Background="White"
+                                Text="{Binding SeciliRedMalzeme.Kondusyon}" />
+                        </DockPanel>
+
+                    </dx:UniformStackPanel>
+
+                    <DockPanel Margin="5,30,0,0">
+                        <TextBlock VerticalAlignment="Center" Text="Red Yeri :" />
+                        <TextBox Background="White" Text="{Binding SeciliRedMalzeme.RedYeri}" />
+                    </DockPanel>
+
+                    <DockPanel Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="Red Nedeni :" />
+                        <TextBox Background="White" Text="{Binding SeciliRedMalzeme.RedNedeni}" />
+                    </DockPanel>
+
+                    <DockPanel Margin="5">
+                        <TextBlock VerticalAlignment="Center" Text="Red Miktarı (kg) :" />
+                        <TextBox
+                            Background="White"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Foreground="Red"
+                            Text="{Binding SeciliRedMalzeme.RedMiktarKg}" />
+                    </DockPanel>
+
+
+
+
+
+
+                </StackPanel>
+
+
+
+            </Grid>
+        </md:Card>
+
+    </Grid>
+
+</UserControl>
+

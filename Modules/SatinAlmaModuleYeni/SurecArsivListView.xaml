@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="mnd.UI.Modules.SatinAlmaModuleYeni.SurecArsivListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.Modules.SatinAlmaModuleYeni"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             d:DataContext="{d:DesignInstance Type=talepViews:TalepListVM}"
+             xmlns:dgy="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
+             xmlns:talepViews="clr-namespace:mnd.UI.Modules.SatinAlmaModuleYeni.TalepViews"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <dxmvvm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+               
+
+
+                <Button  Padding="0" Command="{Binding EkranYenileCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                        <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Yenile" />
+                    </StackPanel>
+                </Button>
+
+                <Separator />
+
+
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Margin="5"
+            VerticalAlignment="Stretch"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+            Padding="5">
+
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,4,20,4" HorizontalAlignment="Right" DockPanel.Dock="Top"/>
+
+                <dxg:GridControl AllowLiveDataShaping="True" SelectedItem="{Binding SeciliTalep,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
+                                            ItemsSource="{Binding Talepler,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+                    <dxg:GridControl.Resources>
+                        <Style TargetType="dxg:GridColumnHeader">
+                            <Setter Property="Background" Value="#FF673AB7"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+                        </Style>
+
+                        <Style TargetType="dxg:GridColumn">
+                            <Setter Property="HorizontalHeaderContentAlignment" Value="Center"/>
+                        </Style>
+
+                    </dxg:GridControl.Resources>
+
+                    <dxg:GridControl.View>
+
+
+
+                        <dxg:TableView  RowMinHeight="35" x:Name="View1" AllowPerPixelScrolling="True" AutoWidth="True" 
+                                  
+                                   ShowAutoFilterRow="True" ShowGroupPanel="False" ShowTotalSummary="True">
+
+                            <dxg:TableView.ColumnHeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock   Text="{Binding}" TextAlignment="Center"
+                                           VerticalAlignment="Stretch" FontWeight="DemiBold" Height="35" 
+                                         TextWrapping="Wrap" HorizontalAlignment="Right" />
+                                </DataTemplate>
+                            </dxg:TableView.ColumnHeaderTemplate>
+
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+
+                    <dxg:GridColumn MaxWidth="75" Header="Talep Id" FixedWidth="True" Width="75" 
+                                FilterPopupMode="Excel"  AutoFilterCondition="Contains" FieldName="TalepId">
+
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dx:SimpleButton MaxWidth="90"  Content="{Binding RowData.Row.TalepId}"
+                                          Command="{Binding View.DataContext.DuzenleCommand}" 
+                                         CommandParameter="{Binding RowData.Row}"
+                                         Style="{StaticResource MyLinkButtonAc}" />
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn Width="100" FieldName="Tip" IsSmart="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings/>
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn Width="100" FieldName="TalepTarihi" IsSmart="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings/>
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn Width="100" FieldName="StokGrupAd" IsSmart="True"/>
+
+                    <dxg:GridColumn Width="200" FieldName="TalepEdenAdSoyad" IsSmart="True"/>
+
+                    <dxg:GridColumn Width="170" FieldName="IsMerkeziAd" IsSmart="True"/>
+
+
+
+
+                    <dxg:GridColumn Width="100" Header="Süreç" FixedWidth="True" FieldName="TalepSurecKonum" 
+                                FilterPopupMode="Excel"  AutoFilterCondition="Contains">
+
+
+
+
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn Width="50"  Style="{StaticResource MesajKolon}" MaxWidth="50" MinWidth="50" FieldName="MesajSayisi" Header="Mesaj" />
+
+
+                    <dxg:GridControl.DetailDescriptor >
+                        <dxg:ContentDetailDescriptor   >
+                            <dxg:ContentDetailDescriptor.ContentTemplate>
+                                <DataTemplate>
+
+                                    <dxg:GridControl AllowLiveDataShaping="True" DockPanel.Dock="Top" ItemsSource="{Binding TalepKalemler}" MaxHeight="500" >
+
+                                        <dxg:GridControl.Resources>
+                                            <Style TargetType="dxg:GridColumnHeader">
+                                                <Setter Property="Background" Value="Red"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="Height" Value="40"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+                                            </Style>
+                                        </dxg:GridControl.Resources>
+
+
+
+                                        <dxg:GridControl.Columns>
+
+
+                                            <dxg:GridColumn FieldName="SeciliMi">
+
+                                                <dxg:GridColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <dxe:CheckEdit MaxWidth="90"  EditValue="{Binding RowData.Row.SeciliMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        />
+                                                    </DataTemplate>
+                                                </dxg:GridColumn.CellTemplate>
+
+
+                                            </dxg:GridColumn>
+                                            <dxg:GridColumn FieldName="IstenilenTarih"/>
+                                            <dxg:GridColumn FieldName="StokKod"/>
+                                            <dxg:GridColumn FieldName="StokAd"/>
+                                            <dxg:GridColumn FieldName="Birim"/>
+                                            <dxg:GridColumn FieldName="Miktar"/>
+                                            <dxg:GridColumn FieldName="Aciklama"/>
+                                        </dxg:GridControl.Columns>
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView ShowGroupPanel="False" />
+                                        </dxg:GridControl.View>
+
+
+                                    </dxg:GridControl>
+
+
+
+                                </DataTemplate>
+                            </dxg:ContentDetailDescriptor.ContentTemplate>
+                        </dxg:ContentDetailDescriptor>
+                    </dxg:GridControl.DetailDescriptor>
+
+
+                </dxg:GridControl>
+
+
+            </DockPanel>
+
+
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

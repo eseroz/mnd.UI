@@ -1,0 +1,83 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+      xmlns:local="clr-namespace:mnd.UI.AppModules.AppModule"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+             x:Class="mnd.UI.AppModules.AppModule.MenuYetkiView"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type={x:Type local:MenuYetkiViewModel}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportService View="{x:Reference View1}" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon x:Name="PackIcon" VerticalAlignment="Center" Kind="ContentSave" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kaydet" />
+                    </StackPanel>
+                </Button>
+                <Separator />
+                <Button Command="{Binding ExcelExportCommand}" CommandParameter="XLSX" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Excele Aktar" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <dxg:GridControl x:Name="grd1" Margin="10" ItemsSource="{Binding NavMenuList}" Grid.Row="1"
+                         SelectedItem="{Binding SeciliNavMenu,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         EnableSmartColumnsGeneration="True">
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="View1" AutoWidth="True" ShowAutoFilterRow="True" NewItemRowPosition="Bottom" ShowGroupPanel="False" AllowPerPixelScrolling="True" ShowTotalSummary="True">
+                    <dxmvvm:Interaction.Behaviors>
+                        <controlHelpers:ItemRowBehavior RowUpdated="{Binding NewItemAddedCommand1}" />
+                        
+                    </dxmvvm:Interaction.Behaviors>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn Header="MenuId" Width="68" FieldName="MenuId" IsSmart="True" />
+            <dxg:GridColumn Width="70" Header="Parent MenuId" FieldName="ParentMenuId" IsSmart="True" />
+
+            <dxg:GridColumn FieldName="FormAd" IsSmart="True" />
+            <dxg:GridColumn FieldName="YetkiliRoller" IsSmart="True" />
+
+            <dxg:GridColumn FieldName="IconPath" IsSmart="True" />
+            <dxg:GridColumn FieldName="BadgeValue" IsSmart="True" />
+
+            <dxg:GridColumn FieldName="ViewName" IsSmart="True" />
+            <dxg:GridColumn FieldName="VM_Name" IsSmart="True" />
+            <dxg:GridColumn FieldName="VM_ParamObj" IsSmart="True" />
+        </dxg:GridControl>
+        <dxg:GridControl Margin="10" ItemsSource="{Binding NavCommandList}"  EnableSmartColumnsGeneration="True" Grid.Row="2">
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" NewItemRowPosition="Bottom" AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowGrouping="True" ShowGroupPanel="False">
+
+                    <dxmvvm:Interaction.Behaviors>
+                        <controlHelpers:ItemRowBehavior RowUpdated="{Binding NewItemAddedCommand2}" />
+                    </dxmvvm:Interaction.Behaviors>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn Width="50" FieldName="Komut" />
+            <dxg:GridColumn FieldName="YetkiliRoller" IsSmart="True" />
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

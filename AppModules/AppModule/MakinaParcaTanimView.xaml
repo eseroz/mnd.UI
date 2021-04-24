@@ -1,0 +1,208 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.AppModules.AppModule"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        
+    xmlns:Domain="clr-namespace:mnd.Logic.BC_App.Domain;assembly=Pandap.Logic" x:Class="mnd.UI.AppModules.AppModule.MakinaParcaTanimView"
+        
+    mc:Ignorable="d" d:DesignWidth="764.966" d:DesignHeight="339.949"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type local:MakinaParcaTanimVM}}">
+    <UserControl.Resources>
+      
+    </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportService View="{x:Reference View1}" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="104*" />
+        </Grid.RowDefinitions>
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+
+
+                <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kaydet" />
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding YenileCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon  VerticalAlignment="Center" Kind="Refresh" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Yenile" />
+                    </StackPanel>
+                </Button>
+
+                <Separator />
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card Grid.Row="1" Margin="8" VerticalAlignment="Stretch" materialDesign:ShadowAssist.ShadowDepth="Depth1" Padding="5">
+
+            <dxg:GridControl Margin="10"  ItemsSource="{Binding MakinaParcalari, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 >
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="{x:Type dxg:GridColumnHeader}">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+                    </Style>
+
+                    <Style TargetType="{x:Type dxg:GridColumn}">
+                        <Setter Property="HorizontalHeaderContentAlignment" Value="Center"/>
+                    </Style>
+
+                </dxg:GridControl.Resources>
+
+         
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem FieldName="MotorGucuKw" SummaryType="Sum" DisplayFormat="n3"/>
+                </dxg:GridControl.TotalSummary>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="View1" ShowGroupPanel="False" AllowSorting="False" IndicatorWidth="30"  
+                                   ShowTotalSummary="True"
+                                   NewItemRowPosition="Bottom" 
+                                   RowMinHeight="35" AutoWidth="True"
+                                   ShowAutoFilterRow="True"  >
+
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock   Text="{Binding}" TextAlignment="Center"
+                                           VerticalAlignment="Stretch" FontWeight="DemiBold" Height="35" 
+                                         TextWrapping="Wrap" HorizontalAlignment="Right" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+
+
+                    </dxg:TableView>
+
+
+
+                </dxg:GridControl.View>
+
+
+                <dxg:GridColumn Width="70" Visible="False" FilterPopupMode="Excel" FieldName="SatirId" IsSmart="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn MinWidth="150"  Header="Makina Adı"
+                                
+                                FilterPopupMode="Excel" FieldName="MakinaKod" IsSmart="True" >
+
+                
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:ComboBoxEdit Name="PART_Editor" DisplayMember="Tanim" AutoComplete="True"
+                                                  ItemsSource="{Binding View.DataContext.IsMerkezleri}"
+                                                  ValueMember="Kod">
+                                <dxe:ComboBoxEdit.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Width="200" Margin="0,0,10,0" Text="{Binding Tanim}"/>
+                                            <TextBlock Text="{Binding Kod}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxe:ComboBoxEdit.ItemTemplate>
+                            </dxe:ComboBoxEdit>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                  
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="MakinaParcaKod" IsSmart="True" />
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="MakinaParcaKodMetin" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="MakinaParcaAd" IsSmart="True" />
+
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="ParcaTipKod" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="Marka" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="MotorGucuHp" IsSmart="True" />
+
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="MotorGucuKw" IsSmart="True" >
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn FilterPopupMode="Excel" Header="Hazı Hızı %" FieldName="HatHiziYuzde" IsSmart="True" >
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n0"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+
+                
+
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="Akim" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="AkimTip" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="Gerilim" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="Rpm" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="Frekans" IsSmart="True" />
+
+
+
+                <dxg:GridColumn Width="250" FilterPopupMode="Excel"  FieldName="Cosq" IsSmart="True" />
+
+
+
+
+            </dxg:GridControl>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

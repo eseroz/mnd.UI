@@ -1,0 +1,163 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:local="clr-namespace:mnd.Dictionary">
+    <Style x:Key="MyLinkButton" TargetType="dx:SimpleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dx:SimpleButton">
+
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            MaxWidth="16"
+                            MaxHeight="16"
+                            Margin="5"
+                            Source="{TemplateBinding Glyph}" />
+                        <TextBlock
+                            x:Name="TextBlock"
+                            VerticalAlignment="Center"
+                            Foreground="#FF2B7AD2">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="TextBlock" Property="TextBlock.TextDecorations" Value="Underline" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MyLinkButton1" TargetType="Button">
+
+        <Setter Property="Foreground" Value="Blue" />
+
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            x:Name="TextBlock"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="#FF2B7AD2">
+                            <ContentPresenter />
+                        </TextBlock>
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="TextBlock" Property="TextBlock.TextDecorations" Value="Underline" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Foreground" Value="Firebrick" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="TextBlock" Property="TextBlock.Foreground" Value="Gray" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="MyLinkButtonAc" TargetType="dx:SimpleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dx:SimpleButton">
+
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            MaxWidth="16"
+                            MaxHeight="16"
+                            Margin="5"
+                            Source="{TemplateBinding Glyph}" />
+                        <TextBlock
+                            x:Name="TextBlock"
+                            VerticalAlignment="Center"
+                            Foreground="#FF2B7AD2">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="TextBlock" Property="TextBlock.TextDecorations" Value="Underline" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MaviSutunBaslikSitil" TargetType="dxg:GridColumnHeader">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Offset="0.261" Color="#FF0D1554" />
+                    <GradientStop Offset="1" Color="#FF4A536E" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="YesilSutunBaslikSitil" TargetType="dxg:GridColumnHeader">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Offset="0.261" Color="LawnGreen" />
+                    <GradientStop Offset="1" Color="DarkGreen" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+
+
+    <Style x:Key="MaviSutunBaslikSitil1" TargetType="dxg:GridColumnHeader">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Offset="0.261" Color="Blue" />
+                    <GradientStop Offset="1" Color="DarkBlue" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+
+
+    <Style x:Key="GridControlBaslikSitil1" TargetType="dxg:GridColumnHeader">
+        <Setter Property="Background" Value="#FF8631C7" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="GridControlBaslikSitil2" TargetType="dxg:GridColumnHeader">
+        <Setter Property="Background" Value="#FFFFCD42" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+
+    <Style x:Key="HeaderHesapSitil" TargetType="dxg:BaseGridHeader">
+        <Setter Property="Background" Value="LightBlue" />
+    </Style>
+
+    <Style x:Key="HeaderFMikSitil" TargetType="dxg:BaseGridHeader">
+        <Setter Property="Background" Value="LightGreen" />
+    </Style>
+</ResourceDictionary>

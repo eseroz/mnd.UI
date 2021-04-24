@@ -1,0 +1,320 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+            xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v18.2"
+             xmlns:converters="clr-namespace:Pandap.UI.Converters"
+             xmlns:siparisKalem="clr-namespace:Pandap.UI.AppModule.__SiparisKalem"
+             x:Class="Pandap.UI.AppModule.__SiparisKalem.KalemView"
+mc:Ignorable="d"
+x:Name="KalemUserControl"
+d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type siparisKalem:KalemViewModel}}"
+Visibility="{Binding IsVisible, Converter={dx:BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+    <UserControl.Resources>
+
+        <converters:AlasimRenkConverter x:Key="alasimRenkConverter" />
+        <converters:FormulRenkConverter x:Key="formulRenkConverter" />
+
+        <Style x:Key="GrpKalem" TargetType="{x:Type dxlc:GroupBox}">
+            <Setter Property="TitleVisibility" Value="Collapsed" />
+            <Setter Property="BorderThickness" Value="0.5" />
+        </Style>
+
+        <Style x:Key="GrpKalem1" TargetType="{x:Type dxlc:GroupBox}">
+            <Setter Property="TitleVisibility" Value="Collapsed" />
+            <Setter Property="BorderThickness" Value="0.4" />
+            <Setter Property="Background"
+                        Value="{Binding DataContext.SiparisKalem.AlasimTipKod, Converter={StaticResource alasimRenkConverter},
+            Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}" />
+        </Style>
+
+        <Style x:Key="col1" TargetType="{x:Type dxlc:LayoutItemLabel}">
+            <!--<Setter Property="Width" Value="70" />-->
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style TargetType="{x:Type dxlc:LayoutItem}">
+            <Setter Property="LabelHorizontalAlignment" Value="Right" />
+        </Style>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DialogService DialogWindowStartupLocation="CenterOwner" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <dxlc:LayoutControl View="GroupBox" Padding="0" HorizontalAlignment="Stretch" DataContext="{Binding SiparisKalem}" Header="Kalem Ekle/Düzenle">
+
+        <dxlc:LayoutGroup Width="540" Padding="-10,-8" Header="SolGrup" View="GroupBox" GroupBoxStyle="{StaticResource GrpKalem}" Orientation="Vertical">
+            <dxlc:LayoutGroup Header="Sol_alt1" Background="BurlyWood">
+                <dxlc:LayoutGroup Padding="-8,-8" ItemSpace="2" ItemLabelsAlignment="Local" Header="LME" View="GroupBox" Orientation="Vertical">
+                    <dxlc:LayoutItem LabelHorizontalAlignment="Right" Label="Tipi :">
+                        <dxe:ComboBoxEdit AutoComplete="True" AllowNullInput="True"
+                                        DisplayMember="Aciklama"
+                                        ValueMember="LmeTipKod"
+                        EditValue="{Binding LmeTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                        ItemsSource="{Binding DataContext.LmeTipleri, ElementName=KalemUserControl}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Bğlm.Tarih:" LabelHorizontalAlignment="Right">
+                        <dxe:DateEdit EditValue="{Binding LmeTarih}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Tutar:" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit EditValue="{Binding LmeTutar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+                <dxlc:LayoutGroup Padding="-8,-8" ItemSpace="2" ItemLabelsAlignment="Local" Header="Külçe Primi" View="GroupBox" Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Tipi :" LabelHorizontalAlignment="Right">
+                        <dxe:ComboBoxEdit AutoComplete="True" DisplayMember="Aciklama"
+                                        ValueMember="KulcePrimTipKod"
+                                        EditValue="{Binding KulcePrimTipKod}"
+                                        ItemsSource="{Binding DataContext.KulceTipleri, ElementName=KalemUserControl}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Bğlm.Tarih:" LabelHorizontalAlignment="Right">
+                        <dxe:DateEdit EditValue="{Binding KulceTarih}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Tutar" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit EditValue="{Binding KulceTutar, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+                <dxlc:LayoutGroup Padding="-8,-8" ItemSpace="2" ItemLabelsAlignment="Local" Header="İşçilik" View="GroupBox" Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Tutar:" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit EditValue="{Binding IscilikTutar, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Vade F.(%):" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit EditValue="{Binding IscilikVadeFarkiOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+                <dxlc:LayoutGroup Padding="-8,-8" ItemSpace="2" ItemLabelsAlignment="Local" Header="Birim" View="GroupBox" Orientation="Vertical">
+
+                    <dxlc:LayoutItem Label="Kdv O.:" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit Background="#FFEFEFF2" IsReadOnly="True" EditValue="{Binding KdvOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Birim Fiyat:" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit Background="#FFF0F0F0" IsReadOnly="True" EditValue="{Binding BirimFiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n3" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Miktar kg:" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit EditValue="{Binding Miktar_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Padding="-10,-10" Header="Sol_alt2" GroupBoxStyle="{StaticResource GrpKalem}" View="GroupBox">
+
+                <dxlc:LayoutItem Label="Toplam" Width="100" LabelPosition="Top" LabelHorizontalAlignment="Center" HorizontalAlignment="Center">
+                    <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding ToplamTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFF0F0F0" />
+                </dxlc:LayoutItem>
+
+                <dxlc:LayoutItem ToolTip="Toplam x İşçilik V.F. Oran" Label="İşç. V.F. Tutar" Width="100" LabelHorizontalAlignment="Center" LabelPosition="Top" HorizontalAlignment="Right">
+                    <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding IscilikVadeFarkiTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFEFEFF2" />
+                </dxlc:LayoutItem>
+
+                <dxlc:LayoutItem Width="100" LabelHorizontalAlignment="Center" Label="Kdv" LabelPosition="Top" HorizontalAlignment="Right">
+                    <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding KdvTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFEFEFF2" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem LabelHorizontalAlignment="Center" Label="Genel Toplam" Width="100" LabelPosition="Top" HorizontalAlignment="Right">
+                    <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding GenelToplamTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFEFEFF2" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutGroup Padding="-10,-8" Header="Kalem" GroupBoxStyle="{StaticResource GrpKalem}" View="GroupBox" Orientation="Horizontal">
+
+            <dxlc:LayoutGroup Padding="-8,-8" ItemSpace="2" GroupBoxStyle="{StaticResource GrpKalem1}"
+                            ItemLabelsAlignment="Local"
+                            Width="170" View="GroupBox" VerticalAlignment="Stretch" Orientation="Vertical">
+
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Ürün K:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit DisplayMember="UrunKod" ValueMember="UrunKod" AutoComplete="True"
+                                    EditValue="{Binding UrunKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                    ItemsSource="{Binding DataContext.Urunler,ElementName=KalemUserControl}" />
+                </dxlc:LayoutItem>
+
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Alaşım:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit AutoComplete="True"
+                                    DisplayMember="Aciklama" ValueMember="AlasimKod"
+
+                                    ItemsSource="{Binding DataContext.Alasimlar, ElementName=KalemUserControl}"
+                                    EditValue="{Binding AlasimTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                </dxlc:LayoutItem>
+
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Ambalaj:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit AutoComplete="True"
+                                    DisplayMember="Aciklama" ValueMember="AmbalajKod"
+                                    EditValue="{Binding AmbalajTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ItemsSource="{Binding DataContext.AmbalajTipleri,ElementName=KalemUserControl}" />
+                </dxlc:LayoutItem>
+
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Sertlik:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit AutoComplete="True"
+                                    DisplayMember="Aciklama" ValueMember="SertlikKod"
+                                    EditValue="{Binding SertlikTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                    ItemsSource="{Binding DataContext.SertlikTipleri, ElementName=KalemUserControl}" />
+                </dxlc:LayoutItem>
+
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Masura:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit AutoComplete="True"
+                                    DisplayMember="Aciklama" ValueMember="MasuraKod"
+                                    EditValue="{Binding MasuraTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                    ItemsSource="{Binding DataContext.MasuraTipleri, ElementName=KalemUserControl}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Kul.Alanı:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit AutoComplete="True"
+                                    DisplayMember="Aciklama" ValueMember="KullanimAlanKod"
+                                    EditValue="{Binding KullanimAlanTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                    ItemsSource="{Binding DataContext.KullanimAlanlari, ElementName=KalemUserControl}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Yüzey:" LabelHorizontalAlignment="Right">
+                    <dxe:ComboBoxEdit AutoComplete="True"
+                                    DisplayMember="Aciklama" ValueMember="YuzeyKod"
+                                    EditValue="{Binding YuzeyTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                    ItemsSource="{Binding DataContext.YuzeyTipleri, ElementName=KalemUserControl}" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutGroup Padding="-8,-8" ItemSpace="2" GroupBoxStyle="{StaticResource GrpKalem}" ItemLabelsAlignment="Local"
+                            Header="Satir3" View="GroupBox" VerticalAlignment="Stretch">
+                <dxlc:LayoutGroup HorizontalAlignment="Left" dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" VerticalAlignment="Stretch">
+                    <dxlc:LayoutGroup Width="150" HorizontalAlignment="Left" Header="Kalınlık μm(%-)(%+)" View="GroupBox">
+                        <dxlc:LayoutItem TabIndex="10" Width="50" LabelStyle="{StaticResource col1}" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="μm" EditValue="{Binding Kalinlik_micron, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Width="35" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        EditValue="{Binding KalinlikEksi_yuzde,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Width="35" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi}"
+                                        EditValue="{Binding KalinlikArti_yuzde,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Width="150" HorizontalAlignment="Left" Padding="0,0,0,0" Header="En (mm)   (-)     (+)" View="GroupBox">
+                        <dxlc:LayoutItem TabIndex="11" Width="50" LabelStyle="{StaticResource col1}" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mm"
+                                        EditValue="{Binding En_mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                        Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+
+                        <dxlc:LayoutItem Width="35" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mm"
+                                        IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        EditValue="{Binding EnEksi_mm,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                                        Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Width="35" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mm"
+                                        IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        EditValue="{Binding EnArti_mm,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                                        Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="Müş Ü.K.">
+                        <dxe:TextEdit EditValue="{Binding MusteriUrunKodu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup HorizontalAlignment="Left" dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" VerticalAlignment="Stretch">
+                    <dxlc:LayoutGroup Width="155" HorizontalAlignment="Left" Padding="0" Header="İç Çap ve Max.Ek" View="GroupBox">
+                        <dxlc:LayoutItem LabelStyle="{StaticResource col1}" LabelHorizontalAlignment="Right"
+                        HorizontalAlignment="Stretch">
+                            <dxe:TextEdit NullText="mm"
+                                        Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding RuloIcCap_mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="" EditValue="{Binding MaxEk}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
+                    <dxlc:LayoutGroup Width="155" HorizontalAlignment="Left" Header="Dışçap Min Max" View="GroupBox" Orientation="Horizontal">
+                        <dxlc:LayoutItem LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mm"
+                                        Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding RuloDiscapMin_mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
+                        </dxlc:LayoutItem>
+
+                        <dxlc:LayoutItem LabelStyle="{StaticResource col1}" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mm"
+                                        EditValue="{Binding RuloDiscapMax_mm,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutItem TabIndex="13" Label="G.Tip:" LabelHorizontalAlignment="Right">
+                        <dxe:ComboBoxEdit DisplayMember="Aciklama"
+                                        ValueMember="GumrukTipKod" EditValue="{Binding GumrukTipKod}"
+                                        ItemsSource="{Binding DataContext.GumrukTipleri,
+                                        ElementName=KalemUserControl}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup HorizontalAlignment="Left" dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+
+                    <dxlc:LayoutGroup Width="150" HorizontalAlignment="Left" Header="Rulo Ağır (min-max)" View="GroupBox" Orientation="Horizontal">
+                        <dxlc:LayoutItem LabelStyle="{StaticResource col1}" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="kg" EditValue="{Binding RuloAgirligiMin_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="kg" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding RuloAgirligiMax_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Width="150" HorizontalAlignment="Left" Header="Metraj        (-)  (+)" View="GroupBox">
+                        <dxlc:LayoutItem TabIndex="12" Width="50" LabelStyle="{StaticResource col1}" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mt" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding Metraj_mt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </dxlc:LayoutItem>
+
+                        <dxlc:LayoutItem Width="35" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mt" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding MetrajEksi_mt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Width="35" LabelHorizontalAlignment="Right"
+                        >
+                            <dxe:TextEdit NullText="mt" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                            EditValue="{Binding MetrajArti_mt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
+                    <dxlc:LayoutItem Visibility="Hidden" TabIndex="13" Label="xxxxx" LabelHorizontalAlignment="Right">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutGroup>
+    </dxlc:LayoutControl>
+</UserControl>

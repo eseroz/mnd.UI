@@ -1,0 +1,411 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules._SatisModule.KapasiteTakip.KapasiteTakipListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules._SatisModule.KapasiteTakip"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DataContext="{d:DesignInstance {x:Type local:KapasiteTakipListVM}}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportPivotService PivotNesne="{x:Reference pvt1}" />
+
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ToolBar
+            MinHeight="50"
+            ClipToBounds="False"
+            Style="{DynamicResource MaterialDesignToolBar}">
+
+
+
+            <Button
+                Padding="0"
+                Command="{Binding EkraniYenileCommand}"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Ekran Yenile" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Command="{Binding ExcelExportCommand}"
+                CommandParameter="XLSX"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Excele Aktar" />
+
+
+                </StackPanel>
+            </Button>
+
+            <TextBlock
+                x:Name="sumText"
+                MinWidth="100"
+                VerticalAlignment="Center"
+                Background="WhiteSmoke"
+                FontSize="14"
+                FontWeight="DemiBold" />
+
+
+        </ToolBar>
+
+
+        <TabControl Grid.Row="1" Margin="8">
+
+            <TabItem>
+
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="30"
+                                Height="35"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Kind="ChartBarStacked" />
+                            <TextBlock
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="Planlama Rapor" />
+                        </StackPanel>
+
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+
+                <dxpg:PivotGridControl
+                    x:Name="pvt1"
+                    Grid.Row="1"
+                    DataSource="{Binding Planlanacaklar}"
+                    FilterString="[SiparisDurum]=='MÜŞTERİ ONAYLI'"
+                    RowTreeWidth="115">
+                    <dxpg:PivotGridControl.Fields>
+
+                        <dxpg:PivotGridField
+                            Name="miktar_kg"
+                            Area="FilterArea"
+                            CellFormat="n0"
+                            FieldName="MiktarKg"
+                            ValueFormat="n0"
+                            Visible="False" />
+
+                        <dxpg:PivotGridField
+                            Name="kalite_red_miktar"
+                            Area="FilterArea"
+                            CellFormat="n0"
+                            FieldName="KaliteRedMiktar"
+                            ValueFormat="n0"
+                            Visible="False" />
+
+
+
+                        <dxpg:PivotGridField
+                            Name="paketlenen"
+                            Area="FilterArea"
+                            Caption="Paketlenen"
+                            CellFormat="n0"
+                            FieldName="PaketlenenMiktar"
+                            ValueFormat="n0"
+                            Visible="False" />
+                        <dxpg:PivotGridField
+                            Name="planlan"
+                            Area="FilterArea"
+                            Caption="Planlanan"
+                            CellFormat="n0"
+                            FieldName="PlanlananMiktar"
+                            ValueFormat="n0"
+                            Visible="False" />
+                        <dxpg:PivotGridField
+                            Name="teslimHafta"
+                            Area="FilterArea"
+                            FieldName="TeslimHafta"
+                            Visible="False" />
+
+
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="1"
+                            FieldName="MusteriAd" />
+
+
+
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="1"
+                            FieldName="SiparisDurum" />
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="0"
+                            Caption="Planlanacak"
+                            CellFormat="n0"
+                            FieldName="Bakiye"
+                            GrandTotalCellFormat="n0"
+                            ValueFormat="n0" />
+
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="1"
+                            Caption="KalemKod"
+                            FieldName="SiparisKalemKod" />
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="1"
+                            FieldName="Alasim" />
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="0"
+                            FieldName="KullanimAlani"
+                            FilterPopupMode="Legacy" />
+                        <dxpg:PivotGridField
+                            Area="DataArea"
+                            AreaIndex="0"
+                            Caption="Planlanacak"
+                            CellFormat="n0"
+                            FieldName="Bakiye"
+                            GrandTotalCellFormat="n0"
+                            ValueFormat="n0" />
+
+                        <dxpg:PivotGridField
+                            Name="u_y"
+                            Area="DataArea"
+                            AreaIndex="1"
+                            Caption="Üretimdeki M."
+                            CellFormat="n0"
+                            FieldName="UretimdeYuruyenMiktar"
+                            GrandTotalCellFormat="n0"
+                            ValueFormat="n0" />
+
+
+                        <dxpg:PivotGridField
+                            Name="t_u_y"
+                            Area="DataArea"
+                            AreaIndex="3"
+                            Caption="Toplam PU"
+                            CellFormat="n0"
+                            FieldName="ToplamPlanlanacakVeUretimdeki"
+                            GrandTotalCellFormat="n0"
+                            ValueFormat="n0" />
+
+                        <dxpg:PivotGridField
+                            Width="60"
+                            Area="FilterArea"
+                            AreaIndex="0"
+                            FieldName="SevkHafta" />
+
+
+
+                        <dxpg:PivotGridField
+                            Area="ColumnArea"
+                            AreaIndex="1"
+                            FieldName="KapasitifDurum" />
+
+                        <dxpg:PivotGridField
+                            Area="RowArea"
+                            AreaIndex="1"
+                            FieldName="SevkYilAy" />
+
+
+                    </dxpg:PivotGridControl.Fields>
+                </dxpg:PivotGridControl>
+
+            </TabItem>
+
+
+            <TabItem>
+
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="30"
+                                Height="35"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Kind="Calendar" />
+                            <TextBlock
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="Haftalık Kapasite" />
+                        </StackPanel>
+
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+
+                <dxpg:PivotGridControl
+                    x:Name="pvt2"
+                    Grid.Row="1"
+                    CellSelectionChanged="pvt2_CellSelectionChanged"
+                    DataProcessingEngine="Optimized"
+                    DataSource="{Binding Planlanacaklar}"
+                    FilterString="[SiparisDurum]=='MÜŞTERİ ONAYLI' And [KullanimAlani] In ('BURKAP')"
+                    RowTreeWidth="115">
+                    <dxpg:PivotGridControl.Fields>
+
+                        <dxpg:PivotGridField
+                            Name="miktar_kg1"
+                            Area="FilterArea"
+                            CellFormat="n0"
+                            FieldName="MiktarKg"
+                            ValueFormat="n0"
+                            Visible="False" />
+
+                        <dxpg:PivotGridField
+                            Name="kalite_red_miktar1"
+                            Area="FilterArea"
+                            CellFormat="n0"
+                            FieldName="KaliteRedMiktar"
+                            ValueFormat="n0"
+                            Visible="False" />
+
+
+
+                        <dxpg:PivotGridField
+                            Name="paketlenen1"
+                            Area="FilterArea"
+                            Caption="Paketlenen"
+                            CellFormat="n0"
+                            FieldName="PaketlenenMiktar"
+                            ValueFormat="n0"
+                            Visible="False" />
+                        <dxpg:PivotGridField
+                            Name="planlan1"
+                            Area="FilterArea"
+                            Caption="Planlanan"
+                            CellFormat="n0"
+                            FieldName="PlanlananMiktar"
+                            ValueFormat="n0"
+                            Visible="False" />
+                        <dxpg:PivotGridField
+                            Name="teslimHafta1"
+                            Area="FilterArea"
+                            FieldName="TeslimHafta"
+                            Visible="False" />
+
+
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="1"
+                            FieldName="MusteriAd" />
+
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="3"
+                            FieldName="SiparisDurum" />
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="0"
+                            Caption="Planlanacak"
+                            CellFormat="n0"
+                            FieldName="Bakiye"
+                            GrandTotalCellFormat="n0"
+                            ValueFormat="n0" />
+
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="4"
+                            Caption="KalemKod"
+                            FieldName="SiparisKalemKod" />
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="5"
+                            FieldName="Alasim" />
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="2"
+                            FieldName="KullanimAlani"
+                            FilterPopupMode="Default" />
+
+                        <dxpg:PivotGridField
+                            x:Name="t_u_y1"
+                            Area="DataArea"
+                            AreaIndex="0"
+                            Caption="Toplam"
+                            CellFormat="n0"
+                            FieldName="ToplamPlanlanacakVeUretimdeki"
+                            GrandTotalCellFormat="n0"
+                            ValueFormat="n0" />
+
+                        <dxpg:PivotGridField
+                            Area="FilterArea"
+                            AreaIndex="6"
+                            FieldName="KapasitifDurum" />
+
+
+                        <dxpg:PivotGridField
+                            Area="DataArea"
+                            AreaIndex="1"
+                            CellFormat="n0"
+                            FieldName="HaftalikTonaj"
+                            GrandTotalCellFormat="n0"
+                            SummaryType="Max"
+                            ValueFormat="n0" />
+
+
+                        <dxpg:PivotGridField
+                            x:Name="kalanKapasite"
+                            Area="DataArea"
+                            AreaIndex="2"
+                            Caption="Kalan Kapasite"
+                            CellFormat="n0"
+                            GrandTotalCellFormat="n0"
+                            UnboundExpression="max([HaftalikTonaj])- sum([ToplamPlanlanacakVeUretimdeki])"
+                            UnboundExpressionMode="UseSummaryValues"
+                            UnboundFieldName="fieldFullName"
+                            UnboundType="Integer"
+                            ValueFormat="n0" />
+
+
+                        <dxpg:PivotGridField
+                            Area="RowArea"
+                            AreaIndex="0"
+                            FieldName="SevkHafta" />
+
+
+                    </dxpg:PivotGridControl.Fields>
+                </dxpg:PivotGridControl>
+
+
+            </TabItem>
+
+         
+
+        </TabControl>
+
+
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,16 @@
+﻿ <ResourceDictionary Source="GyModules/MesajModule/DxGridStyles.xaml" />
+
+ DxGridStyles içerisinde appmesaj yolunu değiştir.
+
+ <dxg:GridColumn Width="145" Style="{StaticResource MesajKolon}" FieldName="MesajSayisi" Header="Mesaj1" />
+
+
+ mesaj takip edilecek entity sutunları
+ 
+public Guid RowGuid { get; set; }
+
+[NotMapped]
+public int MesajSayisi { get => _mesajSayisi; set => SetProperty(ref _mesajSayisi, value); }
+
+[NotMapped]
+public int OkunmamisMesajSayisi { get => _okunmamisMesajSayisi; set => SetProperty(ref _okunmamisMesajSayisi, value); }

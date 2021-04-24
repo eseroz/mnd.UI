@@ -1,0 +1,100 @@
+﻿<Window x:Class="mnd.UI.Modules._DialogViews.StokSecimDialog.StokListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.Modules._DialogViews.StokSecimDialog"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+          xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d" 
+             WindowStartupLocation="CenterScreen"
+             d:DataContext="{d:DesignInstance Type=local:StokListViewModel}"
+             d:DesignHeight="450" Width="903.2">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService ClosingCommand="{Binding FormClosingCommand}" />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding YeniCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon  VerticalAlignment="Center" Kind="FileDocument" />
+                        <TextBlock Margin="4 0 0 0" VerticalAlignment="Center"  Text="Kapat" />
+                    </StackPanel>
+                </Button>
+
+              
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Margin="5"
+            VerticalAlignment="Stretch"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+            Padding="5">
+            <dxg:GridControl ItemsSource="{Binding StokTanimlar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumnHeader">
+                        <Setter Property="Background" Value="#FF673AB7"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+                    </Style>
+
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="HorizontalHeaderContentAlignment" Value="Center"/>
+                    </Style>
+
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="StokKod" SummaryType="Count"/>
+                </dxg:GridControl.TotalSummary>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="View1" AllowPerPixelScrolling="True" AutoWidth="True"  NewItemRowPosition="Bottom"
+                                   ShowAutoFilterRow="True" ShowGroupPanel="False" ShowTotalSummary="True">
+
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn Width="80" Header="Seç" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding View.DataContext.SecCommand}" 
+                                CommandParameter="{Binding RowData.Row}"
+                                Width="auto" Style="{x:Null}" Cursor="Hand" Margin="8,4,16,8" Content="Seç"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                </dxg:GridColumn>
+
+                <dxg:GridColumn AutoFilterCriteria="Contains" Width="100" FieldName="STOK_KODU" IsSmart="True"/>
+                <dxg:GridColumn AutoFilterCriteria="Contains" Width="200" Header="Stok Ad" FieldName="STOKADI_TR" IsSmart="True"/>
+
+                <dxg:GridColumn AutoFilterCriteria="Contains" Width="100" FieldName="GRUP_AD" Header="Stok Grup Ad" IsSmart="True"/>
+       
+
+                <dxg:GridColumn AutoFilterCriteria="Contains" Width="100" FieldName="OLCU_BR1" IsSmart="True"/>
+                <dxg:GridColumn ReadOnly="True"  Width="100" FieldName="BAKIYE" IsSmart="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings  DisplayFormat="n2" MaskUseAsDisplayFormat="True"   />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+
+
+            </dxg:GridControl>
+        </materialDesign:Card>
+    </Grid>
+</Window>

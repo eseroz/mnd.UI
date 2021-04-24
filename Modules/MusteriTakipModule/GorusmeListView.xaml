@@ -1,0 +1,289 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.MusteriTakipModule.GorusmeListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.MusteriTakipModule"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uiControls="clr-namespace:mnd.UI.MyControls.UI_Controls"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
+                                     Type={x:Type local:GorusmeListViewModel}}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportService View="{x:Reference View1}" />
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <UserControl.Resources>
+        <converters:ImageFromAssemblyConverter x:Key="ImageFromAssemblyCnv" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <uiControls:Loading
+            Grid.RowSpan="2"
+            Panel.ZIndex="100"
+            controlHelpers:VisibilityHelpler.IsVisible="{Binding IsLoading, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar
+                MinHeight="50"
+                ClipToBounds="False"
+                Style="{DynamicResource MaterialDesignToolBar}">
+
+                <Separator />
+
+                <Button
+                    Command="{Binding YeniGorusmeEkleCommand}"
+                    IsDefault="True"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileAccount" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yeni Görüşme" />
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding EkranYenileCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yenile" />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    Command="{Binding ExcelExportCommand}"
+                    CommandParameter="XLSX"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Excele Aktar" />
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding YerlesimKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Barcode" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yerleşim Kaydet" />
+                    </StackPanel>
+                </Button>
+
+
+
+
+
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Margin="5"
+            Padding="5"
+            VerticalAlignment="Stretch"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+            <dxg:GridControl ItemsSource="{Binding Gorusmeler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SeciliGorusme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <dxg:GridControl.Resources>
+                    <Style TargetType="{x:Type dxg:GridColumn}">
+                        <Setter Property="ReadOnly" Value="False" />
+                    </Style>
+                </dxg:GridControl.Resources>
+
+
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        x:Name="View1"
+                        AllowPerPixelScrolling="True"
+                        AutoWidth="True"
+                        NewItemRowPosition="None"
+                        ShowAutoFilterRow="True"
+                        ShowGroupPanel="False"
+                        ShowTotalSummary="True">
+
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Height="35"
+                                    Margin="0,-4"
+                                    HorizontalAlignment="Center"
+                                    Text="{Binding ''}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+
+
+
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+
+                <dxg:GridColumn
+                    Width="25"
+                    MaxWidth="25"
+                    AutoFilterCriteria="Contains"
+                    FilterPopupMode="Excel"
+                    Header="#"
+                    ReadOnly="True">
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Width="25"
+                                Height="25"
+                                MaxWidth="25"
+                                Margin="2"
+                                Padding="0"
+                                Background="Transparent"
+                                Command="{Binding View.DataContext.DuzenleCommand}"
+                                CommandParameter="{Binding RowData.Row}"
+                                Style="{x:Null}">
+
+                                <materialDesign:PackIcon VerticalAlignment="Center" Kind="Magnify" />
+
+                            </Button>
+
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    Width="45"
+                    FieldName="GorusmeTarih"
+                    FilterPopupMode="Excel"
+                    Header="Görüşme Tarihi" />
+
+
+
+                <dxg:GridColumn
+                    Width="200"
+                    MinWidth="140"
+                    AutoFilterCondition="Contains"
+                    FieldName="CariIsim"
+                    FilterPopupMode="Excel"
+                    Header="Müşteri">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="24" Source="{Binding RowData.Row.UlkeKod, Converter={StaticResource ImageFromAssemblyCnv}, ConverterParameter='Binding  RowData.Row'}" />
+                                <TextBlock Padding="2" Text="{Binding RowData.Row.CariIsim}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    Width="40"
+                    FilterPopupMode="Excel"
+                    Header="Görüşülen Kişi"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" EditValue="{Binding RowData.Row.GorusulenKisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    Width="50"
+                    FilterPopupMode="Excel"
+                    Header="Görüşme Konusu"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" EditValue="{Binding RowData.Row.GorusmeKonuTip.Ad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    Width="35"
+                    FieldName="GorusmeTip.Ad"
+                    FilterPopupMode="Excel"
+                    Header="Görüşme Tip"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit x:Name="PART_Editor" EditValue="{Binding RowData.Row.GorusmeTip.Ad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    Width="40"
+                    FieldName="KullanimAlanTipKod"
+                    FilterPopupMode="Excel"
+                    Header="K. Alanı"
+                    IsSmart="True" />
+
+                <dxg:GridColumn
+                    Width="100"
+                    FieldName="GorusmeDetay"
+                    FilterPopupMode="Excel"
+                    Header="Detay"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit
+                                x:Name="PART_Editor"
+                                Height="20"
+                                MaxHeight="20"
+                                VerticalContentAlignment="Top"
+                                EditValue="{Binding RowData.Row.GorusmeDetay}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    Width="30"
+                    FieldName="Ekleyen"
+                    FilterPopupMode="Excel"
+                    Header="Ekleyen"
+                    IsSmart="True" />
+
+                <dxg:GridColumn
+                    Width="50"
+                    MinWidth="50"
+                    MaxWidth="50"
+                    FieldName="MesajSayisi"
+                    Header="Mesaj"
+                    Style="{StaticResource MesajKolon}" />
+
+                <dxg:GridColumn
+                    Width="50"
+                    FieldName="MusteriCariKod"
+                    FilterPopupMode="Excel"
+                    Visible="False" />
+
+
+            </dxg:GridControl>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

@@ -1,0 +1,899 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.PlanlamaModule.KartVerimListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DataContext="{d:DesignInstance {x:Type local:KartVerimListVM}}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportService x:Name="servis1" View="{x:Reference View1}" />
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <UserControl.Resources>
+        <dxg:DefaultStyle x:Key="{dxgt:GridRowThemeKey ResourceKey=RowStyle}" TargetType="{x:Type dxg:GridRowContent}">
+            <Setter Property="dxg:GridRowContent.Background" Value="{DynamicResource {dxgt:GridRowThemeKey ResourceKey=BorderNoneBrush}}" />
+            <Setter Property="dxg:GridRowContent.Foreground" Value="{DynamicResource {dxgt:GridRowThemeKey ResourceKey=TextUnfocusedBrush}}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=AlternateRow}" Value="True">
+                    <Setter Property="dxg:GridRowContent.Background" Value="{Binding Path=View.ActualAlternateRowBackground}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=SelectionState}" Value="Selected">
+                    <Setter Property="dxg:GridRowContent.Background" Value="{DynamicResource {dxgt:GridRowThemeKey ResourceKey=BorderSelectedBrush}}" />
+                    <Setter Property="TextBlock.Foreground" Value="{DynamicResource {dxgt:GridRowThemeKey ResourceKey=TextRowSelectedBrush}}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=SelectionState}" Value="Focused">
+                    <Setter Property="TextBlock.Foreground" Value="{DynamicResource {dxgt:GridRowThemeKey ResourceKey=TextFocusedBrush}}" />
+                    <Setter Property="dxg:GridRowContent.Background" Value="{DynamicResource {dxgt:GridRowThemeKey ResourceKey=BorderFocusedBrush}}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </dxg:DefaultStyle>
+
+        <DataTemplate x:Key="ctemplate1">
+            <Border
+                Name="br1"
+                Margin="4"
+                Background="Transparent"
+                BorderBrush="Green"
+                BorderThickness="1"
+                CornerRadius="2">
+                <dxe:TextEdit
+                    Name="PART_Editor"
+                    HorizontalContentAlignment="Center"
+                    dx:ThemeManager.ThemeName="XXX" />
+            </Border>
+
+            <DataTemplate.Triggers>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=RowData.Row.UretimEmriKod}" Value="" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="br1" Property="BorderBrush" Value="Transparent" />
+                    <Setter TargetName="br1" Property="BorderThickness" Value="0" />
+                    <Setter TargetName="br1" Property="Margin" Value="10" />
+                    <Setter TargetName="br1" Property="Background" Value="Transparent" />
+                </MultiDataTrigger>
+
+                <DataTrigger Binding="{Binding Path=RowData.IsSelected}" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Foreground" Value="Red" />
+                    <Setter TargetName="br1" Property="Background" Value="White" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar
+                MinHeight="50"
+                ClipToBounds="False"
+                Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding YerlesimKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon VerticalAlignment="Center" Kind="Barcode" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yerleşim Kaydet" />
+                    </StackPanel>
+                </Button>
+
+
+                <Button
+                    Padding="0"
+                    Command="{Binding EkranYenileCommand}"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yenile" />
+                    </StackPanel>
+                </Button>
+
+
+
+                <Button
+                    Command="{Binding ExcelExportCommand}"
+                    CommandParameter="XLSX"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Excele Aktar" />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    Command="{Binding HesapDetayCommand}"
+                    CommandParameter="XLSX"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="Green"
+                            Kind="Information" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Hesaplama Yöntemi" />
+                    </StackPanel>
+                </Button>
+
+
+
+
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <md:Card
+            Grid.Row="1"
+            Margin="5"
+            Padding="5"
+            VerticalAlignment="Stretch"
+            md:ShadowAssist.ShadowDepth="Depth1">
+
+            <TabControl>
+                <TabItem>
+
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Kind="ChartAreaspline" />
+                                <TextBlock
+                                    Padding="5"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Text="Verim Tablosu" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+
+                    <dxpg:PivotGridControl
+                        x:Name="pvt1"
+                        Grid.Row="1"
+                        BestFitArea="FieldHeader"
+                        BestFitMode="Smart"
+                        CopyToClipboardWithFieldValues="True"
+                        DataFieldHeight="45"
+                        DataSource="{Binding AnakartVerimDTO_TamamlananlarListe}"
+                        FieldHeight="35"
+                        RowTreeWidth="115"
+                        ShowColumnGrandTotalHeader="False"
+                        ShowRowGrandTotalHeader="False"
+                        ShowRowGrandTotals="False">
+
+
+                        <dxpg:PivotGridControl.FieldValueTemplate>
+                            <DataTemplate>
+                                <dxe:TextEdit
+                                    MaxWidth="{Binding ActualWidth}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    EditMode="InplaceInactive"
+                                    EditValue="{Binding DisplayText, Mode=OneWay}"
+                                    FontWeight="DemiBold"
+                                    Foreground="{Binding Foreground}"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxpg:PivotGridControl.FieldValueTemplate>
+                        <dxpg:PivotGridControl.Fields>
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldAnaKartTamamlanmaTarihi"
+                                Area="FilterArea"
+                                Caption="Tamamlanma_Tarihi"
+                                FieldName="AnaKart_Tamamlanma_Tarihi" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldAnaKartNo"
+                                Area="FilterArea"
+                                Caption="Ana Kart No"
+                                FieldName="AnaKartNo" />
+
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldAnakartTamamlanmaYilAy"
+                                Area="RowArea"
+                                Caption="Ay"
+                                FieldName="AnakartTamamlanmaYilAy" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldAnakartTamamlanmaYilHafta"
+                                Area="RowArea"
+                                Caption="Hafta"
+                                FieldName="AnakartTamamlanmaYilHafta" />
+
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldKullanimAlanUrunGrup"
+                                Area="FilterArea"
+                                Caption="Kullanim Alan Urun Grup"
+                                FieldName="KullanimAlanUrunGrup" />
+
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldDokumMiktarikg"
+                                Width="80"
+                                Area="DataArea"
+                                AreaIndex="1"
+                                Caption="Döküm Miktarı"
+                                CellFormat="n0"
+                                FieldName="Dokum_Miktari_kg" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldAnakart_Toplam_Paket_Miktar_kg"
+                                Width="80"
+                                Area="DataArea"
+                                AreaIndex="2"
+                                Caption="Toplam Paketlenen"
+                                CellFormat="n0"
+                                FieldName="Anakart_Toplam_Paket_Miktar_kg" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldKV_WAvg"
+                                Width="80"
+                                Area="DataArea"
+                                AreaIndex="3"
+                                Caption="Kombin Verimi %"
+                                CellFormat="n1"
+                                GrandTotalCellFormat="n1"
+                                UnboundExpression="100*sum([Kombin_Verimi_yuzde]* [Dokum_Miktari_kg])/ sum([Dokum_Miktari_kg])"
+                                UnboundExpressionMode="UseSummaryValues"
+                                UnboundFieldName="fieldFullName"
+                                UnboundType="Decimal"
+                                ValueFormat="n1" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldKF_WAvg"
+                                Width="80"
+                                Area="DataArea"
+                                AreaIndex="4"
+                                Caption="Kombin Fire %"
+                                CellFormat="n1"
+                                GrandTotalCellFormat="n1"
+                                UnboundExpression="100*sum([Kombin_Fire_yuzde]* [Dokum_Miktari_kg])/ sum([Dokum_Miktari_kg])"
+                                UnboundExpressionMode="UseSummaryValues"
+                                UnboundFieldName="fieldFullName"
+                                UnboundType="Decimal" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldGF_WAvg"
+                                Width="80"
+                                Area="DataArea"
+                                AreaIndex="5"
+                                Caption="Geometrik Fire %"
+                                CellFormat="n1"
+                                GrandTotalCellFormat="n1"
+                                UnboundExpression="100*sum([Geometrik_Fire_yuzde]* [Dokum_Miktari_kg])/ sum([Dokum_Miktari_kg])"
+                                UnboundExpressionMode="UseSummaryValues"
+                                UnboundFieldName="fieldFullName"
+                                UnboundType="Decimal"
+                                ValueFormat="n1" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldIF_WAvg"
+                                Width="80"
+                                Area="DataArea"
+                                AreaIndex="6"
+                                Caption="İşletme Fire %"
+                                CellFormat="n1"
+                                GrandTotalCellFormat="n1"
+                                UnboundExpression="100*sum([Isletme_Fire_yuzde]* [Dokum_Miktari_kg])/ sum([Dokum_Miktari_kg])"
+                                UnboundExpressionMode="UseSummaryValues"
+                                UnboundFieldName="fieldFullName"
+                                UnboundType="Decimal" />
+
+                            <dxpg:PivotGridField
+                                x:Name="fieldGV_WAvg"
+                                Width="80"
+                                Height="100"
+                                Area="DataArea"
+                                AreaIndex="7"
+                                Caption="Genel Verim %"
+                                CellFormat="n1"
+                                GrandTotalCellFormat="n1"
+                                UnboundExpression="100*sum([Genel_Verim_Yuzde]* [Dokum_Miktari_kg])/ sum([Dokum_Miktari_kg])"
+                                UnboundExpressionMode="UseSummaryValues"
+                                UnboundFieldName="fieldFullName"
+                                UnboundType="Decimal" />
+
+                        </dxpg:PivotGridControl.Fields>
+                    </dxpg:PivotGridControl>
+                </TabItem>
+                <TabItem>
+
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Kind="NewspaperVariantMultiple" />
+                                <TextBlock
+                                    Padding="5"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Text="Tüm Kartlar" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+
+                    <dxg:GridControl
+                        AllowLiveDataShaping="True"
+                        ItemsSource="{Binding AnakartVerimDTO_Liste, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SeciliKayit}">
+
+                        <dxg:GridControl.TotalSummary>
+                            <dxg:GridSummaryItem
+                                Alignment="Default"
+                                FieldName="AnaKartNo"
+                                SummaryType="Count" />
+
+
+
+
+                        </dxg:GridControl.TotalSummary>
+
+                        <dxg:GridControl.Resources>
+                            <Style TargetType="dxg:GridColumnHeader">
+                                <Setter Property="Background" Value="#FF673AB7" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Height" Value="60" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                            </Style>
+
+                            <Style x:Key="AnakartYuzdeColumn" TargetType="dxg:GridColumnHeader">
+                                <Setter Property="Background" Value="#FF371377" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Height" Value="60" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                            </Style>
+
+
+                            <Style TargetType="dxg:GridColumn">
+                                <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                            </Style>
+
+                        </dxg:GridControl.Resources>
+
+                        <dxg:GridControl.View>
+                            <dxg:TableView
+                                x:Name="View1"
+                                AllowPerPixelScrolling="True"
+                                AlternateRowBackground="WhiteSmoke"
+                                AutoWidth="True"
+                                FontSize="13"
+                                NewItemRowPosition="None"
+                                RowMinHeight="40"
+                                ShowAutoFilterRow="True"
+                                ShowGroupPanel="False"
+                                ShowTotalSummary="True"
+                                ShowVerticalLines="False">
+                                <dxg:TableView.FormatConditions>
+                                    <dxg:IconSetFormatCondition FieldName="AnakartTamamlanmaYuzde" PredefinedFormatName="Boxes5IconSet" />
+                                </dxg:TableView.FormatConditions>
+
+                                <dxg:TableView.ColumnHeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            VerticalAlignment="Stretch"
+                                            FontWeight="DemiBold"
+                                            Text="{Binding}"
+                                            TextAlignment="Center"
+                                            TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </dxg:TableView.ColumnHeaderTemplate>
+
+
+
+
+                            </dxg:TableView>
+                        </dxg:GridControl.View>
+
+
+                        <dxg:GridColumn
+                            Width="90"
+                            AutoFilterCriteria="Contains"
+                            FieldName="AnaKartNo"
+                            Header="Ana Kart No" />
+
+                        <dxg:GridColumn FieldName="AnakartBaslamaTarihi" Header="Başlama Tarihi" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            FieldName="AnaKart_Tamamlanma_Tarihi"
+                            Header="Tamamlanma Tarihi"
+                            ReadOnly="True" />
+
+
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            FieldName="KullanimAlanUrunGrup"
+                            Header="Ürün Grup"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            FieldName="AnakartTamamlanmaYuzde"
+                            Header="Tamamlanma %"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            FieldName="AnakartTamamlanmaYilHafta"
+                            Header="Tamamlanma Hafta"
+                            ReadOnly="True">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <dxe:TextEdit
+                                        x:Name="PART_Editor"
+                                        HorizontalAlignment="Center"
+                                        DisplayFormatString="p0"
+                                        FontWeight="DemiBold"
+                                        Foreground="Red"
+                                        IsReadOnly="True" />
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                            FieldName="Anakart_Toplam_Paket_Miktar_kg"
+                            Header="Toplam Paketlenen (kg)"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                            FieldName="Dokum_Miktari_kg"
+                            Header="Döküm Miktarı (kg)"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            Width="120"
+                            EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                            FieldName="DokumEni_mm"
+                            Header="Döküm Eni (mm)"
+                            ReadOnly="True" />
+
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                            FieldName="Kombin_Eni_AgirOrt_mm"
+                            Header="Kombin Eni WA (mm)"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                            FieldName="Kombin_Max_Eni_Agir_Ort_mm"
+                            Header="Kombin Max Eni  (mm)"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=p1}"
+                            FieldName="Kombin_Verimi_yuzde"
+                            Header="Kombin Verimi %"
+                            HeaderStyle="{StaticResource AnakartYuzdeColumn}"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=p1}"
+                            FieldName="Kombin_Fire_yuzde"
+                            Header="Kombin Fire %"
+                            HeaderStyle="{StaticResource AnakartYuzdeColumn}"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=p1}"
+                            FieldName="Geometrik_Fire_yuzde"
+                            Header="Geometrik Fire %"
+                            HeaderStyle="{StaticResource AnakartYuzdeColumn}"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=p1}"
+                            FieldName="Isletme_Fire_yuzde"
+                            Header="Isletme Fire %"
+                            HeaderStyle="{StaticResource AnakartYuzdeColumn}"
+                            ReadOnly="True" />
+
+                        <dxg:GridColumn
+                            AutoFilterCriteria="Contains"
+                            EditSettings="{dxe:TextSettings DisplayFormat=p1}"
+                            FieldName="Genel_Verim_Yuzde"
+                            Header="Genel Verim %"
+                            HeaderStyle="{StaticResource AnakartYuzdeColumn}">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <dxe:TextEdit
+                                        x:Name="PART_Editor"
+                                        HorizontalAlignment="Center"
+                                        DisplayFormatString="p1"
+                                        FontWeight="Bold"
+                                        Foreground="Red"
+                                        IsReadOnly="True" />
+
+
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+
+                        <dxg:GridControl.DetailDescriptor>
+                            <dxg:DataControlDetailDescriptor ItemsSourcePath="KartListe">
+                                <dxg:GridControl
+                                    Width="500"
+                                    MaxHeight="300"
+                                    Margin="5"
+                                    ShowBorder="True">
+
+                                    <dxg:GridControl.TotalSummary>
+
+
+                                        <dxg:GridSummaryItem
+                                            Alignment="Default"
+                                            DisplayFormat="n0"
+                                            FieldName="PlanlananMiktar"
+                                            SummaryType="Sum" />
+
+                                        <dxg:GridSummaryItem
+                                            Alignment="Default"
+                                            DisplayFormat="n0"
+                                            FieldName="KombinMiktari_kg"
+                                            SummaryType="Sum" />
+
+
+                                    </dxg:GridControl.TotalSummary>
+
+                                    <dxg:GridControl.Resources>
+                                        <Style
+                                            x:Key="uretimKartHeaderStyle"
+                                            BasedOn="{StaticResource {x:Type dxg:GridColumnHeader}}"
+                                            TargetType="dxg:GridColumnHeader">
+
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Opacity="0.8" Color="Black" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Height" Value="50" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                                        </Style>
+
+                                        <Style
+                                            x:Key="uretimKartHeaderHesapStyle"
+                                            BasedOn="{StaticResource {x:Type dxg:GridColumnHeader}}"
+                                            TargetType="dxg:GridColumnHeader">
+
+                                            <Setter Property="Background" Value="Black" />
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Height" Value="50" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                                        </Style>
+                                    </dxg:GridControl.Resources>
+
+
+
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView
+                                            AutoWidth="True"
+                                            IsDetailButtonVisibleBinding="{DXBinding 'Row.KartPlanlamaRulolari.Count > 0'}"
+                                            RowMinHeight="40"
+                                            ShowAutoFilterRow="False"
+                                            ShowGroupPanel="False"
+                                            ShowTotalSummary="True">
+
+                                            <dxg:TableView.ColumnHeaderTemplate>
+                                                <DataTemplate>
+                                                    <Grid Background="Transparent">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Stretch"
+                                                            FontWeight="SemiBold"
+                                                            Text="{Binding ''}"
+                                                            TextAlignment="Center"
+                                                            TextWrapping="Wrap" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </dxg:TableView.ColumnHeaderTemplate>
+                                        </dxg:TableView>
+                                    </dxg:GridControl.View>
+
+                                    <dxg:GridColumn
+                                        Width="80"
+                                        FieldName="KapatildiMi"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+                                    <dxg:GridColumn
+                                        Width="80"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=d}"
+                                        FieldName="EklenmeTarih"
+                                        Header="Başlama Tar."
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+                                    <dxg:GridColumn
+                                        Width="80"
+                                        FieldName="KapatilmaTarihi"
+                                        Header="Kapatılma Tar."
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="90"
+                                        FieldName="KartNo"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+                                    <dxg:GridColumn
+                                        Width="130"
+                                        FieldName="UretimEmriKod"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="130"
+                                        FieldName="KullanimAlanUrunGrup"
+                                        Header="Kullanım Urun Grup"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="130"
+                                        FieldName="MusteriAd"
+                                        Header="MusteriAd"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="130"
+                                        FieldName="Kalinlik"
+                                        Header="Kalinlik"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="130"
+                                        FieldName="En"
+                                        Header="En"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="100"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                        FieldName="PlanlananMiktar"
+                                        Header="Planlanan"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+                                    <dxg:GridColumn
+                                        Width="100"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                        FieldName="PaketlenenMiktar"
+                                        Header="Paketlenen"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}" />
+
+                                    <dxg:GridColumn
+                                        Name="kombinler"
+                                        Width="200"
+                                        FieldName="Kombinler"
+                                        Header="Kombinler"
+                                        HeaderStyle="{StaticResource uretimKartHeaderStyle}">
+                                        <dxg:GridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <dxe:TextEdit
+                                                    x:Name="PART_Editor"
+                                                    IsReadOnly="True"
+                                                    TextWrapping="Wrap" />
+
+
+                                            </DataTemplate>
+                                        </dxg:GridColumn.CellTemplate>
+                                    </dxg:GridColumn>
+
+
+
+                                    <dxg:GridColumn
+                                        Width="100"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                        FieldName="KombinlerEnToplam"
+                                        HeaderStyle="{StaticResource uretimKartHeaderHesapStyle}"
+                                        ReadOnly="True" />
+
+
+
+                                    <dxg:GridColumn
+                                        Width="100"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                        FieldName="DokumMiktari_kg"
+                                        Header="Döküm Miktarı (kg)"
+                                        HeaderStyle="{StaticResource uretimKartHeaderHesapStyle}"
+                                        ReadOnly="True" />
+
+                                    <dxg:GridColumn
+                                        Width="100"
+                                        CellTemplate="{StaticResource ctemplate1}"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                        FieldName="MaxKombinEni"
+                                        HeaderStyle="{StaticResource uretimKartHeaderHesapStyle}" />
+
+                                    <dxg:GridColumn
+                                        Width="100"
+                                        CellTemplate="{StaticResource ctemplate1}"
+                                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                        FieldName="KombinMiktari_kg"
+                                        Header="Kombin Miktarı (kg)"
+                                        HeaderStyle="{StaticResource uretimKartHeaderHesapStyle}" />
+
+                                    <dxg:GridColumn HeaderStyle="{StaticResource uretimKartHeaderHesapStyle}" IsSmart="True">
+
+                                        <dxg:GridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Width="50"
+                                                    Margin="2"
+                                                    Padding="0"
+                                                    md:ColorZoneAssist.Mode="PrimaryLight"
+                                                    Command="{Binding DataContext.SatirGuncelleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding RowData.Row}"
+                                                    Content="Güncelle"
+                                                    FontSize="10"
+                                                    Style="{StaticResource MaterialDesignRaisedAccentButton}" />
+                                            </DataTemplate>
+                                        </dxg:GridColumn.CellTemplate>
+                                    </dxg:GridColumn>
+
+
+                                    <dxg:GridControl.DetailDescriptor>
+                                        <dxg:DataControlDetailDescriptor ItemsSourcePath="KartPlanlamaRulolari">
+                                            <dxg:GridControl MaxHeight="300" Margin="5">
+
+                                                <dxg:GridControl.Resources>
+                                                    <Style
+                                                        x:Key="ruloSitil"
+                                                        BasedOn="{StaticResource {x:Type dxg:GridColumnHeader}}"
+                                                        TargetType="dxg:GridColumnHeader">
+                                                        <Setter Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Opacity="0.6" Color="Black" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="Foreground" Value="WhiteSmoke" />
+                                                        <Setter Property="Height" Value="50" />
+                                                        <Setter Property="FontWeight" Value="Bold" />
+                                                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                                                    </Style>
+                                                </dxg:GridControl.Resources>
+
+                                                <dxg:GridControl.View>
+                                                    <dxg:TableView
+                                                        RowMinHeight="40"
+                                                        ShowAutoFilterRow="False"
+                                                        ShowGroupPanel="False">
+                                                        <dxg:TableView.ColumnHeaderTemplate>
+                                                            <DataTemplate>
+                                                                <Grid Background="Transparent">
+                                                                    <TextBlock
+                                                                        HorizontalAlignment="Stretch"
+                                                                        FontWeight="SemiBold"
+                                                                        Text="{Binding ''}"
+                                                                        TextAlignment="Center"
+                                                                        TextWrapping="Wrap" />
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </dxg:TableView.ColumnHeaderTemplate>
+                                                    </dxg:TableView>
+
+                                                </dxg:GridControl.View>
+
+                                                <dxg:GridColumn
+                                                    Width="60"
+                                                    FieldName="Id"
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+
+                                                <dxg:GridColumn
+                                                    Width="100"
+                                                    FieldName="BaslangicNo_kg"
+                                                    Header="Başlangıç No"
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+                                                <dxg:GridColumn
+                                                    Width="100"
+                                                    FieldName="BaslangicEni_mm"
+                                                    Header="Başlangıç Eni"
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+
+                                                <dxg:GridColumn
+                                                    Width="100"
+                                                    FieldName="DokmeRuloNo"
+                                                    Header="Dökme Rulo No"
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+                                                <dxg:GridColumn
+                                                    Width="100"
+                                                    FieldName="PlanlamaRuloNo"
+                                                    Header="Planlama Rulo No"
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+
+                                                <dxg:GridColumn
+                                                    Width="100"
+                                                    CellTemplate="{StaticResource ctemplate1}"
+                                                    EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                                    FieldName="DokmeRuloAgirligi_kg"
+                                                    Header="Dökme Rulo Ağır."
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+                                                <dxg:GridColumn
+                                                    Width="100"
+                                                    CellTemplate="{StaticResource ctemplate1}"
+                                                    EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                                                    FieldName="DokumEni_mm"
+                                                    Header="Döküm Eni"
+                                                    HeaderStyle="{StaticResource ruloSitil}" />
+
+                                                <dxg:GridColumn HeaderStyle="{StaticResource ruloSitil}" IsSmart="True">
+
+                                                    <dxg:GridColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button
+                                                                Width="60"
+                                                                Margin="2"
+                                                                Padding="0"
+                                                                md:ColorZoneAssist.Mode="PrimaryLight"
+                                                                Command="{Binding DataContext.SatirGuncelleCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                                CommandParameter="{Binding RowData.Row}"
+                                                                Content="Güncelle"
+                                                                FontSize="10"
+                                                                Style="{StaticResource MaterialDesignRaisedAccentButton}" />
+                                                        </DataTemplate>
+                                                    </dxg:GridColumn.CellTemplate>
+                                                </dxg:GridColumn>
+
+                                            </dxg:GridControl>
+                                        </dxg:DataControlDetailDescriptor>
+                                    </dxg:GridControl.DetailDescriptor>
+
+
+                                </dxg:GridControl>
+                            </dxg:DataControlDetailDescriptor>
+                        </dxg:GridControl.DetailDescriptor>
+
+
+                    </dxg:GridControl>
+
+                </TabItem>
+
+            </TabControl>
+        </md:Card>
+    </Grid>
+</UserControl>

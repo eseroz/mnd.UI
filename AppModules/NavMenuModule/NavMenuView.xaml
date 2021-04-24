@@ -1,0 +1,165 @@
+﻿<UserControl
+    x:Class="mnd.UI.AppModules.NavMenuModule.NavMenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters1="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="145"
+    d:DesignWidth="175"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    Loaded="{DXEvent OnLoaded()}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+
+    </dxmvvm:Interaction.Behaviors>
+
+    <UserControl.Resources>
+        <Style x:Key="LookAtMe" TargetType="TextBlock">
+            <Setter Property="Background" Value="Transparent" />
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                                    BeginTime="0:0:0"
+                                    FillBehavior="Stop"
+                                    Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)"
+                                    From="Transparent"
+                                    To="Magenta"
+                                    Duration="0:0:0.5" />
+                                <ColorAnimation
+                                    BeginTime="0:0:0.8"
+                                    Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)"
+                                    From="Magenta"
+                                    To="Transparent"
+                                    Duration="0:0:1" />
+
+
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <converters1:Base64ImageConverterMetin x:Key="MyImageConverter" />
+    </UserControl.Resources>
+
+
+    <dxa:AccordionControl
+        Name="accordion"
+        Width="auto"
+        Height="auto"
+        HorizontalAlignment="Stretch"
+        dx:ThemeManager.ThemeName="MetropolisLight"
+        ChildrenPath="SubItems"
+        DisplayMemberPath="Caption"
+        ItemsSource="{Binding AppMenu, UpdateSourceTrigger=PropertyChanged}"
+        SearchControlFilterCondition="Contains"
+        SearchText=""
+        SelectionUnit="SubItem"
+        ShowSearchControl="True">
+
+
+        <dxa:AccordionControl.ItemTemplate>
+            <DataTemplate>
+                <DockPanel>
+
+                    <materialDesign:PackIcon
+                        Width="26"
+                        Height="26"
+                        Margin="5,5,10,5"
+                        Foreground="#FFC30E2E"
+                        Kind="{Binding Icon}"
+                        Visibility="{Binding Icon, Converter={dxmvvm:StringToVisibilityConverter}}" />
+
+
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Caption}" />
+
+
+                    <Border
+                        x:Name="badgeBorder"
+                        Margin="0,0,5,0"
+                        Padding="2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Background="DarkSlateBlue"
+                        BorderBrush="Pink"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Visibility="{Binding IsBadge, Converter={dxmvvm:BooleanToVisibilityConverter}}">
+                        <TextBlock
+                            x:Name="badge"
+                            Width="35"
+                            Background="Transparent"
+                            Foreground="White"
+                            Style="{StaticResource LookAtMe}"
+                            Text="{Binding Deger, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}"
+                            TextAlignment="Center" />
+                    </Border>
+                </DockPanel>
+
+            </DataTemplate>
+        </dxa:AccordionControl.ItemTemplate>
+
+
+        <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:EventToCommand
+                Command="{Binding MouseSecimYapildiCommand}"
+                CommandParameter="{Binding ElementName=accordion, Path=SelectedItem}"
+                EventName="MouseUp" />
+        </dxmvvm:Interaction.Behaviors>
+
+        <dxa:AccordionControl.Resources>
+            <Style TargetType="dxa:AccordionItem">
+                <Style.Triggers>
+                    <Trigger Property="ItemLevel" Value="0">
+                        <Setter Property="FontSize" Value="16" />
+
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                    </Trigger>
+
+
+                    <Trigger Property="ItemLevel" Value="1">
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="FontWeight" Value="Light" />
+                        <Setter Property="Margin" Value="0,4" />
+                    </Trigger>
+
+                    <Trigger Property="ItemLevel" Value="2">
+                        <Setter Property="FontSize" Value="15" />
+                        <Setter Property="FontWeight" Value="Regular" />
+
+                        <Setter Property="Margin" Value="0,4" />
+                    </Trigger>
+
+
+
+                </Style.Triggers>
+            </Style>
+        </dxa:AccordionControl.Resources>
+
+
+
+    </dxa:AccordionControl>
+
+
+</UserControl>

@@ -1,0 +1,734 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules._SatisModule.SiparisListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules._SatisModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    x:Name="SiparisList_UserControl"
+    d:DataContext="{d:DesignInstance Type=local:SiparisListViewModel}"
+    d:DesignHeight="675.2"
+    d:DesignWidth="1426.4"
+    Background="{DynamicResource MaterialDesignPaper}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:GreaterThanZeroVisibilityConverter x:Key="greaterThenZeroCnv" />
+        <converters:HaftaKontrolConverter x:Key="haftaKontrolCnv" />
+        <DataTemplate x:Key="SelectedTemplate">
+            <StackPanel Width="80">
+                <Border
+                    Width="80"
+                    Height="10"
+                    Padding="5"
+                    Background="Green"
+                    BorderBrush="DarkGreen"
+                    BorderThickness="1"
+                    CornerRadius="0" />
+                <TextBlock
+                    FontSize="8"
+                    Foreground="DarkBlue"
+                    Text="{Binding}"
+                    TextAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ItemTemplate">
+            <StackPanel Width="80">
+                <Border
+                    Width="80"
+                    Height="10"
+                    Padding="5"
+                    BorderBrush="LightBlue"
+                    BorderThickness="1"
+                    CornerRadius="0" />
+                <TextBlock
+                    FontSize="8"
+                    Foreground="LightBlue"
+                    Text="{Binding}"
+                    TextAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="ContentTemplate" Value="{StaticResource ItemTemplate}" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="ContentTemplate" Value="{StaticResource SelectedTemplate}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <dxmvvm:FormatStringConverter x:Key="FormatStringConverter" FormatString="Age: {0}" />
+        <converters:ImageFromAssemblyConverter x:Key="ImageFromAssemblyCnv" />
+    </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService />
+        <helper:ExportService x:Name="servis1" View="{x:Reference View1}" />
+        <helper:ExportService x:Name="servis2" View="{x:Reference View2}" />
+        <dx:DialogService x:Name="SiparisEditDialogService" DialogWindowStartupLocation="CenterOwner">
+            <dx:DialogService.DialogStyle>
+                <Style TargetType="dx:DXWindow">
+                    <Setter Property="Width" Value="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={converters:RatioConverter}, ConverterParameter='0,85'}" />
+                    <Setter Property="Height" Value="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={converters:RatioConverter}, ConverterParameter='0,9'}" />
+                </Style>
+            </dx:DialogService.DialogStyle>
+        </dx:DialogService>
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" MinHeight="86.4" />
+            <RowDefinition />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Margin="0,0,0.4,1.4">
+            <ToolBarTray.Resources>
+                <Style
+                    x:Key="{x:Static ToolBar.ButtonStyleKey}"
+                    BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                    TargetType="Button">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="80" />
+                    <Setter Property="Width" Value="50" />
+                </Style>
+                <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" TargetType="ToggleButton">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="80" />
+                    <Setter Property="Width" Value="50" />
+                </Style>
+                <Style TargetType="Image">
+                    <Setter Property="Height" Value="32" />
+                    <Setter Property="Width" Value="112" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+                    <Setter Property="TextAlignment" Value="Center" />
+                </Style>
+            </ToolBarTray.Resources>
+            <ToolBar Name="siparişişlemleri">
+                <ToggleButton Width="60" Style="{x:Null}" Command="{Binding SiparisYeniCommand}">
+                    <StackPanel Margin="0,0,0,0">
+                        <StackPanel Orientation="Vertical">
+                            <md:PackIcon
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="DarkOrange"
+                                Kind="FileDocument" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                FontWeight="DemiBold"
+                                Text="Yeni Sipariş"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+                </ToggleButton>
+                <Button Command="{Binding VerileriTazeleCommand}">
+                    <StackPanel>
+                        <Image Source="{dx:DXImage Image=RefreshAllPivotTable_32x32.png}" />
+                        <TextBlock Text="Ekranı Tazele" />
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding SiparisSilCommand}">
+                    <StackPanel>
+                        <Image Source="{dx:DXImage Image=Delete_32x32.png}" />
+                        <TextBlock Text="Sil" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+            <ToolBar Name="kapsitifgoster">
+                <Button Width="70" Command="{Binding SiparisKapatCommand}">
+                    <StackPanel>
+                        <Image Source="{dx:DXImage Image=Status_32x32.png}" />
+                        <TextBlock Text="Sipariş Kapat" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+            <ToolBar Name="tabloişlemleri">
+                <ToggleButton>
+                    <StackPanel>
+                        <Image Source="{dx:DXImage Image=ExportToXLS_32x32.png}" />
+                        <TextBlock Text="Excel Export" />
+                        <Popup
+                            IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                            PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                            StaysOpen="false">
+                            <Border
+                                Background="White"
+                                BorderBrush="LightGray"
+                                BorderThickness="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        Margin="5"
+                                        Command="{Binding ExcelExportCommand1}"
+                                        Content="Siparişler" />
+                                    <Button
+                                        Margin="5"
+                                        Command="{Binding ExcelExportCommand2}"
+                                        Content="Kalemler" />
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                </ToggleButton>
+                <ToggleButton>
+                    <StackPanel>
+                        <Image Source="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" />
+                        <TextBlock Text="Yerleşim Kaydet" />
+                        <Popup
+                            IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                            PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                            StaysOpen="false">
+                            <Border
+                                Background="White"
+                                BorderBrush="LightGray"
+                                BorderThickness="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        Margin="5"
+                                        Command="{Binding YerlesimKaydetCommand1}"
+                                        Content="Siparişler" />
+                                    <Button
+                                        Margin="5"
+                                        Command="{Binding YerlesimKaydetCommand2}"
+                                        Content="Kalemler" />
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                </ToggleButton>
+            </ToolBar>
+        </ToolBarTray>
+
+        <md:Card
+            Grid.Row="1"
+            Margin="5,2.6,5.4,4.6"
+            VerticalAlignment="Stretch">
+
+            <dxg:GridControl
+                x:Name="grdListe"
+                dx:DXSerializer.SerializationID="grid"
+                dx:DXSerializer.StoreLayoutMode="All"
+                dxg:GridSerializationOptions.AddNewColumns="True"
+                dxg:GridSerializationOptions.RemoveOldColumns="True"
+                helper:FilteredDataSupport.FilterFinished="{Binding BittiCommand}"
+                helper:FilteredDataSupport.VisibleData="{Binding SiparisListeVisibleData, Mode=TwoWay}"
+                AllowLiveDataShaping="True"
+                CurrentItem="{Binding DataContext.SeciliSiparisDto, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding SiparisListe}"
+                ShowLoadingPanel="{Binding DataContext.DataIsLoading, ElementName=SiparisList_UserControl}">
+
+                <dxg:GridControl.Resources>
+                    <Style BasedOn="{StaticResource MaviSutunBaslikSitil}" TargetType="dxg:GridColumnHeader" />
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="ReadOnly" Value="True" />
+                    </Style>
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="Miktar"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="SiparisKod"
+                        SummaryType="Count" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="FaturaEdilenMiktar"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="PaketlenenTumMiktarKg"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="PaketlenenMiktarKg"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="KalanIsyukuKg"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="GenelToplamTutar_OtoLME"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="GenelToplamTutar"
+                        ShowInColumn="GenelToplamTutarKurlu"
+                        SummaryType="Sum" />
+
+                    <dxg:GridSummaryItem
+                        DisplayFormat="{}{0:n0}"
+                        FieldName="DepodaUrunSayisi"
+                        SummaryType="Sum" />
+                </dxg:GridControl.TotalSummary>
+
+                <dxg:GridControl.GroupSummary>
+                    <dxg:GridSummaryItem
+                        DisplayFormat="Toplam: {0:n0}"
+                        FieldName="Miktar"
+                        ShowInColumn=""
+                        SummaryType="Sum" />
+                </dxg:GridControl.GroupSummary>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        x:Name="View1"
+                        AllowCascadeUpdate="True"
+                        AllowEditing="True"
+                        AllowGrouping="True"
+                        AllowPerPixelScrolling="False"
+                        AutoWidth="True"
+                        ShowAutoFilterRow="True"
+                        ShowGroupPanel="False"
+                        ShowTotalSummary="True">
+                        <dxg:TableView.FormatConditions>
+                            <dxg:FormatCondition
+                                Expression="[SevkHaftaGectiMi] = 'True'"
+                                FieldName="SevkHaftasi"
+                                ValueRule="Expression">
+                                <dx:Format
+                                    Background="Red"
+                                    Foreground="White"
+                                    TextDecorations="{x:Null}" />
+                            </dxg:FormatCondition>
+                        </dxg:TableView.FormatConditions>
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Height="35"
+                                    Margin="1"
+                                    HorizontalAlignment="Center"
+                                    Text="{Binding}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn
+                    Width="75"
+                    MaxWidth="75"
+                    AutoFilterCondition="Contains"
+                    FieldName="SiparisKod"
+                    FilterPopupMode="Excel"
+                    FixedWidth="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dx:SimpleButton
+                                MaxWidth="90"
+                                Command="{Binding View.DataContext.SiparisEditCommand}"
+                                Content="{Binding RowData.Row.SiparisKod}"
+                                Style="{StaticResource MyLinkButtonAc}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn
+                    Width="70"
+                    MaxWidth="70"
+                    FieldName="Tarih"
+                    FilterPopupMode="ExcelSmart"
+                    Header="Sip.Tarihi" />
+                <dxg:GridColumn
+                    Width="*"
+                    MinWidth="160"
+                    AutoFilterCondition="Contains"
+                    FieldName="CariIsim"
+                    FilterPopupMode="Excel"
+                    Header="Cari">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="24" Source="{Binding RowData.Row.UlkeKodIso, Converter={StaticResource ImageFromAssemblyCnv}, ConverterParameter='Binding  RowData.Row'}" />
+                                <TextBlock Padding="2" Text="{Binding RowData.Row.CariIsim}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn
+                    Width="80"
+                    FieldName="SiparisSurecDurum"
+                    Header="Süreç Durum"
+                    Visible="True" />
+                <dxg:GridColumn
+                    Width="80"
+                    MaxWidth="80"
+                    FieldName="TemsilciAdSoyad"
+                    Header="Temsilci"
+                    IsSmart="True" />
+                <dxg:GridColumn
+                    Width="*" MinWidth="70"
+                    FieldName="CariKod" />
+                <dxg:GridColumn
+                    Width="*"
+                    MinWidth="50"
+                    FieldName="FaturaDovizCinsi"
+                    Visible="True" />
+                <dxg:GridColumn
+                    Width="92"
+                    FieldName="FirmaSiparisNo"
+                    Header="Firma Sip.No"
+                    Visible="False" />
+                <dxg:GridColumn
+                    Width="92"
+                    FieldName="SevkAyAdi"
+                    Header="Sevk Ay Adı"
+                    Visible="False" />
+                <dxg:GridColumn
+                    Width="92"
+                    FieldName="GenelToplamTutar"
+                    Header="Sipariş Tutar"
+                    Visible="True" />
+                <dxg:GridColumn
+                    Width="55"
+                    MinWidth="55"
+                    MaxWidth="55"
+                    FieldName="MesajSayisi"
+                    Header="Mesaj"
+                    Style="{StaticResource MesajKolon}" />
+                <dxg:GridColumn
+                    Width="55"
+                    MinWidth="55"
+                    MaxWidth="55"
+                    Header="İşlem">
+                    <dxg:GridColumn.AutoFilterRowDisplayTemplate>
+                        <ControlTemplate />
+                    </dxg:GridColumn.AutoFilterRowDisplayTemplate>
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+
+                            <md:PopupBox>
+                                <StackPanel>
+
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.BolgeYoneticiOnayaGonderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="{Binding RowData.Row}"
+                                            Content="Bölge Yönetici Onayına Gönder" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.PlanlamayaGonderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="{Binding RowData.Row}"
+                                            Content="Planlamaya Gönder" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.OnayCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="Ok"
+                                            Content="Onayla" />
+
+
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.OnayCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="Reddedildi"
+                                            Content="Reddet" />
+
+
+                                    </StackPanel>
+
+
+                                </StackPanel>
+                            </md:PopupBox>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridControl.DetailDescriptor>
+                    <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding SiparisKalemDTO_List}" ShowHeader="False">
+                        <dxg:GridControl>
+                            <dxg:GridControl.Resources>
+                                <Style TargetType="dxg:GridColumn">
+                                    <Setter Property="ReadOnly" Value="True" />
+                                </Style>
+                            </dxg:GridControl.Resources>
+                            <dxg:GridControl.View>
+                                <dxg:TableView
+                                    x:Name="view2"
+                                    AllowEditing="True"
+                                    AutoWidth="True"
+                                    IsDetailButtonVisibleBinding="{DXBinding 'Row.UretimEmirleriDTO_List.Count > 0'}"
+                                    ShowBandsPanel="False"
+                                    ShowGroupPanel="False"
+                                    ShowTotalSummary="True">
+                                    <dxg:TableView.ColumnHeaderContentStyle>
+                                        <Style TargetType="dxg:HeaderContentControl">
+                                            <Setter Property="FontWeight" Value="DemiBold" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            <Setter Property="VerticalContentAlignment" Value="Top" />
+                                        </Style>
+                                    </dxg:TableView.ColumnHeaderContentStyle>
+                                    <dxg:TableView.ColumnHeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Height="25"
+                                                Margin="0,4"
+                                                HorizontalAlignment="Center"
+                                                Text="{Binding ''}"
+                                                TextAlignment="Center"
+                                                TextWrapping="Wrap" />
+                                        </DataTemplate>
+                                    </dxg:TableView.ColumnHeaderTemplate>
+                                    <dxg:TableView.TotalSummaryContentStyle>
+                                        <Style TargetType="dx:DataContentPresenter">
+                                            <Setter Property="Control.FontWeight" Value="Bold" />
+                                            <Setter Property="Control.Foreground" Value="Green" />
+                                            <Setter Property="Control.HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </dxg:TableView.TotalSummaryContentStyle>
+                                </dxg:TableView>
+                            </dxg:GridControl.View>
+                            <dxg:GridControl.TotalSummary>
+                                <dxg:GridSummaryItem
+                                    DisplayFormat="{}{0:n0}"
+                                    FieldName="Miktar"
+                                    SummaryType="Sum" />
+                                <dxg:GridSummaryItem
+                                    DisplayFormat="{}{0:n0}"
+                                    FieldName="Tutar"
+                                    SummaryType="Sum" />
+                                <dxg:GridSummaryItem
+                                    DisplayFormat="Count:{0:n0}"
+                                    FieldName="SiparisKalemKod"
+                                    SummaryType="Count" />
+                            </dxg:GridControl.TotalSummary>
+                            <dxg:GridControl.Bands>
+                                <dxg:GridControlBand>
+                                    <dxg:GridColumn
+                                        Width="140"
+                                        Visible="False"
+                                        FieldName="SiparisKalemKapaliDurum"
+                                        Header="Kapalı Mı?" />
+                                    <dxg:GridColumn FieldName="UrunKod" Header="ÜrÜn Kod" Width="65" IsSmart="True" />
+                                    <dxg:GridColumn FieldName="UrunAdiEN" Header="Ürün Adı" IsSmart="True" Width="250" />
+                                    <dxg:GridColumn FieldName="GR" Header="GR" IsSmart="True"  Width="55"/>
+                                    <dxg:GridColumn FieldName="PCS" Header="PCS" Visible="False" IsSmart="True"  Width="55" />
+                                    <dxg:GridColumn FieldName="BOX" Header="BOX" IsSmart="True"  Width="55" />
+                                    <dxg:GridColumn FieldName="NETKG" Header="NETKG" IsSmart="True"   Width="55"/>
+                                    <dxg:GridColumn FieldName="GROSS" Header="GROSS" Visible="False" IsSmart="True"  Width="55" />
+                                    <dxg:GridColumn FieldName="W" Header="W" IsSmart="True"  Width="40"/>
+                                    <dxg:GridColumn FieldName="L" Header="L" IsSmart="True"  Width="40"/>
+                                    <dxg:GridColumn FieldName="H" Header="H" IsSmart="True"  Width="40" />
+                                    <dxg:GridColumn FieldName="M3" Header="M3" Visible="False" IsSmart="True" />
+                                    <dxg:GridColumn FieldName="CRTN" Header="CRTN" Visible="False" IsSmart="True" />
+                                    <dxg:GridColumn Visible="False" FieldName="SatisFiyati" Width="120" />
+                                    <dxg:GridColumn Header="Miktar" FieldName="Miktar" IsSmart="True"  Width="60">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings MaskType="Numeric" DisplayFormat="n0" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+                                    <dxg:GridColumn Visible="True" FieldName="Tutar" Width="70" />
+                                </dxg:GridControlBand>
+                            </dxg:GridControl.Bands>
+                        </dxg:GridControl>
+                    </dxg:DataControlDetailDescriptor>
+                </dxg:GridControl.DetailDescriptor>
+            </dxg:GridControl>
+
+        </md:Card>
+
+        <GridSplitter
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            Background="Red" Margin="0,0.4,0.4,0.2" Grid.RowSpan="2" />
+
+        <dxg:GridControl Grid.Row="3" ItemsSource="{Binding SiparisKalemDtoListe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0.6,0.4,0.2">
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem
+                    DisplayFormat="{}{0:n0}"
+                    FieldName="Miktar"
+                    SummaryType="Sum" />
+            </dxg:GridControl.TotalSummary>
+
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    Name="View2"
+                    ShowAutoFilterRow="True"
+                    ShowGroupPanel="False"
+                    ShowTotalSummary="True">
+                    <dxg:TableView.ColumnHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Height="35"
+                                Margin="0,-4"
+                                HorizontalAlignment="Center"
+                                Text="{Binding}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </dxg:TableView.ColumnHeaderTemplate>
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition
+                            ApplyToRow="False"
+                            FieldName="SiparisKalemKapaliDurum"
+                            Value1="Kapalı"
+                            ValueRule="Equal">
+                            <dx:Format
+                                Background="Red"
+                                Foreground="White"
+                                TextDecorations="{x:Null}" />
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn Width="60" FieldName="SiparisKalemKod" />
+            <dxg:GridColumn Width="60" FieldName="SiparisKalemKapaliDurum" />
+            <dxg:GridColumn Width="60" FieldName="UrunKod" />
+            <dxg:GridColumn
+                Width="60"
+                EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                FieldName="Miktar"
+                Header="Miktar"
+                IsSmart="True" />
+            <dxg:GridColumn Width="60" FieldName="UlkeKodIso" />
+            <dxg:GridColumn MinWidth="70" FieldName="CariIsim" />
+            <dxg:GridColumn Width="60" FieldName="SevkHaftasi" />
+            <dxg:GridColumn Width="60" FieldName="TeslimHaftasi" />
+
+            <!--<dxg:GridColumn
+                Width="60"
+                FieldName="AlasimTipAd"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="SertlikTipAd"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="MasuraTipAd"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="YuzeyTipAd"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="AmbalajTipAd"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="KullanimAlanTipAd"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="MaxEk"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="Kalinlik"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="KalinlikDurum"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="KalinlikArti"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="KalinlikEksi"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="Metraj"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="MetrajArti"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="MetrajEksi"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="En"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="EnArti"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="EnEksi"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="RuloAgirlikMax"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="RuloAgirlikMin"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="RuloDiscapMax"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="RuloDiscapMin"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="60"
+                FieldName="RuloIcCap"
+                IsSmart="True" />-->
+
+        </dxg:GridControl>
+
+
+        <Grid Grid.Row="3" Background="#FF40508D" Margin="0,0.6,0.4,0.2">
+            <TextBlock
+                Height="25"
+                Padding="4"
+                HorizontalAlignment="Left"
+                Foreground="White"
+                Text="{Binding AktifYilHafta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=Hafta : {0}}"
+                TextAlignment="Left" />
+
+            <TextBlock
+                Grid.Row="4"
+                Height="25"
+                Padding="4"
+                HorizontalAlignment="Stretch"
+                Foreground="White"
+                Text="{Binding FormYuklenmeSuresi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=Form Yüklenme Süresi : {0:n2} sn}"
+                TextAlignment="Right" />
+        </Grid>
+
+    </Grid>
+</UserControl>

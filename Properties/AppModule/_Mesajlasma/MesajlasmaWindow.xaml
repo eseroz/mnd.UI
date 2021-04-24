@@ -1,0 +1,121 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Pandap.UI.Converters"
+   
+    xmlns:helper="clr-namespace:Pandap.UI.Helper"
+    xmlns:mesajlasma="clr-namespace:Pandap.UI.AppModule._Mesajlasma"
+    d:DataContext="{d:DesignInstance Type=helper:ViewModelLocator}"
+        x:Name="MesajWindow"
+        x:Class="Pandap.UI.AppModule._Mesajlasma.MesajlasmaWindow"
+        mc:Ignorable="d" Width="442.925" Height="557.477" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip"
+    >
+
+    <Window.Resources>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Text, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, 
+                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource"
+                                 Background="Transparent"
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="LightGray" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <converters:Base64ImageConverter x:Key="MyImageConverter" />
+        <converters:HorizontalToTextAlignmentConverter x:Key="H2TAlignmentConverter" />
+        <converters:ListboxControlColorConverter x:Key="ColorControlConverter" />
+        <converters:MyBoolToVisibilityConverter x:Key="MyVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="67.2"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="lst1" Grid.Row="0" mesajlasma:ListBoxBehavior.ScrollOnNewItem="true"
+                  ItemsSource="{Binding Mesajlar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                  ScrollViewer.CanContentScroll="False" Padding="0,0,0,20" HorizontalContentAlignment="Stretch"
+                  SelectedItem="{Binding SeciliMesaj, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-0.2,5.8" SelectionChanged="ListBox_SelectionChanged">
+
+            <ListBox.ItemTemplate>
+
+                <DataTemplate>
+                    <Border  HorizontalAlignment="{Binding GidenMi,Converter={StaticResource H2TAlignmentConverter}}"   
+                             BorderThickness="1,1,1,1" CornerRadius="4,4,4,4"
+                             Background="{Binding GidenMi,Converter={StaticResource ColorControlConverter}}">
+
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="1" Color="#FF206946" />
+                        </Border.Effect>
+                        <StackPanel  Orientation="Vertical">
+
+                            <TextBlock FontWeight="Bold"  MaxWidth="250" TextWrapping="Wrap"  Text="{Binding Gonderen}" Padding="20,3" />
+
+                            <TextBlock MaxWidth="250" TextWrapping="Wrap"    Text="{Binding MesajIcerik}" Padding="20,5" />
+
+                            <Image   MaxWidth="250" Height="auto" Cursor="Hand"  Source="{Binding DokumanIcerik, 
+                                Converter={StaticResource MyImageConverter}}">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.DosyaAcCommand, ElementName=MesajWindow}" 
+                                                  CommandParameter="{Binding}" />
+                                </Image.InputBindings>
+                            </Image>
+
+                            <Button   MaxWidth="250"  Cursor="Hand" Visibility="{Binding EkVarMi,Converter={StaticResource MyVisibilityConverter}}"
+                                    Content="{Binding DokumanAdi}" Padding="20,5" 
+                                    Command="{Binding DataContext.DosyaAcCommand,RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                    CommandParameter="{Binding}" />
+
+                            <TextBlock MaxWidth="250" TextWrapping="Wrap" Text="{Binding MesajTarihi, StringFormat='dd/MM/yyyy HH:mm:ss'}" 
+                                       Padding="20,5" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Margin="8,6.2,7.8,8" Grid.Row="1" Background="#FFF5F1EE">
+
+            <dxe:TextEdit TextWrapping="Wrap" NullText="Bir metin girin"  Text="{Binding AktifMesaj.MesajIcerik, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5,5,30,5" FontSize="14">
+                <dxe:TextEdit.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding SendMessageCommand}" />
+                </dxe:TextEdit.InputBindings>
+            </dxe:TextEdit>
+
+            <Button  Command="{Binding DosyaEkleCommand}" Padding="17" DockPanel.Dock="Right" 
+                     HorizontalContentAlignment="Right" RenderTransformOrigin="1.716,0.452" Margin="0,5,11.6,4.6" 
+                     HorizontalAlignment="Right" Width="24">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{dx:DXImage Image=Attachment_32x32.png}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,42 @@
+﻿//FaturaKalemKod
+
+
+
+UPDATE  Uretim.Palet
+SET DepoKabulTarihi = DepoyaAktarilmaOnayTarihi
+
+
+UPDATE  Uretim.Palet
+SET DepoOnayaGonderimTarihi = DepoyaAktarilmaTarihi
+
+
+UPDATE  Uretim.Palet
+SET PaletDara_Kg = PaletAgirlik
+
+UPDATE  Uretim.Palet
+SET KartNo = KafileNo
+
+
+kontrol et ve sil
+ALTER TABLE Uretim.Palet DROP COLUMN FaturaKalemKod;
+ALTER TABLE Uretim.Palet DROP COLUMN DepoyaAktarilmaOnayTarihi;
+ALTER TABLE Uretim.Palet DROP COLUMN DepoyaAktarilmaTarihi;
+ALTER TABLE Uretim.Palet DROP COLUMN KafileNo;
+ALTER TABLE Uretim.Palet DROP COLUMN PaletAgirlik;
+
+
+UPDATE  Uretim.Palet
+SET FiyatKalemKod = SUBSTRING(UretimEmriKod, 0, 12)
+
+
+update Uretim.Palet
+set PaletKonum='DEPO'
+where DepoKabulTarihi is not null and SevkiyatTarihi is null
+
+update Uretim.Palet
+set PaletKonum='SEVKEDILDI'
+where SevkiyatTarihi is not null
+
+
+alter table [Operasyon].[IrsaliyePalet]
+alter column [GTip] varchar(150)

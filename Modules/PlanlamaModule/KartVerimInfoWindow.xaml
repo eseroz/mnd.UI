@@ -1,0 +1,72 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule"
+        xmlns:dxre="http://schemas.devexpress.com/winfx/2008/xaml/richedit" xmlns:Custom="http://schemas.devexpress.com/winfx/2008/xaml/charts/rangecontrolclient" x:Class="mnd.UI.Modules.PlanlamaModule.KartVerimInfoWindow"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        FontSize="16"
+        Title="KartVerim Info" Height="450" Width="800">
+    <Grid>
+        <RichTextBox Style="{x:Null}" Margin="10">
+            <FlowDocument>
+             
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Kombin_Verimi_yuzde =</Run>
+                    <Run FontWeight="Normal">Kombin_Eni_AgirOrt_mm / Kombin_Max_Eni_Agir_Ort_mm</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Kombin_Fire_yuzde = </Run>
+                    <Run FontWeight="Normal">1 - Kombin_Verimi_yuzde</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Geometrik_Fire_yuzde = </Run>
+                    <Run FontWeight="Normal">1 - Kombin_Max_Eni_Agir_Ort_mm / DokumEni_mm</Run>
+                </Paragraph>
+
+              
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Isletme_Fire_yuzde =</Run>
+                    <Run FontWeight="Normal"> 1 - (Kombin_Fire_yuzde + Geometrik_Fire_yuzde + Genel_Verim_Yuzde)</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Genel_Verim_Yuzde =</Run>
+                    <Run FontWeight="Normal">Anakart_Toplam_Paket_Miktar_kg / Dokum_Miktari_kg</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="Bold">
+                    <Run>-----------------------------------------------------------------------------------------</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Verim Pivot Hesabı :</Run>
+                    <Run FontWeight="Normal">Pivot yüzdeleri Döküm miktarıyla ağırlıklı ortalamalar alınarak hesaplanmıştır.</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Anakart_Toplam_Paket_Miktar =</Run>
+                    <Run FontWeight="Normal">PaketlenenMiktar= PaketlenenMiktar-(KaliteRedMiktar + PaketKarantinaMiktar)</Run>
+                </Paragraph>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run FontWeight="Normal">Yukarıdaki formül Anakarta ait tüm kartlar için yapılarak toplam alınır.</Run>
+                </Paragraph>
+
+
+
+
+
+
+
+
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</Window>

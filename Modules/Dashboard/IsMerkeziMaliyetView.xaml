@@ -1,0 +1,173 @@
+﻿
+<UserControl x:Class="mnd.UI.Modules.Dashboard.IsMerkeziMaliyetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.Modules.Dashboard"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             d:DataContext="{d:DesignInstance local:IsMerkeziMaliyetVM}"
+              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+
+                <Button  Padding="0" Command="{Binding EkranYenileCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                        <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Yenile" />
+                    </StackPanel>
+                </Button>
+
+                <Label VerticalAlignment="Center" Width="400"  Foreground="Red" FontSize="14"
+                       Content="{Binding SonKurBilgi,Mode=TwoWay}"/>
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Margin="5"
+            VerticalAlignment="Stretch"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+            Padding="5">
+
+            <dxg:GridControl AllowLiveDataShaping="True" ItemsSource="{Binding DepoCikisFisListeKalemli,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumnHeader">
+                        <Setter Property="Background" Value="Black" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                    </Style>
+
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                    </Style>
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.GroupSummary>
+                    <dxg:GridSummaryItem DisplayFormat=" {0:n0} € " FieldName="Toplam_Euro"
+                                ShowInColumn="StokToplami_Euro" SummaryType="Sum" />
+                </dxg:GridControl.GroupSummary>
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="CikisMiktar" SummaryType="Sum" DisplayFormat="n0" />
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="FisNo" SummaryType="Count" />
+                    <dxg:GridSummaryItem Alignment="Default" FieldName="Toplam_Euro" SummaryType="Sum" DisplayFormat="n0"/>
+                </dxg:GridControl.TotalSummary>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView RowMinHeight="30" x:Name="View2" AllowPerPixelScrolling="True" AutoWidth="True"
+                                   ShowAutoFilterRow="True" ShowGroupPanel="False" ShowTotalSummary="True">
+
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock   Text="{Binding}" TextAlignment="Center"
+                                           VerticalAlignment="Stretch" FontWeight="DemiBold" Height="35" 
+                                         TextWrapping="Wrap" HorizontalAlignment="Right" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn Header="Fiş No" MaxWidth="140" FixedWidth="True" Width="200" FilterPopupMode="Excel"  AutoFilterCondition="Contains" FieldName="FisNo">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dx:SimpleButton MaxWidth="150"  Content="{Binding RowData.Row.FisNo}"
+                                          Command="{Binding View.DataContext.FisEditCommand}"
+                                             CommandParameter="{Binding RowData.Row}"
+                                             Style="{StaticResource MyLinkButtonAc}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn MinWidth="90" MaxWidth="91" FieldName="FisTarihi" IsSmart="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayFormat="dd/MM/yyyy hh:mm" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="TalepEdenKisi" IsSmart="True" />
+                <dxg:GridColumn AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="TeslimAlanKisi" IsSmart="True" />
+                <dxg:GridColumn AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="IlgiliUnite" IsSmart="True" />
+
+                <dxg:GridColumn AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="MasrafSeviye1" IsSmart="True" />
+                <dxg:GridColumn AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="MasrafSeviye2" IsSmart="True" />
+                <dxg:GridColumn AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="MasrafSeviye3" IsSmart="True" />
+
+
+                <dxg:GridColumn Visible="False" AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="MasrafMerkeziAd" IsSmart="True" />
+                <dxg:GridColumn Visible="False" AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="MasrafMerkeziKod" IsSmart="True" />
+
+                <dxg:GridColumn FieldName="StokKodu">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Center" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn MinWidth="300" Width="300" AutoFilterCriteria="Contains" FilterPopupMode="Excel" FieldName="StokAd" />
+
+
+                <dxg:GridColumn MaxWidth="35" FilterPopupMode="Excel" FieldName="OlcuBirimAd" Header="Ölçü Birim" >
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Center" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn Visible="{Binding MaliyetFiyatSutunGorebilirMi}" FieldName="BirimFiyat">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Right" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn Visible="{Binding MaliyetFiyatSutunGorebilirMi}" MaxWidth="35" FieldName="DovizTip">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Center" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+               
+
+                <dxg:GridColumn ReadOnly="True" FieldName="CikisMiktar">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Right" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn  MaxWidth="35" FieldName="PariteEuro">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Center" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn Visible="{Binding MaliyetFiyatSutunGorebilirMi}" Header="Stok Toplam (€)" FieldName="Toplam_Euro">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n2" HorizontalContentAlignment="Right" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+
+            </dxg:GridControl>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

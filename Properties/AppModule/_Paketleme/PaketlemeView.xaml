@@ -1,0 +1,507 @@
+﻿<UserControl
+    x:Class="Pandap.UI.AppModule._Paketleme.PaketlemeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    MinWidth="600"
+    MinHeight="500"
+    mc:Ignorable="d"
+    Background="{DynamicResource MaterialDesignPaper}"
+   
+    d:DesignHeight="632.8"
+    d:DesignWidth="1460.8"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    
+    
+    xmlns:helper="clr-namespace:Pandap.UI.Helper"
+    d:DataContext="{d:DesignInstance Type=helper:ViewModelLocator}"
+    >
+
+    <UserControl.Resources>
+        <Style TargetType="dxg:GridColumnHeader">
+            <Setter Property="Background" Value="#FFAEEA00" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:NotificationService x:Name="AppNotificationService" UseWin8NotificationsIfAvailable="False" />
+        <dx:DXMessageBoxService />
+
+    </dxmvvm:Interaction.Behaviors>
+    
+    
+    
+    
+
+    <TabControl Margin="10">
+        <TabItem Header="Paletler">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="268*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                </Grid.ColumnDefinitions>
+                <md:Card
+                    Grid.Column="0"
+                    Margin="0"
+                    VerticalAlignment="Stretch"
+                    Padding="5">
+                    <md:DialogHost
+                        x:Uid="paletDialog"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        IsOpen="{Binding IsOpenPaletDialog,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <md:DialogHost.DialogContent>
+                            <StackPanel Width="300" Margin="16">
+                                <StackPanel.Resources>
+                                    <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                                        <Setter Property="md:HintAssist.IsFloating" Value="True" />
+                                        <Setter Property="Margin" Value="8" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <md:ColorZone md:ColorZoneAssist.Mode="PrimaryDark">
+                                    <TextBlock Text="Palet Ekleme" />
+                                </md:ColorZone>
+                                <ComboBox
+                                    Margin="8"
+                                    DisplayMemberPath="CariIsim"
+                                    ItemsSource="{Binding Path=PaleteHazirCariler,  Mode=OneWay, UpdateSourceTrigger=PropertyChanged }"
+                                    md:HintAssist.Hint="Cari seçiniz"
+                                    SelectedValue="{Binding TempPalet.CariKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedValuePath="CariKod" />
+                                <TextBox
+                                    HorizontalAlignment="Stretch"
+                                    FontSize="16"
+                                    md:HintAssist.Hint="Palet Ağırlık"
+                                    Text="{Binding TempPalet.PaletAgirlik,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    HorizontalAlignment="Stretch"
+                                    FontSize="16"
+                                    md:HintAssist.Hint="Palet Ebat"
+                                    Text="{Binding TempPalet.PaletEbat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <Button
+                                        Margin="0,8,8,0"
+                                        Command="{Binding ClosePaletDialogCommand}"
+                                        CommandParameter="Cancel"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        İptal
+                                    </Button>
+                                    <Button
+                                        Margin="0,8,8,0"
+                                        Command="{Binding ClosePaletDialogCommand}"
+                                        CommandParameter="Ok"
+                                        Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                                        Tamam
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </md:DialogHost.DialogContent>
+                        <md:DialogHost.Content>
+                            <GroupBox
+                                SnapsToDevicePixels="True"
+                                Style="{DynamicResource MaterialDesignGroupBox}"
+                                UseLayoutRounding="True">
+                                <GroupBox.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <md:PackIcon
+                                                Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                VerticalAlignment="Center"
+                                                Kind="ViewGrid" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                Text="Paletler " />
+                                            <!--<TextBlock Margin="10,0,0,0" Grid.Column="2" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" TextAlignment="Center"
+                                                    FontWeight="Bold"
+
+                                                   Text="{Binding DataContext.GunlukTonaj, Mode=TwoWay, StringFormat=Günlük Tonaj :{0:N}, UpdateSourceTrigger=PropertyChanged
+                                                ,RelativeSource={RelativeSource AncestorType=GroupBox}}" />-->
+                                            <Button
+                                                Grid.Column="3"
+                                                HorizontalAlignment="Right"
+                                                Command="{Binding DataContext.OpenPaletDialogCommand, RelativeSource={RelativeSource AncestorType=GroupBox}}"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                                                <Viewbox Width="22" Height="22">
+                                                    <Canvas Width="24" Height="24">
+                                                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button},
+                                                    Path=Foreground}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GroupBox.HeaderTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="5" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <ListBox
+                                        x:Name="lstPanel"
+                                        Grid.Row="0"
+                                        MinHeight="100"
+                                        IsSynchronizedWithCurrentItem="True"
+                                        ItemsSource="{Binding Paletler, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedItem="{Binding SeciliPalet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border
+                                                    BorderBrush="Black"
+                                                    BorderThickness="1"
+                                                    CornerRadius="5"
+                                                    Padding="6">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel Grid.Column="0" HorizontalAlignment="Stretch">
+                                                            <TextBlock FontWeight="Bold" Text="{Binding UretimEmriKod,StringFormat=Üretim Emri Kod:{0}}" />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock  Text="{Binding Id,StringFormat=Palet No:{0}}" />
+                                                             
+                                                                <TextBlock Margin="10,0,0,0" Text="{Binding PaletEbat,StringFormat=Ebat:{0}}" />
+                                                              
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock FontWeight="Bold"   Text="{Binding ToplamBobinAgirligi,StringFormat=Net Kg:{0}}" />
+                                                                <TextBlock Margin="10,0,0,0" Text="{Binding PaletAgirlik,StringFormat=Dara:{0}}" />
+                                                                <TextBlock Margin="10,0,0,0" Text="{Binding BrutAgirlik,StringFormat=Brüt-Ağırlık:{0}}" />
+                                                            </StackPanel>
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.Kalinlik_micron,StringFormat=Kalınlık:{0}}" />
+                                                                <TextBlock Margin="10,0,0,0" FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.En_mm,StringFormat=En:{0}}" />
+                                                                <TextBlock Margin="10,0,0,0" FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.AlasimTipKod,StringFormat=:{0}}" />
+                                                                <TextBlock Margin="10,0,0,0" FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.SertlikTipKod,StringFormat=:{0}}" />
+                                                            </StackPanel>
+
+
+                                                            <TextBlock FontWeight="Bold"
+                                                                HorizontalAlignment="Left"
+                                                                Text="{Binding CariKartNav.CariIsim,StringFormat=Cari:{0}}"
+                                                                TextWrapping="Wrap" />
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1">
+                                                            <Button Width="80" Command="{Binding DataContext.PaletBarkodYazdirCommand,RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}" CommandParameter="{Binding}" FontSize="26" Style="{StaticResource MaterialDesignRaisedButton}" ToolTip="Barkod Yazdır">
+                                                                <fa:ImageAwesome HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Icon="Barcode"/>
+                                                            </Button>
+
+
+                                                            <Button Width="40" Command="{Binding DataContext.PaletSilCommand,RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}" CommandParameter="{Binding}" FontSize="26"
+                                                                    Style="{StaticResource MaterialDesignRaisedButton}" ToolTip="Palet Sil">
+                                                                <fa:ImageAwesome Margin="1" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Icon="Minus"/>
+                                                            </Button>
+
+
+                                                        </StackPanel>
+                                                      
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <GridSplitter
+                                        Grid.Row="1"
+                                        Height="5"
+                                        HorizontalAlignment="Stretch" />
+                                    <GroupBox
+                                        Grid.Row="2"
+                                        Margin="5"
+                                        BorderThickness="2"
+                                        Header="Kullanılabilir Bobinler"
+                                        md:ColorZoneAssist.Mode="Standard"
+                                        md:ShadowAssist.ShadowDepth="Depth1"
+                                        Style="{DynamicResource MaterialDesignGroupBox}"
+                                        UseLayoutRounding="True">
+                                        <GroupBox.HeaderTemplate>
+                                            <DataTemplate>
+                                                <DockPanel LastChildFill="True">
+                                                    <md:PackIcon
+                                                        Width="32"
+                                                        Height="32"
+                                                        VerticalAlignment="Center"
+                                                        Kind="Album" />
+                                                    <TextBlock
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Text="Kullanılabilir Bobinler" />
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </GroupBox.HeaderTemplate>
+                                        <DataGrid
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            FontSize="14"
+                                            ItemsSource="{Binding CariyeAitKullanilabilirBobinler,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            md:DataGridAssist.CellPadding="6"
+                                            md:DataGridAssist.ColumnHeaderPadding="4"
+                                            SelectedItem="{Binding SeciliBobin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding UretimEmriKod}" Header="UretimEmri Kod" />
+                                                <DataGridTextColumn Binding="{Binding BobinNo,Mode=OneWay}" Header="Bobin No" />
+
+
+                                                <DataGridTemplateColumn Header="Ağırlık">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <dxe:TextEdit
+                                                                Width="50"
+                                                                VerticalAlignment="Top"
+                                                                Text="{Binding Path=Agirlik_kg,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+
+                                                <DataGridTemplateColumn Header="FH_CikisNo">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <dxe:TextEdit
+                                                                Width="100"
+                                                                VerticalAlignment="Top"
+                                                                Text="{Binding Path=FH_CikisNo,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+
+                                                <DataGridTemplateColumn Header="#">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button
+                                                                Width="32"
+                                                                Height="32"
+                                                                Command="{Binding DataContext.BobiniPaleteAktarCommand, RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}"
+                                                                CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                                Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                                                                ToolTip="Palete Ekle">
+                                                                <md:PackIcon
+                                                                    Width="24"
+                                                                    Height="24"
+                                                                    Kind="ArrowRight" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </GroupBox>
+                                </Grid>
+                            </GroupBox>
+                        </md:DialogHost.Content>
+                    </md:DialogHost>
+                </md:Card>
+                <GridSplitter
+                    Grid.Column="1"
+                    Width="5"
+                    HorizontalAlignment="Stretch" />
+                <md:Card
+                    Grid.Column="2"
+                    Margin="0"
+                    VerticalAlignment="Stretch"
+                    Padding="0">
+                    <GroupBox
+                        Margin="8"
+                        SnapsToDevicePixels="True"
+                        Style="{DynamicResource MaterialDesignGroupBox}"
+                        UseLayoutRounding="True">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="Palete Eklenmiş Bobinler" />
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                        <Button
+                                       
+                                        
+                                        Command="{Binding DataContext.DepoyaGonderCommand, RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}"
+                                        Style="{StaticResource MaterialDesignRaisedAccentButton}">
+                                            Depoya Gönder
+                                        </Button>
+
+                                        <!--<Button Margin="10,0,0,0"
+                                       
+                                     
+                                        Command="{Binding DataContext.DepoyaGonderCommand, RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}"
+                                        Style="{StaticResource MaterialDesignRaisedAccentButton}">
+                                            Panda Stoğa Gönder
+                                        </Button>-->
+                                    </StackPanel>
+                                   
+
+
+                                </DockPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <DataGrid
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            FontSize="14"
+                            ItemsSource="{Binding SelectedItem.Bobinler, ElementName=lstPanel}"
+                            md:DataGridAssist.CellPadding="6"
+                            md:DataGridAssist.ColumnHeaderPadding="4">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding UretimEmriKod}" Header="UretimEmri Kod" />
+                                <DataGridTextColumn Binding="{Binding BobinNo}" Header="Bobin No" />
+                                <DataGridTextColumn Binding="{Binding Agirlik_kg}" Header="Bobin Ağırlık" />
+                                <DataGridTextColumn Binding="{Binding FH_CikisNo}" Header="FH Çıkış No" />
+                                <DataGridTemplateColumn Header="#">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button
+                                                    Command="{Binding DataContext.PaletBobinSilCommand, RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}"
+                                                    CommandParameter="{Binding Path=SelectedItem,
+                                                RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                    Content="X" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </md:Card>
+                <GroupBox
+                    Grid.Column="3"
+                    Margin="5"
+                    BorderThickness="1"
+                    Header="Depo Onay Bekleyenler"
+                    md:ShadowAssist.ShadowDepth="Depth3"
+                    Style="{DynamicResource MaterialDesignGroupBox}"
+                    UseLayoutRounding="True">
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <DockPanel LastChildFill="True">
+                                <md:PackIcon
+                                    Width="32"
+                                    Height="32"
+                                    VerticalAlignment="Center"
+                                    Kind="OpenInApp" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Text="Depo Onayı Bekleyenler" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <GroupBox.Content>
+                        <ListBox
+                            x:Name="cboDepoOnayiBekleyenler"
+                            Grid.Row="0"
+                            MinHeight="100"
+                            IsSynchronizedWithCurrentItem="True"
+                            ItemsSource="{Binding DepodakiPaletler}"
+                            SelectedItem="{Binding DepoSeciliPalet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                
+
+                                <DataTemplate>
+                                    <Border
+                                                    BorderBrush="Black"
+                                                    BorderThickness="1"
+                                                    CornerRadius="5"
+                                                    Padding="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" HorizontalAlignment="Stretch">
+                                                <TextBlock FontWeight="Bold" Text="{Binding UretimEmriKod,StringFormat=Üretim Emri Kod:{0}}" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock  Text="{Binding Id,StringFormat=Palet No:{0}}" />
+                                                    <TextBlock Text="{Binding DepoyaAktarilmaTarihi,StringFormat=DepoyaAktarılmaT.:{0:dd/MM/yyyy HH:mm}}" />
+                                                    <TextBlock Margin="10,0,0,0" Text="{Binding PaletEbat,StringFormat=Ebat:{0}}" />
+
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontWeight="Bold"   Text="{Binding ToplamBobinAgirligi,StringFormat=Net Kg:{0}}" />
+                                                    <TextBlock Margin="10,0,0,0" Text="{Binding PaletAgirlik,StringFormat=Dara:{0}}" />
+                                                    <TextBlock Margin="10,0,0,0" Text="{Binding BrutAgirlik,StringFormat=Brüt-Ağırlık:{0}}" />
+                                                </StackPanel>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.Kalinlik_micron,StringFormat=Kalınlık:{0}}" />
+                                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.En_mm,StringFormat=En:{0}}" />
+                                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.AlasimTipKod,StringFormat=:{0}}" />
+                                                    <TextBlock Margin="10,0,0,0" FontWeight="Bold" Text="{Binding UretimEmriKodNav.SiparisKalemKodNav.SertlikTipKod,StringFormat=:{0}}" />
+                                                </StackPanel>
+
+
+                                                <TextBlock FontWeight="Bold"
+                                                                HorizontalAlignment="Left"
+                                                                Text="{Binding CariKartNav.CariIsim,StringFormat=Cari:{0}}"
+                                                                TextWrapping="Wrap" />
+                                            </StackPanel>
+
+
+                                            <StackPanel Grid.Column="1">
+                                                <Button Width="80" Command="{Binding DataContext.PaletBarkodYazdirCommand,RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}" CommandParameter="{Binding}" FontSize="26" Style="{StaticResource MaterialDesignRaisedButton}" ToolTip="Barkod Yazdır">
+                                                    <fa:ImageAwesome HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Icon="Barcode"/>
+                                                </Button>
+
+
+                                                <Button Width="40" Command="{Binding DataContext.DepoOnayindanbGeriAlCommand,RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}" CommandParameter="{Binding}" FontSize="26"
+                                                                    Style="{StaticResource MaterialDesignRaisedButton}" ToolTip="Palet Sil">
+                                                    <fa:ImageAwesome Margin="1" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Icon="Minus"/>
+                                                </Button>
+
+
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox.Content>
+                </GroupBox>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</UserControl>

@@ -1,0 +1,788 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.UretimIsletmeModule.MakinaVeriTabloView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:uretimIsletmeModule="clr-namespace:mnd.UI.Modules.UretimIsletmeModule"
+    x:Name="win1"
+    d:DesignHeight="520"
+    d:DesignWidth="905"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="ctemplate1">
+            <Border
+                Name="br1"
+                Margin="1"
+                Background="Transparent"
+                BorderBrush="LightSteelBlue"
+                BorderThickness="1"
+                CornerRadius="1">
+                <dxe:TextEdit
+                    Name="PART_Editor"
+                    HorizontalContentAlignment="Center"
+                    dx:ThemeManager.ThemeName="XXX" />
+            </Border>
+
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=RowData.IsSelected}" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Foreground" Value="Red" />
+                    <Setter TargetName="br1" Property="Background" Value="White" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <Style x:Key="grayColumnHeader" TargetType="dxg:BaseGridHeader">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="Black" />
+                        <GradientStop Offset="1" Color="#FF5266BA" />
+                        <GradientStop Offset="0.137" Color="#FE4868C7" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+
+        <Style TargetType="dxg:LightweightCellEditor">
+            <Style.Triggers>
+                <Trigger Property="IsFocusedCell" Value="True">
+
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="dxg:RowControl">
+            <Style.Triggers>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property="Background" Value="WhiteSmoke" />
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportService View="{x:Reference View1}" />
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+        <dxmvvm:NotificationService x:Name="AppNotificationService" UseWin8NotificationsIfAvailable="False" />
+        <dx:DXMessageBoxService />
+
+        <dxmvvm:EventToCommand
+            Command="{Binding PastingFromClipboardCommand}"
+            EventName="PastingFromClipboard"
+            PassEventArgsToCommand="True"
+            SourceObject="{Binding ElementName=View1}" />
+
+        <dxmvvm:EventToCommand
+            Command="{Binding CellValueChangedCommand}"
+            EventName="CellValueChanged"
+            PassEventArgsToCommand="True"
+            SourceObject="{Binding ElementName=View1}" />
+
+        <dxmvvm:EventToCommand
+            Command="{Binding KeyDownCommand}"
+            EventName="PreviewKeyDown"
+            PassEventArgsToCommand="True"
+            SourceObject="{Binding ElementName=View1}" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ToolBar
+            Grid.Row="0"
+            Margin="0,0,0,0"
+            ClipToBounds="False">
+
+            <Button
+                Padding="0"
+                Command="{Binding EkranTazeleCommand}"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Ekran Yinele" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Command="{Binding YerlesimKaydetCommand}"
+                Style="{DynamicResource MaterialDesignFlatButton}"
+                Visibility="Visible">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" />
+
+                    <dxe:ListBoxEdit
+                        Width="60"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        ItemsSource="{Binding Yerlesimler}"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        SelectedItem="{Binding SeciliYerlesim, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                        <dxe:ListBoxEdit.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </dxe:ListBoxEdit.ItemsPanel>
+
+                        <dxe:ListBoxEdit.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="20"
+                                        Margin="2,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        Text="{Binding}"
+                                        TextAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxe:ListBoxEdit.ItemTemplate>
+                    </dxe:ListBoxEdit>
+
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Yerleşim Kaydet" />
+                </StackPanel>
+            </Button>
+        </ToolBar>
+
+        <StackPanel
+            Grid.Row="1"
+            Height="28"
+            Margin="10"
+            Orientation="Horizontal">
+
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Tarih : " />
+
+            <dxe:DateEdit
+                Width="120"
+                EditValue="{Binding SeciliTarih}"
+                FontSize="14"
+                FontWeight="Bold" />
+
+            <TextBlock
+                Margin="20,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Vardiya : " />
+            <dxe:ComboBoxEdit
+                Width="130"
+                HorizontalContentAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                IsTextEditable="False"
+                ItemsSource="{Binding Vardiyalar}"
+                SelectedItem="{Binding Vardiya, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Margin="20,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Makina : " />
+
+            <dxe:ComboBoxEdit
+                Width="200"
+                Margin="10,0,0,0"
+                DisplayMember="AdSoyad"
+                EditValue="{Binding OperatorAdSoyad, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="14"
+                FontWeight="Bold"
+                ItemsSource="{Binding OperatorListe}"
+                NullText="Operator"
+                ValueMember="AdSoyad"
+                Visibility="Collapsed" />
+
+            <dxe:ComboBoxEdit
+                Width="200"
+                Margin="10,0,0,0"
+                DisplayMember="MakinaAd"
+                EditValue="{Binding MakinaKod, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="14"
+                FontWeight="Bold"
+                IsTextEditable="False"
+                ItemsSource="{Binding MakinaListe}"
+                NullText="Makina"
+                ValueMember="MakinaKod" />
+
+            <StackPanel Margin="40,0,0,0" Orientation="Horizontal">
+                <Button
+                    Width="200"
+                    Height="Auto"
+                    Background="DarkSeaGreen"
+                    Command="{Binding VeriKontrolEtCommand}"
+                    Content="Verileri Kontrol Et" />
+                <Button
+                    Width="200"
+                    Height="Auto"
+                    Margin="5,0,0,0"
+                    Command="{Binding KaydetCommand}"
+                    Content="Kaydet (Ctrl+S)" />
+            </StackPanel>
+        </StackPanel>
+
+        <md:Snackbar
+            x:Name="Snackbar"
+            Grid.Row="2"
+            Height="50"
+            Margin="0,0,0,-0.4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Panel.ZIndex="1000"
+            MessageQueue="{Binding BoundMessageQueue}" />
+
+        <dxg:GridControl
+            Name="g1"
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Margin="10,10,10,9.6"
+            AutoGenerateColumns="None"
+            ClipboardCopyMode="ExcludeHeader"
+            CurrentItem="{Binding SeciliSatir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            FontSize="13"
+            ItemsSource="{Binding UretimTabloSatirlar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Cell">
+
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem
+                    Alignment="Default"
+                    DisplayFormat="n0"
+                    FieldName="SiraNo"
+                    SummaryType="Count" />
+                <dxg:GridSummaryItem
+                    Alignment="Default"
+                    DisplayFormat="n0"
+                    FieldName="GirişBobinAğırlığı"
+                    SummaryType="Sum" />
+                <dxg:GridSummaryItem
+                    Alignment="Default"
+                    DisplayFormat="n0"
+                    FieldName="SüreDk"
+                    SummaryType="Sum" />
+                <dxg:GridSummaryItem
+                    Alignment="Default"
+                    DisplayFormat="n2"
+                    FieldName="Hurda"
+                    SummaryType="Sum" />
+                <dxg:GridSummaryItem
+                    Alignment="Default"
+                    DisplayFormat="n0"
+                    FieldName="ÇıkışBobinAğırlığı"
+                    SummaryType="Sum" />
+                <dxg:GridSummaryItem
+                    Alignment="Default"
+                    DisplayFormat="n0"
+                    FieldName="İşletmeFiresi"
+                    SummaryType="Sum" />
+            </dxg:GridControl.TotalSummary>
+
+            <dxg:GridControl.Resources>
+
+                <Style x:Key="s1" TargetType="dxg:BaseGridHeader">
+                    <Setter Property="Background" Value="WhiteSmoke" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style>
+
+                <Style TargetType="{x:Type dxg:GridControlBand}">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Foreground="Black"
+                                    Text="{Binding}" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <Style TargetType="dxg:GridColumnHeader">
+                    <Style.Triggers>
+
+                        <DataTrigger Binding="{Binding ElementName=win1, Path=DataContext.MakinaGrupKod}" Value="SH">
+                            <Setter Property="Background" Value="SlateBlue" />
+                            <Setter Property="Foreground" Value="White" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding ElementName=win1, Path=DataContext.MakinaGrupKod}" Value="FH">
+                            <Setter Property="Background" Value="LightPink" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding ElementName=win1, Path=DataContext.MakinaGrupKod}" Value="SP">
+                            <Setter Property="Background" Value="LightGreen" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding ElementName=win1, Path=DataContext.MakinaGrupKod}" Value="DLM">
+                            <Setter Property="Background" Value="SkyBlue" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+
+                <Style TargetType="dxg:GridColumn">
+                    <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                    <Setter Property="FilterPopupMode" Value="Excel" />
+                </Style>
+
+                <Style
+                    x:Key="grayCell"
+                    BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}"
+                    TargetType="dxg:LightweightCellEditor">
+                    <Style.Setters>
+                        <Setter Property="Background" Value="WhiteSmoke" />
+                    </Style.Setters>
+
+                    <Style.Triggers>
+                        <Trigger Property="SelectionState" Value="FocusedAndSelected">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="TextBlock.Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+                <Style BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" TargetType="dxg:LightweightCellEditor">
+                    <Style.Triggers>
+                        <Trigger Property="SelectionState" Value="FocusedAndSelected">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="TextBlock.Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </dxg:GridControl.Resources>
+
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    x:Name="View1"
+                    AllowChangeBandParent="True"
+                    AllowChangeColumnParent="True"
+                    AllowColumnFiltering="True"
+                    AllowSorting="False"
+                    AutoWidth="False"
+                    ClipboardCopyOptions="Excel"
+                    ColumnFilterPopupMode="Excel"
+                    EnableImmediatePosting="True"
+                    EnterMoveNextColumn="False"
+                    IndicatorWidth="30"
+                    NavigationStyle="Cell"
+                    NewItemRowPosition="None"
+                    PasteMode="Update"
+                    RowMinHeight="40"
+                    ShowFocusedRectangle="True"
+                    ShowGroupPanel="False"
+                    ShowTotalSummary="True">
+
+                    <dxg:TableView.FocusedCellBorderTemplate>
+                        <ControlTemplate>
+                            <Border
+                                Margin="0"
+                                BorderBrush="DarkGreen"
+                                BorderThickness="1.5" />
+                        </ControlTemplate>
+                    </dxg:TableView.FocusedCellBorderTemplate>
+
+                    <dxg:TableView.FormatConditions>
+
+                        <dxg:FormatCondition Expression="[SüreProblemliMi] =1" FieldName="SüreDk">
+                            <dx:Format
+                                Background="Red"
+                                Foreground="White"
+                                TextDecorations="{x:Null}" />
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
+
+                    <dxg:TableView.ColumnHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Height="35"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Stretch"
+                                FontWeight="DemiBold"
+                                Text="{Binding}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </dxg:TableView.ColumnHeaderTemplate>
+
+                    <dxg:TableView.RowCellMenuCustomizations>
+                        <dxb:BarButtonItem
+                            Command="ApplicationCommands.Copy"
+                            Content="Kopyala"
+                            Glyph="{dx:DXImage Image=Copy_16x16.png}" />
+                        <dxb:BarButtonItem
+                            Command="ApplicationCommands.Paste"
+                            Content="Yapıştır"
+                            Glyph="{dx:DXImage Image=Paste_16x16.png}" />
+
+                        <dxb:BarButtonItem
+                            Command="{Binding View.DataContext.IcerigiTemizleCommand}"
+                            CommandParameter="{Binding ElementName=View1}"
+                            Content="İçeriğiTemizle" />
+
+                        <dxb:BarButtonItem Content="-------------" />
+
+                        <dxb:BarButtonItem
+                            Command="{Binding View.DataContext.UsteSatirEkleCommand}"
+                            CommandParameter="{Binding ElementName=View1}"
+                            Content="Ekle..." />
+
+                        <dxb:BarButtonItem
+                            Command="{Binding View.DataContext.SilCommand}"
+                            CommandParameter="{Binding ElementName=View1}"
+                            Content="Sil..."
+                            Glyph="{dx:DXImage Image=Delete_16x16.png}" />
+                    </dxg:TableView.RowCellMenuCustomizations>
+
+                    <dxg:TableView.RowIndicatorContentTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <uretimIsletmeModule:HandleToIndexConverter x:Key="conv" />
+                            </DataTemplate.Resources>
+                            <TextBlock TextAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource conv}">
+                                        <Binding Path="RowHandle.Value" />
+                                        <Binding Path="View.Grid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </dxg:TableView.RowIndicatorContentTemplate>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+
+            <dxg:GridControl.Bands>
+
+                <dxg:GridControlBand Name="operatorBobin" Header="OPERATÖR / BOBİN BİLGİLERİ">
+                    <dxg:GridColumn
+                        Name="id"
+                        Width="45"
+                        MinWidth="25"
+                        FieldName="Id"
+                        FilterPopupMode="Excel"
+                        Visible="False">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <dxe:TextEdit EditValue="{Binding RowData.Row.Id}" />
+                                    <dxe:TextEdit EditValue="{Binding RowData.Row.KayitEklenmeTarihi}" NullText="Kayit Eklenme Tar" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn
+                        Name="operator"
+                        Width="100"
+                        MinWidth="25"
+                        CellStyle="{StaticResource grayCell}"
+                        FieldName="Operatör"
+                        FilterPopupMode="Excel"
+                        Header="Operatör" />
+
+                    <dxg:GridColumn
+                        Name="kafileNo"
+                        Width="75"
+                        EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                        FieldName="GirişKafileNo"
+                        Header="Giriş Kafile No" />
+
+                    <dxg:GridColumn
+                        Name="bobinNo"
+                        Width="70"
+                        EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center,
+                                                        DisplayFormat=n0}"
+                        FieldName="GirişBobinNo"
+                        Header="Giriş Bobin No" />
+
+                    <dxg:GridColumn
+                        Name="miktarKg"
+                        Width="70"
+                        FieldName="GirişBobinAğırlığı"
+                        Header="Giriş Bobin Ağ.">
+
+
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:CalcEditSettings
+                                HorizontalContentAlignment="Center"
+                                DisplayFormat="n0"
+                                Mask="####"
+                                MaxLength="4" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn
+                        Name="cikisKafileNo"
+                        Width="75"
+                        EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                        FieldName="ÇıkışKafileNo"
+                        Header="Çıkış Kafile No" />
+
+                    <dxg:GridColumn
+                        Name="cikisBobinNo"
+                        Width="70"
+                        EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center,
+                                                        DisplayFormat=n0}"
+                        FieldName="ÇıkışBobinNo"
+                        Header="Çıkış BobinNo" />
+
+                    <dxg:GridColumn
+                        Name="cikisBobinAgirligi"
+                        Width="70"
+                        FieldName="ÇıkışBobinAğırlığı"
+                        Header="Çıkış Bobin Ağ.">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:CalcEditSettings
+                                HorizontalContentAlignment="Center"
+                                DisplayFormat="n0"
+                                Mask="####"
+                                MaxLength="4" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand
+                    Name="runSure"
+                    Header="RUN SÜRE"
+                    HeaderStyle="{StaticResource s1}">
+                    <dxg:GridColumn
+                        Name="baslamaZamani"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        CopyValueAsDisplayText="False"
+                        FieldName="BaşlangıçSaati"
+                        Header="Başlama Zamanı">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings
+                                HorizontalContentAlignment="Center"
+                                AllowNullInput="True"
+                                Mask="HH:mm"
+                                MaskType="DateTimeAdvancingCaret" />
+                        </dxg:GridColumn.EditSettings>
+
+                        <dxg:GridColumn.DisplayTemplate>
+                            <ControlTemplate>
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock
+                                        FontWeight="Bold"
+                                        Text="{Binding RowData.Row.BaşlangıçSaati, StringFormat=HH:mm}"
+                                        TextAlignment="Center" />
+                                    <TextBlock
+                                        FontSize="9"
+                                        Text="{Binding RowData.Row.BaşlangıçSaati, StringFormat=dd/MM ddd}"
+                                        TextAlignment="Center" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </dxg:GridColumn.DisplayTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn
+                        Name="bitisZamani"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        CopyValueAsDisplayText="False"
+                        FieldName="BitişSaati"
+                        Header="Bitiş Zamanı"
+                        HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings
+                                HorizontalContentAlignment="Center"
+                                AllowNullInput="True"
+                                DisplayFormat="HH:mm ddd"
+                                Mask="HH:mm"
+                                MaskType="DateTimeAdvancingCaret" />
+                        </dxg:GridColumn.EditSettings>
+
+                        <dxg:GridColumn.DisplayTemplate>
+                            <ControlTemplate>
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock
+                                        FontWeight="Bold"
+                                        Text="{Binding RowData.Row.BitişSaati, StringFormat=HH:mm}"
+                                        TextAlignment="Center" />
+                                    <TextBlock
+                                        FontSize="9"
+                                        Text="{Binding RowData.Row.BitişSaati, StringFormat=dd/MM ddd}"
+                                        TextAlignment="Center" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </dxg:GridColumn.DisplayTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn
+                        Name="durusKodu"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        FieldName="DuruşKodu">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings HorizontalContentAlignment="Center" AllowNullInput="True" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn
+                        Name="durusAd"
+                        Width="140"
+                        CellStyle="{StaticResource grayCell}"
+                        FieldName="MakinaDuruşAd"
+                        Header="Duruş Ad"
+                        ReadOnly="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings TextWrapping="Wrap" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn
+                        Name="sureDk"
+                        Width="60"
+                        CellStyle="{StaticResource grayCell}"
+                        EditSettings="{dxe:TextSettings DisplayFormat=n0,
+                                                        HorizontalContentAlignment=Center}"
+                        FieldName="SüreDk"
+                        ReadOnly="True" />
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand Name="BobinBoyut" Header="KALINLIK / EN">
+                    <dxg:GridColumn
+                        Name="girisKalinlik"
+                        Width="70"
+                        FieldName="GirişKalınlık"
+                        Header="Giriş Kalınlık" />
+                    <dxg:GridColumn
+                        Name="cikisKalinlik"
+                        Width="70"
+                        FieldName="ÇıkışKalınlık"
+                        Header="Çıkış Kalınlık" />
+
+                    <dxg:GridColumn
+                        Name="girisEni"
+                        Width="70"
+                        FieldName="GirişEni"
+                        Header="Giriş Eni" />
+
+                    <dxg:GridColumn
+                        Name="cikisEni"
+                        Width="70"
+                        FieldName="ÇıkışEni"
+                        Header="Çıkış Eni">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:CalcEditSettings HorizontalContentAlignment="Center" DisplayFormat="n2" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand Name="Diger" Header="DİĞER">
+                    <dxg:GridColumn
+                        Name="kondusyon"
+                        Width="70"
+                        FieldName="Kondüsyon" />
+                    <dxg:GridColumn
+                        Name="pasNo"
+                        Width="70"
+                        FieldName="PasNo" />
+                    <dxg:GridColumn
+                        Name="nihaiSonPas"
+                        Width="70"
+                        FieldName="NihaiSonPas" />
+                    <dxg:GridColumn
+                        Name="Alasim"
+                        Width="70"
+                        FieldName="Alaşım" />
+                    <dxg:GridColumn
+                        Name="cap"
+                        Width="70"
+                        FieldName="Çap" />
+                    <dxg:GridColumn
+                        Name="eksayisi"
+                        Width="70"
+                        FieldName="EkSayısı" />
+                    <dxg:GridColumn
+                        Name="eknedeni"
+                        Width="70"
+                        FieldName="EkNedeni" />
+                    <dxg:GridColumn
+                        Name="sonrakiIslem"
+                        Width="70"
+                        FieldName="Sonrakiİşlem" />
+                    <dxg:GridColumn
+                        Name="aciklama"
+                        Width="70"
+                        FieldName="Açıklama" />
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand
+                    Name="istatistikler"
+                    Header="İSTATİSTİKLER"
+                    HeaderStyle="{StaticResource s1}">
+                    <dxg:GridColumn
+                        Name="ortalamaKalinlikKatsayisi"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                        FieldName="Ort_Kalınlık_Katsayısı"
+                        Header="Ort.Kalınlık Katsayısı"
+                        ReadOnly="True" />
+                    <dxg:GridColumn
+                        Name="ortalamaEnKatsayisi"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                        FieldName="Ort_EnKatsayısı"
+                        FilterPopupMode="Excel"
+                        Header="Ort.En Katsayısı"
+                        ReadOnly="True" />
+                    <dxg:GridColumn
+                        Name="ortalamaKenarKesme"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                        FieldName="KenarKesmeFiresi"
+                        ReadOnly="True" />
+                    <dxg:GridColumn
+                        Name="isletmeFiresi"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        EditSettings="{dxe:TextSettings DisplayFormat=n0}"
+                        FieldName="İşletmeFiresi"
+                        FilterPopupMode="Excel"
+                        ReadOnly="True" />
+                    <dxg:GridColumn
+                        Name="hurdaTon"
+                        Width="70"
+                        CellStyle="{StaticResource grayCell}"
+                        EditSettings="{dxe:TextSettings DisplayFormat=n3}"
+                        FieldName="Hurda"
+                        FilterPopupMode="Excel"
+                        Header="Hurda (ton)"
+                        ReadOnly="True" />
+                </dxg:GridControlBand>
+            </dxg:GridControl.Bands>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

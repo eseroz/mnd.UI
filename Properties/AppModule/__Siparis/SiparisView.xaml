@@ -1,0 +1,645 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+    xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v20.2"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:converters="clr-namespace:Pandap.UI.Converters"
+             xmlns:siparis="clr-namespace:Pandap.UI.AppModule.__Siparis"
+             xmlns:siparisKalem="clr-namespace:Pandap.UI.AppModule.__SiparisKalem"
+
+
+             x:Class="Pandap.UI.AppModule.__Siparis.SiparisView"
+    x:Name="siparisform"
+
+    mc:Ignorable="d" Background="#FFF0F0F0" d:DesignWidth="1262.2" d:DesignHeight="742.8"
+   d:DataContext="{d:DesignInstance siparis:SiparisViewModel}"
+   >
+
+    <UserControl.Resources>
+
+        <DataTemplate DataType="{x:Type siparisKalem:KalemViewModel}">
+            <siparisKalem:KalemView />
+        </DataTemplate>
+
+        <converters:MyEmptyOrNullConverter x:Key="myEmptyNullConverter" />
+
+
+        <Style TargetType="dxe:SpinEdit">
+            <Setter Property="IsFloatValue" Value="False" />
+            <Setter Property="EditValueType" Value="{x:Type sys:Int32}" />
+        </Style>
+
+        <Style x:Key="grpSiparis" TargetType="dxlc:GroupBox">
+            <Setter Property="TitleVisibility" Value="Collapsed" />
+            <Setter Property="BorderThickness" Value="0.3" />
+        </Style>
+
+        <Style x:Key="col0" TargetType="dxlc:LayoutItemLabel">
+            <Setter Property="Width" Value="0" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style x:Key="col1" TargetType="dxlc:LayoutItemLabel">
+            <Setter Property="Width" Value="90" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style x:Key="col2" TargetType="dxlc:LayoutItemLabel">
+            <Setter Property="Width" Value="130" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style x:Key="col3" TargetType="dxlc:LayoutItemLabel">
+            <Setter Property="Width" Value="220" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style TargetType="dxlc:LayoutItem">
+            <Setter Property="LabelHorizontalAlignment" Value="Right" />
+        </Style>
+
+        <Style x:Key="BaseStyle" TargetType="dxe:BaseEdit">
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="True">
+                    <Setter Property="Background" Value="#F4F4F4" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="dxe:TextEdit" BasedOn="{StaticResource BaseStyle}" />
+        <Style TargetType="dxe:ComboBoxEdit" BasedOn="{StaticResource BaseStyle}" />
+
+        <DataTemplate x:Key="barcontentTemlate">
+            <TextBlock Text="{Binding}" FontWeight="SemiBold" />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService />
+        <dx:DXMessageBoxService />
+        <dx:DialogService DialogWindowStartupLocation="CenterOwner" x:Name="Service1">
+            <dx:DialogService.DialogStyle>
+                <Style TargetType="{x:Type dx:DXDialogWindow}">
+                    <Setter Property="WindowStyle" Value="ToolWindow" />
+                </Style>
+            </dx:DialogService.DialogStyle>
+        </dx:DialogService>
+
+        <dxmvvm:EventToCommand SourceName="siparisform" EventName="Loaded"
+            Command="{Binding FormLoadedCommand}" />
+
+        <dxmvvm:CurrentWindowService ClosingCommand="{Binding FormClosingCommand}" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <DockPanel>
+        <dxb:BarContainerControl DockPanel.Dock="Top">
+            <dxb:ToolBarControl IsEnabled="{Binding IsEditableForm, Mode=TwoWay}" Height="40" Margin="0,0">
+
+                <dxb:BarButtonItem Command="{Binding SiparisYeniCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Yeni Sipariş" Glyph="{dx:DXImage Image=WrapText2_32x32.png}" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="{dx:DXImage Image=AddFile_32x32.png}" />
+                <dxb:BarButtonItem Command="{Binding SiparisKopyalaCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Kopyala" Glyph="{dx:DXImageOffice2013 Image=Copy_16x16.png}" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="{dx:DXImageOffice2013 Image=Copy_32x32.png}" />
+
+                <dxb:BarButtonItem CommandParameter="{Binding}" Command="{Binding SiparisKaydetCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Kaydet" Glyph="{dx:DXImageOffice2013 Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="{dx:DXImage Image=Save_32x32.png}" />
+                <dxb:BarButtonItem Command="{Binding SiparisKapasitiftenYeniCommand}" Content="Kapasitiften Yeni" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="{dx:DXImage Image=NewTableStyle_32x32.png}" Glyph="{dx:DXImage Image=NewTableStyle_16x16.png}" />
+
+                <dxb:BarItemSeparator />
+
+                <dxb:BarButtonItem Command="{Binding TeyitFormYazdirEnCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Yazdır En" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="pack://application:,,,/Pandap;component/Content/Images/en.JPG" />
+                <dxb:BarButtonItem Command="{Binding TeyitFormYazdirTrCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Yazdır Tr" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="pack://application:,,,/Pandap;component/Content/Images/tr.JPG" Alignment="Default" />
+
+                <dxb:BarButtonItem Command="{Binding TeyitFormDesignerCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Teyit Form" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="{dx:DXImage Image=Design_32x32.png}" Glyph="{dx:DXImage Image=Design_16x16.png}" />
+
+                <dxb:BarButtonItem Command="{Binding SiparisMesajYazCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Mesaj Yaz" BarItemDisplayMode="ContentAndGlyph" LargeGlyph="{dx:DXImage Image=EditComment_32x32.png}" />
+
+                <dxb:BarItemSeparator />
+            </dxb:ToolBarControl>
+            <dxb:ToolBarControl Height="40" Margin="0,0">
+
+                <dxb:BarStaticItem Content="{Binding}" Alignment="Far">
+                    <dxb:BarStaticItem.ContentTemplate>
+                        <DataTemplate>
+                            <StackPanel Height="25" Orientation="Horizontal">
+
+                                <TextBlock Padding="5,0" VerticalAlignment="Center" FontWeight="Bold" Text="Versiyonlar:" />
+
+                                <dxe:ComboBoxEdit IsTextEditable="False" ApplyItemTemplateToSelectedItem="True" Width="220"
+
+                            ItemsSource="{Binding DataContext.EntityLogs,ElementName=siparisform}"
+                            SelectedItem="{Binding DataContext.SeciliEntityLog,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,
+                                ElementName=siparisform}">
+
+                                    <dxe:ComboBoxEdit.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Padding="5,0" Text="{Binding Path=KayitTarihi,StringFormat={}{0:dd/MM/yyyy hh:mm:ss}}" MinHeight="0" />
+                                                <TextBlock Text="{Binding Path=KullaniciAdSoyad}" MinHeight="0" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </dxe:ComboBoxEdit.ItemTemplate>
+                                </dxe:ComboBoxEdit>
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxb:BarStaticItem.ContentTemplate>
+                </dxb:BarStaticItem>
+            </dxb:ToolBarControl>
+        </dxb:BarContainerControl>
+
+        <dxlc:LayoutControl Orientation="Vertical">
+
+            <dxlc:LayoutGroup Padding="0,-4,0,0" ItemSpace="0" DataContext="{Binding SeciliSiparis}" View="GroupBox"
+                              Orientation="Vertical">
+
+                <dxlc:LayoutGroup.HeaderTemplate>
+                    <DataTemplate>
+                        <!--<StackPanel  Orientation="Horizontal">
+                        <TextBlock Text="Plasiyer : " FontWeight="Bold" />
+                        <TextBlock Text="{Binding DataContext.StokHareket.PlasiyerRef.PlasiyerAciklama,
+                                RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <TextBlock Text="{Binding DataContext.StokHareket.Id, StringFormat=-SiparişId:{0},
+                                RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    </StackPanel>-->
+                    </DataTemplate>
+                </dxlc:LayoutGroup.HeaderTemplate>
+                <dxlc:LayoutGroup ItemLabelsAlignment="Local" Padding="0,-8" GroupBoxStyle="{StaticResource grpSiparis}" View="GroupBox">
+
+                    <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Sipariş No : " HorizontalAlignment="Left">
+                        <dxe:TextEdit ShowBorder="False" FontSize="13" Width="150"
+                                  Text="{Binding SiparisKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="DarkRed" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem LabelStyle="{StaticResource col1}" Label="Tarih : " HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <dxe:TextEdit ShowBorder="False" IsReadOnly="True" Width="100"
+                                  EditValue="{Binding SiparisTarih, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  FontWeight="Bold" Foreground="DarkRed" DisplayFormatString="d" />
+                        </StackPanel>
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem LabelStyle="{StaticResource col1}" HorizontalAlignment="Left">
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="280" VerticalAlignment="Top"
+                                  Text="{Binding IlgiliKapasitifSiparisKod,Mode=OneWay,  StringFormat=Kapasitif Kod: {0}}"
+                                  FontWeight="Bold" Foreground="DarkRed" />
+
+                            <dxe:ToggleSwitchEdit Margin="0,0,100,0" EditValue="{Binding KapasitifMi,Mode=TwoWay}" CheckedStateContent="Kapasitif"
+                                              UncheckedStateContent="Siparis" ContentPlacement="Far" />
+                            <dxe:ToggleSwitchEdit EditValue="{Binding KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                              UncheckedStateContent="Kalem Toleransları Standart"
+                                              CheckedStateContent="Kalem Toleransları Standart Dışı" ContentPlacement="Far" />
+                        </StackPanel>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup ItemLabelsAlignment="Local" Padding="0,-8" GroupBoxStyle="{StaticResource grpSiparis}" View="GroupBox" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label="Müşteri : " LabelStyle="{StaticResource col1}">
+                        <dxg:LookUpEdit Width="397" HorizontalAlignment="Left" AutoPopulateColumns="False"
+                            DisplayMember="CariIsim"
+                            EditValue="{Binding CariKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding DataContext.SeciliMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged,
+                                    RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            ItemsSource="{Binding DataContext.Musteriler, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            ValueMember="CariKod">
+
+                            <dxg:LookUpEdit.StyleSettings>
+                                <dxg:SearchLookUpEditStyleSettings />
+                            </dxg:LookUpEdit.StyleSettings>
+                            <dxg:LookUpEdit.PopupContentTemplate>
+                                <ControlTemplate>
+                                    <dxg:GridControl x:Name="PART_GridControl">
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView AutoWidth="False" />
+                                        </dxg:GridControl.View>
+                                        <dxg:GridColumn Width="100" FieldName="CariKod" />
+                                        <dxg:GridColumn Width="*" FieldName="CariIsim" />
+                                        <dxg:GridColumn Width="30" FieldName="UlkeKod" />
+                                        <dxg:GridColumn Width="50" FieldName="PlasiyerKod" />
+                                    </dxg:GridControl>
+                                </ControlTemplate>
+                            </dxg:LookUpEdit.PopupContentTemplate>
+                        </dxg:LookUpEdit>
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label="Sevk Haftası : " LabelStyle="{StaticResource col2}"
+                        >
+                        <dxe:TextEdit EditValue="{Binding SevkYil}" Width="70" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label=" " LabelStyle="{StaticResource col0}">
+                        <dxe:SpinEdit Width="60" EditValue="{Binding SevkHafta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label="Teslim Haftası : " LabelStyle="{StaticResource col2}"
+                        >
+                        <dxe:TextEdit EditValue="{Binding TeslimYil}" Width="70" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label=" " LabelStyle="{StaticResource col0}">
+                        <dxe:SpinEdit Width="60" EditValue="{Binding TeslimHafta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup HorizontalAlignment="Stretch" ItemLabelsAlignment="Local" Padding="0,-8" GroupBoxStyle="{StaticResource grpSiparis}" View="GroupBox">
+
+                    <dxlc:LayoutItem Label="Ödeme Şekli : " HorizontalAlignment="Left" LabelStyle="{StaticResource col1}">
+                        <dxe:ComboBoxEdit AutoComplete="True"
+                            Width="150"
+                            DisplayMember="Aciklama"
+                            EditValue="{Binding OdemeTipKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding DataContext.OdemeTipleri, ElementName=siparisform}"
+                            ValueMember="OdemeTipKod" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem Label="Ödeme Not : " HorizontalAlignment="Left" LabelStyle="{StaticResource col1}">
+                        <dxe:TextEdit Width="150"
+                                  EditValue="{Binding OdemeAciklama,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem Label="Firma Sipariş No : " LabelStyle="{StaticResource col2}"
+                        HorizontalAlignment="Left">
+                        <dxe:TextEdit Width="137" EditValue="{Binding FirmaSiparisNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup ItemLabelsAlignment="Local" Padding="0,-8" GroupBoxStyle="{StaticResource grpSiparis}" View="GroupBox" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutItem Label="Satış Tipi : " HorizontalAlignment="Left" LabelStyle="{StaticResource col1}">
+                        <dxe:ComboBoxEdit ShowEditorButtons="False" Width="150"
+                            IsReadOnly="True"
+                            DisplayMember="Aciklama"
+                            EditValue="{Binding SatisTipKod,Mode=TwoWay}"
+                            ItemsSource="{Binding DataContext.SatisTipleri, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            ValueMember="SatisTipKod" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label="Teslim Şekli : " LabelStyle="{StaticResource col1}">
+                        <dxe:ComboBoxEdit AutoComplete="True"
+                            Width="150"
+                            DisplayMember="Aciklama"
+                            EditValue="{Binding TeslimTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding DataContext.TeslimTipleri, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            ValueMember="TeslimTipKod" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label="Fatura Döviz Cinsi : " LabelStyle="{StaticResource col2}"
+                        >
+                        <dxe:ComboBoxEdit Width="70" AutoComplete="True"
+                            DisplayMember="Aciklama"
+                            EditValue="{Binding FaturaDovizTipKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding DataContext.SeciliIslemDovizCinsi,RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding DataContext.DovizTipleri, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            ValueMember="DovizTipKod" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label=" " LabelStyle="{StaticResource col0}">
+                        <dxe:TextEdit Width="60"
+                            Background="LightGray"
+                            EditValue="{Binding FaturaDovizKuru,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            Mask="n"
+                            MaskCulture="tr-TR"
+                            MaskType="Numeric"
+                            DisplayFormatString="n4"
+                            />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label="Takip Döviz Cinsi : " LabelStyle="{StaticResource col2}"
+                        >
+                        <dxe:ComboBoxEdit Width="70" NullValue="-1" AutoComplete="True"
+                            DisplayMember="Aciklama"
+                            EditValue="{Binding TakipDovizTipKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding DataContext.SeciliTakipDovizCinsi,RelativeSource={RelativeSource AncestorType=UserControl},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding DataContext.DovizTipleri, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            ValueMember="DovizTipKod" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Label=" " LabelStyle="{StaticResource col0}">
+                        <dxe:TextEdit Background="LightGray"
+                            Width="60"
+                            EditValue="{Binding TakipDovizKuru, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Mask="n"
+                            DisplayFormatString="n4"
+                            MaskCulture="tr-TR"
+                            MaskType="Numeric"
+                            />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutGroup Padding="-8,-8" Header="Kalem Detaylar" View="GroupBox"
+                              Orientation="Vertical">
+
+                <dxlc:LayoutGroup.HeaderTemplate>
+                    <DataTemplate>
+                    </DataTemplate>
+                </dxlc:LayoutGroup.HeaderTemplate>
+
+                <dxb:ToolBarControl IsEnabled="{Binding IsEditableForm, Mode=TwoWay}" Height="30" Margin="0,0">
+                    <dxb:BarButtonItem Command="{Binding KalemYeniCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Yeni Kalem" Glyph="{dx:DXImage Image=ShowDetail_16x16.png}" BarItemDisplayMode="ContentAndGlyph" />
+                    <dxb:BarButtonItem Command="{Binding KalemKaydetCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Ekle/Güncelle" Glyph="{dx:DXImageOffice2013 Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph" />
+
+                    <dxb:BarButtonItem Command="{Binding KalemKopyalaCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Kalem Kopyala" Glyph="{dx:DXImageOffice2013 Image=Copy_16x16.png}" BarItemDisplayMode="ContentAndGlyph" />
+
+                    <dxb:BarButtonItem Command="{Binding KalemEditCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="Düzenle" Glyph="{dx:DXImage Image=PenColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph" />
+                    <dxb:BarButtonItem Command="{Binding KalemSilCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="   Sil       " Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" BarItemDisplayMode="ContentAndGlyph" />
+                    <dxb:BarButtonItem Command="{Binding KalemVazgecCommand}" ContentTemplate="{StaticResource barcontentTemlate}" Content="İptal" Glyph="{dx:DXImage Image=Reset_32x32.png}" BarItemDisplayMode="ContentAndGlyph" />
+                    <dxb:BarButtonItem Command="{Binding UrunKodunuBulCommand}" Content="Stok Kodunu Bul" Alignment="Far" ContentTemplate="{StaticResource barcontentTemlate}" Glyph="{dx:DXImage Image=AddCalculatedField_16x16.png}" BarItemDisplayMode="ContentAndGlyph" />
+
+                    <dxb:BarStaticItem Alignment="Far">
+                        <dxb:BarStaticItem.ContentTemplate>
+                            <DataTemplate>
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Risk" />
+
+                                        <TextBlock Padding="2" Background="Yellow" TextAlignment="Right"
+                                               Text="{Binding DataContext.CariRiskDurum.DovizTuru, StringFormat='n0',
+                                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                        <TextBlock Padding="2" TextAlignment="Right"
+                                               Width="60" Foreground="White" Background="Black"
+                                               Text="{Binding DataContext.CariRiskDurum.RiskLimitiDoviz, StringFormat='n0',
+                                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Bakiye:" />
+                                        <TextBlock Padding="2" Background="Yellow" TextAlignment="Right"
+                                               Text="{Binding DataContext.CariRiskDurum.DovizTuru, StringFormat='n0',
+                                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Padding="2" TextAlignment="Right"
+                                               Width="60" Foreground="White" Background="Black"
+                                               Text="{Binding DataContext.CariRiskDurum.D_Bakiye, StringFormat='n0',
+                                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Bakiye(TL):" />
+                                        <TextBlock Padding="2" TextAlignment="Right"
+                                               Width="60" Foreground="White" Background="Black"
+                                               Text="{Binding DataContext.CariRiskDurum.Bakiye, StringFormat='n0',
+                                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+
+                                    <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                                        <TextBlock Text="Risk(TL):" />
+                                        <TextBlock Padding="2" TextAlignment="Right"
+                                               Width="60" Foreground="White" Background="Black"
+                                               Text="{Binding DataContext.CariRiskDurum.Toplam, StringFormat='n0',
+                                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxb:BarStaticItem.ContentTemplate>
+                    </dxb:BarStaticItem>
+
+                    <dxb:BarStaticItem Alignment="Far">
+                        <dxb:BarStaticItem.ContentTemplate>
+                            <DataTemplate>
+                                <Button Content="Netsise Aktar" Width="100" Height="20" Command="{Binding DataContext.NetsiseAktarCommand,RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="0" />
+                            </DataTemplate>
+                        </dxb:BarStaticItem.ContentTemplate>
+                    </dxb:BarStaticItem>
+                </dxb:ToolBarControl>
+
+                <dxlc:LayoutItem>
+                    <ContentControl Content="{Binding KalemVM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </dxlc:LayoutItem>
+
+                <dxg:GridControl SelectionMode="Cell" SelectedItem="{Binding SeciliKalem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MinHeight="50"
+                                 ItemsSource="{Binding SeciliSiparis.SiparisKalemleri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  VerticalAlignment="Stretch">
+
+                    <dxg:GridControl.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Yeni Satır (insert)" Command="{Binding KalemYeniCommand}" />
+                            <MenuItem Header="Satır Sil (delete)" Command="{Binding KalemSilCommand}" />
+                            <MenuItem Header="Satır Kopyala" Command="{Binding KalemKopyalaCommand}" />
+                            <MenuItem Header="Satır Detay (F4)" Command="{Binding KalemEditCommand}" />
+                        </ContextMenu>
+                    </dxg:GridControl.ContextMenu>
+
+                    <dxg:GridControl.View>
+
+                        <dxg:TableView AllowGrouping="False" AutoWidth="True" ShowGroupPanel="False" ShowFixedTotalSummary="False" ShowTotalSummary="True" AllowEditing="False">
+                            <dxg:TableView.FormatConditions>
+
+                                <dxg:FormatCondition FieldName="OPER_NetsisBelgeNo" Value1="{x:Null}" ValueRule="NotEqual">
+                                    <dx:Format Background="Green" Foreground="White" TextDecorations="{x:Null}" />
+                                </dxg:FormatCondition>
+                            </dxg:TableView.FormatConditions>
+
+                            <dxg:TableView.ColumnHeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Height="35" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding }" Margin="0,-4" />
+                                </DataTemplate>
+                            </dxg:TableView.ColumnHeaderTemplate>
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+
+                    <dxg:GridControl.TotalSummary>
+                        <dxg:GridSummaryItem FieldName="KDVliToplam" SummaryType="Sum" DisplayFormat="{}{0:n2}" />
+                    </dxg:GridControl.TotalSummary>
+                    <dxg:GridColumn VisibleIndex="2" Visible="True" FieldName="SiparisKalemKod" Width="150" SortOrder="Ascending" SortIndex="0" />
+
+                    <dxg:GridColumn Visible="False" FieldName="PlanlamaSevkOnayliMi" Width="120" />
+
+                    <dxg:GridColumn VisibleIndex="3" Visible="True" FieldName="UrunKod" Header="Stok Kodu" Width="120" />
+
+                    <dxg:GridColumn VisibleIndex="3" Visible="True" FieldName="MusteriUrunKodu" Header="Müş. Ürün Kodu" Width="120" />
+
+                    <dxg:GridColumn VisibleIndex="3" Visible="False" FieldName="Id" Header="Id" Width="55" IsSmart="True" />
+
+                    <dxg:GridColumn VisibleIndex="1" Visible="True" FieldName="OPER_NetsisBelgeNo" Header="NetsisBelgeNo" Width="140" IsSmart="True">
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn VisibleIndex="0" FieldName="SatirSecildiMi" Header="Seç" Width="50">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dxe:CheckEdit HorizontalAlignment="Center"
+                                      IsChecked="{Binding Path=RowData.Row.SatirSecildiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                      IsEnabled="{Binding Path=RowData.Row.OPER_NetsisBelgeNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource myEmptyNullConverter}}">
+                                </dxe:CheckEdit>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn FieldName="AlasimTipKod" Header="Alaşım" IsSmart="True" VisibleIndex="4" />
+                    <dxg:GridColumn FieldName="SertlikTipKod" Header="Sertlik" IsSmart="True" VisibleIndex="5" />
+                    <dxg:GridColumn FieldName="AmbalajTipKod" Header="Ambalaj Tip" Visible="False" IsSmart="True" VisibleIndex="5" />
+                    
+                    <dxg:GridColumn Width="115" Header="Kalınlık (µ)" FieldName="Kalinlik_micron" IsSmart="True" VisibleIndex="6">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="En (mm)" FieldName="En_mm" IsSmart="True" VisibleIndex="7">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="Miktar (kg)" FieldName="Miktar_kg" IsSmart="True" VisibleIndex="8">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings MaskType="Numeric" DisplayFormat="n0" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn FieldName="ToplamTutar" IsSmart="True" VisibleIndex="13">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" MaskType="Numeric" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn FieldName="BirimFiyat" IsSmart="True" VisibleIndex="12">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings DisplayFormat="n2" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="LmeTutar" Header="Lme Tutar" IsSmart="True" VisibleIndex="9">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="IscilikTutar" Header="İşçilik Tutar" IsSmart="True" VisibleIndex="10">
+
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    
+                    
+                    <dxg:GridColumn FieldName="KulceTutar" Header="Külçe Tutar" IsSmart="True" VisibleIndex="11">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="IscilikVadeFarkiTutar" Header="İşç.VF.Tut." IsSmart="True" UnboundType="Decimal" VisibleIndex="14">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn FieldName="KdvTutar" Header="Kdv Tutarı" IsSmart="True" VisibleIndex="15">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn FieldName="GenelToplamTutar" Header="Genel T." IsSmart="True" VisibleIndex="16">
+                        <dxg:GridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type dxg:BaseGridHeader }">
+                                <Setter Property="Background" Value="#E78E46" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Style>
+                        </dxg:GridColumn.HeaderStyle>
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings Mask="n1" DisplayFormat="n1" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn FieldName="RefEntityGuid" Header="#" IsSmart="True" VisibleIndex="17">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <dx:SimpleButton Glyph="{dx:DXImage Image=EditComment_16x16.png}"
+                                        Command="{Binding View.DataContext.SiparisKalemMesajYazCommand}"
+                                        CommandParameter="{Binding RowData.Row}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                </dxg:GridControl>
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutGroup Padding="-8" DataContext="{Binding SeciliSiparis}" Header="Teyit Formu Notları" IsCollapsible="True" View="GroupBox"
+                              IsCollapsed="{Binding RaporDataKapansinMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Orientation="Vertical">
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True">
+                    <dxlc:LayoutGroup View="GroupBox" Orientation="Vertical">
+
+                        <dxlc:LayoutItem Label="Özel Notlar">
+                            <dxe:TextEdit EditValue="{Binding OzelNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Teknik Özellik">
+                            <dxe:TextEdit EditValue="{Binding TeknikOzellikNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Paketleme">
+                            <dxe:TextEdit EditValue="{Binding PaketlemeNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="LME Bağlama Metni">
+                            <dxe:TextEdit EditValue="{Binding LmeBaglamaNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+
+                        <dxlc:LayoutItem Label="İrsaliye Adresi">
+                            <dxe:TextEdit EditValue="{Binding IrsaliyeAdresi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+
+                        <dxlc:LayoutItem Label="İlgili Not ">
+                            <dxe:TextEdit NullText="Cari bilgilerinden gelen ilgili den farkıysa giriş yapınız..." EditValue="{Binding IlgiliNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+
+                        <dxlc:LayoutItem Label="Panda Not ">
+                            <dxe:TextEdit NullText="Panda için  özel notları buraya giriniz.." EditValue="{Binding PandaNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </dxlc:LayoutItem>
+
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </DockPanel>
+</UserControl>

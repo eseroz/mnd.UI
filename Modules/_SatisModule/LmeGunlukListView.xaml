@@ -1,0 +1,80 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+     xmlns:local="clr-namespace:mnd.UI.Modules._SatisModule"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+          
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="mnd.UI.Modules._SatisModule.LmeGunlukListView"
+             d:DataContext="{d:DesignInstance {x:Type local:LmeGunlukListViewModel}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Command="{Binding YeniCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="FileDocument" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Yeni" />
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Kaydet" />
+                </StackPanel>
+            </Button>
+
+
+            <Button  Padding="0" Command="{Binding EkranTazeleCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Ekran Tazele" />
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding ExcelExportCommand}" Style="{DynamicResource MaterialDesignFlatButton}" CommandParameter="XLSX">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Excele Aktar" />
+                </StackPanel>
+            </Button>
+
+
+        </ToolBar>
+
+        <dxg:GridControl ItemsSource="{Binding LmeGunlukListe}"   Grid.Row="1">
+            <dxg:GridControl.View>
+                <dxg:TableView NewItemRowPosition="Bottom" ShowGroupPanel="False" AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+            </dxg:GridControl.View>
+
+            <dxg:GridColumn FieldName="Tarih" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:DateEditSettings MaskType="DateTimeAdvancingCaret"  MaskUseAsDisplayFormat="True"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Lme_USD"  IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" MaskType="Numeric"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Lme_EUR" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" MaskType="Numeric"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Lme_GBP">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" MaskType="Numeric" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+        </dxg:GridControl>
+
+    </Grid>
+</UserControl>

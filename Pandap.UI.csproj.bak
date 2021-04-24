@@ -1,0 +1,2823 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4C084B06-EAFF-40A5-B88A-1587C7118B32}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Pandap.UI</RootNamespace>
+    <AssemblyName>Pandap</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>.\WpfDist\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://localhost/Pandap/</UpdateUrl>
+    <TargetCulture>tr-TR</TargetCulture>
+    <ProductName>Pandap 2017</ProductName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.html</WebPage>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>2020.500.14.1</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ikon 64x64.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Pandap.UI.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Dashboard.v20.2.Wpf, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Diagram.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Docs.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Map.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.PivotGrid.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataVisualization.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Spreadsheet.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Accordion.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Charts.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Controls.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.Desktop.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Dashboard.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Diagram.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Docking.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.DocumentViewer.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Gauges.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Layout.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Map.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.NavBar.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.PivotGrid.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Printing.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.ReportDesigner.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Ribbon.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Charts.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Office.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.RichEdit.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Spreadsheet.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.MetropolisLight.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2019White.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.TreeMap.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.2.920, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=3.0.1.920, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.3.0.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="ResponsiveGrid.Wpf, Version=0.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ResponsiveGrid.0.3.3\lib\net45\ResponsiveGrid.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SqlClient, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.6.0\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TableDependency.SqlClient, Version=8.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlTableDependency.8.5.3\lib\net451\TableDependency.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AppCommands.cs" />
+    <Compile Include="AppMenu.cs" />
+    <Compile Include="AppModules\AppModule\IsMerkeziTanimView.xaml.cs">
+      <DependentUpon>IsMerkeziTanimView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\IsMerkeziTanimVM.cs" />
+    <Compile Include="AppModules\AppModule\MakinaParcaTanimView.xaml.cs">
+      <DependentUpon>MakinaParcaTanimView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\MakinaParcaTanimVM.cs" />
+    <Compile Include="AppModules\AppModule\MakinaDurusTanimListView.xaml.cs">
+      <DependentUpon>MakinaDurusTanimListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\MakinaDurusTanimListVM.cs" />
+    <Compile Include="AppModules\MenuSelectedEvent.cs" />
+    <Compile Include="AppModules\RaporDesignerModule\EkRapor.cs" />
+    <Compile Include="Behaviors\ScrollIntoViewForListBox.cs" />
+    <Compile Include="ControlHelpers\SelectionItemView.cs" />
+    <Compile Include="Converters\HaftaKontrolConverter.cs" />
+    <Compile Include="Converters\DovizSembolConverter.cs" />
+    <Compile Include="Converters\MyVisibilityFromCountConverter.cs" />
+    <Compile Include="Converters\PaketlemeConverter.cs" />
+    <Compile Include="GyModules\MesajModule\AppMesaj.cs" />
+    <Compile Include="GyModules\MesajModule\BlobInfo.cs" />
+    <Compile Include="GyModules\MesajModule\Converters\_Base64ImageConverter.cs" />
+    <Compile Include="GyModules\MesajModule\Converters\_HorizontalToTextAlignmentConverter.cs" />
+    <Compile Include="GyModules\MesajModule\Converters\_ListboxControlColorConverter.cs" />
+    <Compile Include="GyModules\MesajModule\Converters\_MyBoolToVisibilityInvertConverter.cs" />
+    <Compile Include="GyModules\MesajModule\GyMesajExtensions.cs" />
+    <Compile Include="GyModules\MesajModule\ListBoxBehavior.cs" />
+    <Compile Include="GyModules\MesajModule\MesajKayitEvents.cs" />
+    <Compile Include="GyModules\MesajModule\MesajlasmaViewModel.cs" />
+    <Compile Include="GyModules\MesajModule\MesajlasmaWindow.xaml.cs">
+      <DependentUpon>MesajlasmaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GyModules\MesajModule\MyAttachProps.cs" />
+    <Compile Include="GyModules\MesajModule\MyMessangerBindableBase.cs" />
+    <Compile Include="GyModules\MesajModule\Utils.cs" />
+    <Compile Include="Helper\GridFilterHelper\SupportClasses.cs" />
+    <Compile Include="Helper\MyAttachProps.cs" />
+    <Compile Include="Modules\Dashboard\Dashboard1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Dashboard1.Designer.cs">
+      <DependentUpon>Dashboard1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\DashboardWindow.xaml.cs">
+      <DependentUpon>DashboardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\ExwMaliyetView.xaml.cs">
+      <DependentUpon>ExwMaliyetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\ExwMaliyetVM.cs" />
+    <Compile Include="Modules\Dashboard\IsMerkeziMaliyetView.xaml.cs">
+      <DependentUpon>IsMerkeziMaliyetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\IsMerkeziMaliyetVM.cs" />
+    <Compile Include="Modules\Dashboard\JsonData.cs" />
+    <Compile Include="Modules\Dashboard\MakinaMaliyetService.cs" />
+    <Compile Include="Modules\Dashboard\MakinaMaliyetView.xaml.cs">
+      <DependentUpon>MakinaMaliyetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\MakinaMaliyetVM.cs" />
+    <Compile Include="Modules\Dashboard\MakinaPLC\MakinaDataDto.cs" />
+    <Compile Include="Modules\Dashboard\MakinaPLC\MakinaPlcDataView.xaml.cs">
+      <DependentUpon>MakinaPlcDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\MakinaPLC\MakinaPlcDataVM.cs" />
+    <Compile Include="Modules\Dashboard\SatislarView.xaml.cs">
+      <DependentUpon>SatislarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\SatislarVM.cs" />
+    <Compile Include="Modules\Dashboard\StokMaliyetVM.cs" />
+    <Compile Include="Modules\Dashboard\StokMaliyetView.xaml.cs">
+      <DependentUpon>StokMaliyetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Utils.cs" />
+    <Compile Include="Modules\DepoModule\YuklemeEmirleriView.xaml.cs">
+      <DependentUpon>YuklemeEmirleriView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DepoModule\YuklemeEmirleriViewModel.cs" />
+    <Compile Include="Modules\FinansModule\ImageConverterFinans.cs" />
+    <Compile Include="Modules\FinansModule\KonsolideFinansalRaporView.xaml.cs">
+      <DependentUpon>KonsolideFinansalRaporView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\FinansModule\KonsolideFinansalRaporVM.cs" />
+    <Compile Include="Modules\KaliteModule\RedMalzemeListView.xaml.cs">
+      <DependentUpon>RedMalzemeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\RedMalzemeListVM.cs" />
+    <Compile Include="Modules\KaliteModule\RedMalzemeView.xaml.cs">
+      <DependentUpon>RedMalzemeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\RedMalzemeVM.cs" />
+    <Compile Include="Modules\MessangerData_Events.cs" />
+    <Compile Include="Modules\ModuleStrings.cs" />
+    <Compile Include="Modules\MuhasebeModule\BankaListView.xaml.cs">
+      <DependentUpon>BankaListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MuhasebeModule\BankaListViewModel.cs" />
+    <Compile Include="AppModules\AppModule\KullaniciListView.xaml.cs">
+      <DependentUpon>KullaniciListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\KullaniciListViewModel.cs" />
+    <Compile Include="AppModules\AppModule\KullaniciRolListView.xaml.cs">
+      <DependentUpon>KullaniciRolListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\KullaniciRolListViewModel.cs" />
+    <Compile Include="AppModules\AppModule\MenuYetkiView.xaml.cs">
+      <DependentUpon>MenuYetkiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\MenuYetkiViewModel.cs" />
+    <Compile Include="AppModules\AppModule\OrtakDilTanimListView.xaml.cs">
+      <DependentUpon>OrtakDilTanimListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\OrtakDilTanimListViewModel.cs" />
+    <Compile Include="AppModules\AppModule\UygulamaAyarView.xaml.cs">
+      <DependentUpon>UygulamaAyarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\AppModule\UygulamaAyarViewModel.cs" />
+    <Compile Include="AppModules\AppModule\YetkiKontrolAttribute.cs" />
+    <Compile Include="Modules\IForm.cs" />
+    <Compile Include="Modules\DepoModule\DepoInfo.cs" />
+    <Compile Include="Modules\MusteriTakipModule\FirmaYetkiliKisiView.xaml.cs">
+      <DependentUpon>FirmaYetkiliKisiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MusteriTakipModule\FirmaYetkiliKisiViewModel.cs" />
+    <Compile Include="Modules\MusteriTakipModule\GorusmeListView.xaml.cs">
+      <DependentUpon>GorusmeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MusteriTakipModule\GorusmeListViewModel.cs" />
+    <Compile Include="Modules\MusteriTakipModule\GorusmeView.xaml.cs">
+      <DependentUpon>GorusmeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MusteriTakipModule\GorusmeViewModel.cs" />
+    <Compile Include="Modules\MusteriTakipModule\MessangerEvents.cs" />
+    <Compile Include="Modules\MusteriTakipModule\MusteriDetayView.xaml.cs">
+      <DependentUpon>MusteriDetayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MusteriTakipModule\MusteriEditModel.cs" />
+    <Compile Include="Modules\MusteriTakipModule\MusteriListView.xaml.cs">
+      <DependentUpon>MusteriListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MusteriTakipModule\MusteriListViewModel.cs" />
+    <Compile Include="Modules\MusteriTakipModule\MusteriDetayViewModel.cs" />
+    <Compile Include="Modules\GenericSqlTableDependency.cs" />
+    <Compile Include="Modules\OperasyonModule\HaftalikYuklemePlanView.xaml.cs">
+      <DependentUpon>HaftalikYuklemePlanView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\OperasyonModule\HaftalikYuklemePlanViewModel.cs" />
+    <Compile Include="Modules\OperasyonModule\IrsaliyeDetayView.xaml.cs">
+      <DependentUpon>IrsaliyeDetayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\OperasyonModule\IrsaliyeDetayViewModel.cs" />
+    <Compile Include="Modules\OperasyonModule\IrsaliyeService.cs" />
+    <Compile Include="Modules\OperasyonModule\NetsisHelper.cs" />
+    <Compile Include="Modules\OperasyonModule\SevkEmriService.cs" />
+    <Compile Include="Modules\OperasyonModule\SevkEmriView.xaml.cs">
+      <DependentUpon>SevkEmriView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\OperasyonModule\SevkEmriViewModel.cs" />
+    <Compile Include="Modules\MuhasebeModule\IrsaliyeListView.xaml.cs">
+      <DependentUpon>IrsaliyeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MuhasebeModule\IrsaliyeListViewModel.cs" />
+    <Compile Include="Modules\OperasyonModule\SevkTeslimTarihiGirisForm.xaml.cs">
+      <DependentUpon>SevkTeslimTarihiGirisForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\OperasyonModule\SevkTeslimVM.cs" />
+    <Compile Include="Modules\OperasyonModule\YariMamulDataView.xaml.cs">
+      <DependentUpon>YariMamulDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\OperasyonModule\YariMamulDataVM.cs" />
+    <Compile Include="Modules\PaketlemeModule\BobinEkleOnayForm.xaml.cs">
+      <DependentUpon>BobinEkleOnayForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PaketlemeModule\KantarSerialPort.cs" />
+    <Compile Include="Modules\PaketlemeModule\KantarSonucWindow.xaml.cs">
+      <DependentUpon>KantarSonucWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PandapCariModule\PandapCariListView.xaml.cs">
+      <DependentUpon>PandapCariListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PandapCariModule\PandapCariListViewModel.cs" />
+    <Compile Include="Modules\PlanlamaModule\DokumBolum\BobinEkleFormVM.cs" />
+    <Compile Include="Modules\PlanlamaModule\DokumBolum\BobinEkleForm.xaml.cs">
+      <DependentUpon>BobinEkleForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\DokumBolum\DokumListView.xaml.cs">
+      <DependentUpon>DokumListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\DokumBolum\DokumListVM.cs" />
+    <Compile Include="Modules\PlanlamaModule\ShRotaKartBolum\ShRotaKartListView.xaml.cs">
+      <DependentUpon>ShRotaKartListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\ShRotaKartBolum\ShRotaKartListVM.cs" />
+    <Compile Include="Modules\PlanlamaModule\ShRotaKartBolum\ShRotaKartView.xaml.cs">
+      <DependentUpon>ShRotaKartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\ShRotaKartBolum\ShRotaKartVM.cs" />
+    <Compile Include="Modules\PlanlamaModule\KartVerimDto.cs" />
+    <Compile Include="Modules\PlanlamaModule\P_SKalemListView_IW.xaml.cs">
+      <DependentUpon>P_SKalemListView_IW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\KartVerimInfoWindow.xaml.cs">
+      <DependentUpon>KartVerimInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\KartVerimListView.xaml.cs">
+      <DependentUpon>KartVerimListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\KartVerimListVM.cs" />
+    <Compile Include="Modules\RaporlarModule\SatisDolulukRaporView.xaml.cs">
+      <DependentUpon>SatisDolulukRaporView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\RaporlarModule\SatisDolulukRaporVM.cs" />
+    <Compile Include="Modules\OperasyonModule\SevkEmriListVM.cs" />
+    <Compile Include="Modules\OperasyonModule\SevkEmriListView.xaml.cs">
+      <DependentUpon>SevkEmriListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\KaliteStandartListView.xaml.cs">
+      <DependentUpon>KaliteStandartListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\ReceteListView.xaml.cs">
+      <DependentUpon>ReceteListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\UrunListView.xaml.cs">
+      <DependentUpon>UrunListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\KaliteStandartListViewModel.cs" />
+    <Compile Include="Modules\KaliteModule\ReceteListViewModel.cs" />
+    <Compile Include="Modules\KaliteModule\UrunListViewModel.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\FisKalemViewModel.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\ItemInfo.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\KararFormEvents.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\RaporCikti\SatinAlmaSiparisDto.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\RaporCikti\TalepToSiparisServis.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\KararFormTabloModels.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\SatinAlmaService.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\SiparisListeView.xaml.cs">
+      <DependentUpon>SiparisListeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\SiparisListeVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\Stoklar\StokFiyatListeWindow.xaml.cs">
+      <DependentUpon>StokFiyatListeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\SurecArsivListView.xaml.cs">
+      <DependentUpon>SurecArsivListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\SurecArsivListVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepDurumListView.xaml.cs">
+      <DependentUpon>TalepDurumListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepDurumListVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\TeklifListView.xaml.cs">
+      <DependentUpon>TeklifListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\TeklifListVM.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\HeaderMenuHelper.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\KestiriciBakim\FormYanitlarListView.xaml.cs">
+      <DependentUpon>FormYanitlarListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimIsletmeModule\KestiriciBakim\FormYanitlarListVM.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\KestiriciBakim\GunlukFormListView.xaml.cs">
+      <DependentUpon>GunlukFormListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimIsletmeModule\KestiriciBakim\GunlukFormListVM.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\Makina.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\MakinaPivotView.xaml.cs">
+      <DependentUpon>MakinaPivotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimIsletmeModule\MakinaPivotVM.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\MakinaVeriRaporView.xaml.cs">
+      <DependentUpon>MakinaVeriRaporView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimIsletmeModule\MakinaVeriRaporVM.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\MakinaVeriTabloView.xaml.cs">
+      <DependentUpon>MakinaVeriTabloView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimIsletmeModule\MakinaVeriTabloVM.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\OperatorBilgi.cs" />
+    <Compile Include="Modules\UretimIsletmeModule\Utils.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinBarkodModel.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\BakimTalepListView.xaml.cs">
+      <DependentUpon>BakimTalepListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\BakimTalepListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\LevhaBobinGenelDurum.xaml.cs">
+      <DependentUpon>LevhaBobinGenelDurum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\LevhaBobinGenelDurumVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\FolyoBobinGenelDurum.xaml.cs">
+      <DependentUpon>FolyoBobinGenelDurum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\FolyoBobinGenelDurumVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinItemConverters.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinItemEvents.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinItemView.xaml.cs">
+      <DependentUpon>BobinItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinItemVm.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DhOnDepoListView.xaml.cs">
+      <DependentUpon>DhOnDepoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DhSonDepoListView.xaml.cs">
+      <DependentUpon>DhSonDepoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DhSonDepoListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DhOperatorView.xaml.cs">
+      <DependentUpon>DhOperatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DhOperatorVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinBitisFormlari\BobinBitirModel.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DurusEkleme\DurusEkleForm.xaml.cs">
+      <DependentUpon>DurusEkleForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DurusEkleme\DurusEkleFormVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\LtfSonDepoListView.xaml.cs">
+      <DependentUpon>LtfSonDepoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\LtfOnDepoListView.xaml.cs">
+      <DependentUpon>LtfOnDepoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\LtfOnDepoListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\LtfOperatorView.xaml.cs">
+      <DependentUpon>LtfOperatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\LtfOperatorVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinBitisFormlari\BobinBitirForm.xaml.cs">
+      <DependentUpon>BobinBitirForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\BobinBitisFormlari\BobinBitirFormVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\LtfSonDepoListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\MakinaAktiviteRapor\MakinaAktiviteTabloView.xaml.cs">
+      <DependentUpon>MakinaAktiviteTabloView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\MakinaAktiviteRapor\MakinaAktiviteTabloVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\DhOnDepoListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\ShSonDepoListView.xaml.cs">
+      <DependentUpon>ShSonDepoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\ShOnDepoListView.xaml.cs">
+      <DependentUpon>ShOnDepoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\ShSonDepoListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\ShOnDepoListVM.cs" />
+    <Compile Include="Modules\UretimOperatorEkranlariModule\ShOperatorView.xaml.cs">
+      <DependentUpon>ShOperatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UretimOperatorEkranlariModule\ShOperatorVM.cs" />
+    <Compile Include="Modules\_SatisModule\KapasiteTakip\KapasiteTakipListView.xaml.cs">
+      <DependentUpon>KapasiteTakipListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\KapasiteTakip\KapasiteTakipListVM.cs" />
+    <Compile Include="Modules\_SatisModule\MusteriAramalar\Events\PTD_MusteriAramaEvents.cs" />
+    <Compile Include="Modules\_SatisModule\MusteriAramalar\MusteriAramaListView.xaml.cs">
+      <DependentUpon>MusteriAramaListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\MusteriAramalar\MusteriAramaListVM.cs" />
+    <Compile Include="Modules\_SatisModule\MusteriAramalar\PTD_AramaEditView.xaml.cs">
+      <DependentUpon>PTD_AramaEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\MusteriAramalar\PTD_AramaEditVM.cs" />
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\GorusmeEditView.xaml.cs">
+      <DependentUpon>GorusmeEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\GorusmeEditVM.cs" />
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\Events\SeyahatEvents.cs" />
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\SeyahatListView.xaml.cs">
+      <DependentUpon>SeyahatListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\SeyahatListVM.cs" />
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\SeyahatEditView.xaml.cs">
+      <DependentUpon>SeyahatEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\SeyahatRaporlari\SeyahatEditVM.cs" />
+    <Compile Include="Modules\_SatisModule\Sikayetler\KaliteFormGirisVM.cs" />
+    <Compile Include="Modules\_SatisModule\Sikayetler\KaliteFormGirWindow.xaml.cs">
+      <DependentUpon>KaliteFormGirWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\Converters.cs" />
+    <Compile Include="Modules\_DialogViews\IsMerkeziSecDialog\IsMerkeziSec.xaml.cs">
+      <DependentUpon>IsMerkeziSec.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_DialogViews\IsMerkeziSecDialog\IsMerkeziSecVM.cs" />
+    <Compile Include="Modules\_DialogViews\KayitSecildiEvent.cs" />
+    <Compile Include="MyControls\StepControlModel.cs" />
+    <Compile Include="MyControls\StepControlWindow.xaml.cs">
+      <DependentUpon>StepControlWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_DialogViews\StokSecimDialog\StokListView.xaml.cs">
+      <DependentUpon>StokListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_DialogViews\StokSecimDialog\StokListViewModel.cs" />
+    <Compile Include="Modules\_DialogViews\StokSecimDialog\StokSecildiEvent.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepEditView.xaml.cs">
+      <DependentUpon>TalepEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepEditVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepKalemEklendiEvent.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepKalemView.xaml.cs">
+      <DependentUpon>TalepKalemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepKalemVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepListView.xaml.cs">
+      <DependentUpon>TalepListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepListVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\KararFormView.xaml.cs">
+      <DependentUpon>KararFormView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\KararFormVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\DepoCikisFisListVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\DepoCikisFisListView.xaml.cs">
+      <DependentUpon>DepoCikisFisListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\DepoCikisView.xaml.cs">
+      <DependentUpon>DepoCikisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\DepoCikisVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\DepoCikis\KayitMessages.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\KulceKontratEditView.xaml.cs">
+      <DependentUpon>KulceKontratEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\KulceKontratEditVM.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\KulceKontratListModel.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\KulceKontratListView.xaml.cs">
+      <DependentUpon>KulceKontratListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\ProformaEditView.xaml.cs">
+      <DependentUpon>ProformaEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\ProformaEditVM.cs" />
+    <Compile Include="Modules\_SatisModule\Sikayetler\SikayetEklendiEvent.cs" />
+    <Compile Include="Modules\_SatisModule\Sikayetler\SikayetListView.xaml.cs">
+      <DependentUpon>SikayetListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\Sikayetler\SikayetListVM.cs" />
+    <Compile Include="Modules\_SatisModule\Sikayetler\SikayetView.xaml.cs">
+      <DependentUpon>SikayetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\Sikayetler\SikayetViewModel.cs" />
+    <Compile Include="Modules\SatinAlmaModuleYeni\Stoklar\StokListView.xaml.cs">
+      <DependentUpon>StokListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SatinAlmaModuleYeni\Stoklar\StokListViewModel.cs" />
+    <Compile Include="Modules\TeklifModule\LookUpData.cs" />
+    <Compile Include="Modules\TeklifModule\LookUpItem.cs" />
+    <Compile Include="Modules\TeklifModule\MessangerEvents\KalemEklendiEvent.cs" />
+    <Compile Include="Modules\TeklifModule\MessangerEvents\MusteriSecildiEvent.cs" />
+    <Compile Include="Modules\TeklifModule\MessangerEvents\TeklifEklendiEvent.cs" />
+    <Compile Include="Modules\TeklifModule\Models\TeklifEditModel.cs" />
+    <Compile Include="Modules\TeklifModule\Models\TeklifKalemEditModel.cs" />
+    <Compile Include="Modules\TeklifModule\Models\TeklifListModel.cs" />
+    <Compile Include="Modules\_DialogViews\MusteriSecimDialog\MusteriItemModel.cs" />
+    <Compile Include="Modules\_DialogViews\MusteriSecimDialog\MusteriSecVM.cs" />
+    <Compile Include="Modules\_DialogViews\MusteriSecimDialog\MusteriSecView.xaml.cs">
+      <DependentUpon>MusteriSecView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TeklifModule\TeklifCiktiFormDto.cs" />
+    <Compile Include="Modules\TeklifModule\Services\TeklifDataService.cs" />
+    <Compile Include="Modules\TeklifModule\TeklifIslemVM.cs" />
+    <Compile Include="Modules\TeklifModule\TeklifKalemView.xaml.cs">
+      <DependentUpon>TeklifKalemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TeklifModule\TeklifKalemViewModel.cs" />
+    <Compile Include="Modules\TeklifModule\TeklifIslemForm.xaml.cs">
+      <DependentUpon>TeklifIslemForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TeklifModule\TeklifListView.xaml.cs">
+      <DependentUpon>TeklifListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TeklifModule\TeklifListViewModel.cs" />
+    <Compile Include="Modules\TeklifModule\TeklifView.xaml.cs">
+      <DependentUpon>TeklifView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TeklifModule\TeklifViewModel.cs" />
+    <Compile Include="Modules\_SatisModule\LmeGunlukListView.xaml.cs">
+      <DependentUpon>LmeGunlukListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\LmeGunlukListViewModel.cs" />
+    <Compile Include="Modules\_Services\ExcelService.cs" />
+    <Compile Include="Modules\PlanlamaModule\P_UretimEmriListView.xaml.cs">
+      <DependentUpon>P_UretimEmriListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\P_SKalemListView.xaml.cs">
+      <DependentUpon>P_SKalemListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\P_UretimEmriListVM.cs" />
+    <Compile Include="Modules\PlanlamaModule\P_SKalemListVM.cs" />
+    <Compile Include="Modules\PlanlamaModule\UretimEmriDTO.cs" />
+    <Compile Include="Modules\PlanlamaModule\Yerlesim.cs" />
+    <Compile Include="AppModules\RaporDesignerModule\CustomDesignerCommands.cs" />
+    <Compile Include="AppModules\RaporDesignerModule\PandapRaporHelper.cs" />
+    <Compile Include="Modules\FiltreItemModel.cs" />
+    <Compile Include="Modules\_SatisModule\LmeBaglamaList.xaml.cs">
+      <DependentUpon>LmeBaglamaList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\LmeBaglamaListModel.cs" />
+    <Compile Include="Modules\_SatisModule\LmeOrtalamaView.xaml.cs">
+      <DependentUpon>LmeOrtalamaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\LmeOrtalamaViewModel.cs" />
+    <Compile Include="Modules\_SatisModule\SiparisService.cs" />
+    <Compile Include="AppPandap.cs" />
+    <Compile Include="ControlHelpers\VisibilityHelper.cs" />
+    <Compile Include="Converters\Base64ImageConverterMetin.cs" />
+    <Compile Include="Converters\CellBgColorConverter.cs" />
+    <Compile Include="Converters\IntoToColorConverter.cs" />
+    <Compile Include="Converters\MyBoolToVisibilityInvertConverter.cs" />
+    <Compile Include="Converters\NullOrEmptyVisibilityInvertConverter.cs" />
+    <Compile Include="Converters\NullOrEmptyVisibilityConverter.cs" />
+    <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
+    <Compile Include="Converters\TrueFalseInvertConverter.cs" />
+    <Compile Include="DispatchService.cs" />
+    <Compile Include="Helper\ArrayExtensions.cs" />
+    <Compile Include="Helper\ArrayTraverse.cs" />
+    <Compile Include="Helper\ExportService.cs" />
+    <Compile Include="Helper\ExportType.cs" />
+    <Compile Include="Helper\FilteredDataSupport.cs" />
+    <Compile Include="Helper\IExportService.cs" />
+    <Compile Include="Helper\ViewModelLocator.cs" />
+    <Compile Include="Helper\NesneIslemleri.cs" />
+    <Compile Include="ControlHelpers\NewItemRowBehavior.cs" />
+    <Compile Include="Helper\ReferenceEqualityComparer.cs" />
+    <Compile Include="Helper\SqlDependencyMesajSayisi.cs" />
+    <Compile Include="Helper\SqlDependencySiparisKalem.cs" />
+    <Compile Include="Helper\SqlDependencySiparisSonucTablo.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="AppModules\NavMenuModule\NavMenuView.xaml.cs">
+      <DependentUpon>NavMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\NavMenuModule\NavMenuViewModel.cs" />
+    <Compile Include="Services\EntityLogService.cs" />
+    <Compile Include="Modules\TeklifModule\Services\LookupTables.cs" />
+    <Compile Include="Services\NetsisService.cs" />
+    <Compile Include="Services\SiparisTeyitDTO.cs" />
+    <Compile Include="Services\SiparisTeyitKalemDTO.cs" />
+    <Compile Include="Services\TeyitFormService.cs" />
+    <Compile Include="Services\UretimEmriService.cs" />
+    <Compile Include="Modules\DepoModule\DepoViewModel.cs" />
+    <Compile Include="Modules\_SatisModule\KalemListVM.cs" />
+    <Compile Include="Modules\_SatisModule\KalemViewModel.cs" />
+    <Compile Include="Modules\KaliteModule\KaliteBobinViewModel.cs" />
+    <Compile Include="Modules\KaliteModule\KaliteViewModel.cs" />
+    <Compile Include="Modules\PaketlemeModule\PaketlemeViewModel.cs" />
+    <Compile Include="AppModules\PanoModule\PanoViewModel.cs" />
+    <Compile Include="Modules\PlanlamaModule\PlanlamaKalemListViewModel.cs" />
+    <Compile Include="Modules\_SatisModule\SiparisListViewModel.cs" />
+    <Compile Include="Modules\_SatisModule\SiparisViewModel.cs" />
+    <Compile Include="Modules\PlanlamaModule\UretimEmriListViewModel.cs" />
+    <Compile Include="Modules\PlanlamaModule\UretimEmriViewModel.cs" />
+    <Compile Include="Modules\DepoModule\DepoView.xaml.cs">
+      <DependentUpon>DepoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\KalemListView.xaml.cs">
+      <DependentUpon>KalemListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\KalemView.xaml.cs">
+      <DependentUpon>KalemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\KaliteBobinWindow.xaml.cs">
+      <DependentUpon>KaliteBobinWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\KaliteModule\KaliteView.xaml.cs">
+      <DependentUpon>KaliteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PaketlemeModule\PaketlemeView.xaml.cs">
+      <DependentUpon>PaketlemeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\RaporDesignerModule\PandapRaporDesigner.xaml.cs">
+      <DependentUpon>PandapRaporDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\RaporDesignerModule\PandapRaporSimpleViever.cs">
+      <DependentUpon>PandapRaporSimpleViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\PanoModule\PanoView.xaml.cs">
+      <DependentUpon>PanoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\PlanlamaKalemListView.xaml.cs">
+      <DependentUpon>PlanlamaKalemListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\SiparisListView.xaml.cs">
+      <DependentUpon>SiparisListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\_SatisModule\SiparisView.xaml.cs">
+      <DependentUpon>SiparisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\UretimEmriListView.xaml.cs">
+      <DependentUpon>UretimEmriListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\UretimEmriView.xaml.cs">
+      <DependentUpon>UretimEmriView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlanlamaModule\UretimMiktarWindow.xaml.cs">
+      <DependentUpon>UretimMiktarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\UI_Controls\Loading.cs" />
+    <Compile Include="UI_TEST\RaporTest.cs" />
+    <Compile Include="UI_TEST\TestForm.xaml.cs">
+      <DependentUpon>TestForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueObjects\MesajInfo.cs" />
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AppModules\AppModule\IsMerkeziTanimView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\MakinaParcaTanimView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\MakinaDurusTanimListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GyModules\MesajModule\DxGridStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GyModules\MesajModule\MesajlasmaWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Dashboard\DashboardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Dashboard\ExwMaliyetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Dashboard\IsMerkeziMaliyetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Dashboard\MakinaMaliyetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Dashboard\MakinaPLC\MakinaPlcDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Dashboard\SatislarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Dashboard\StokMaliyetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DepoModule\YuklemeEmirleriView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\FinansModule\KonsolideFinansalRaporView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\KaliteModule\RedMalzemeListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\KaliteModule\RedMalzemeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MuhasebeModule\BankaListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\KullaniciListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\KullaniciRolListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\MenuYetkiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\OrtakDilTanimListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppModules\AppModule\UygulamaAyarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MuhasebeModule\IrsaliyeListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MusteriTakipModule\FirmaYetkiliKisiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MusteriTakipModule\GorusmeListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MusteriTakipModule\GorusmeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MusteriTakipModule\MusteriDetayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MusteriTakipModule\MusteriListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\OperasyonModule\HaftalikYuklemePlanView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\OperasyonModule\IrsaliyeDetayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\OperasyonModule\SevkEmriView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Modules\OperasyonModule\SevkTeslimTarihiGirisForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\OperasyonModule\YariMamulDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PaketlemeModule\BobinEkleOnayForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PaketlemeModule\KantarSonucWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PandapCariModule\PandapCariListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\DokumBolum\BobinEkleForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\DokumBolum\DokumListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\ShRotaKartBolum\ShRotaKartListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\ShRotaKartBolum\ShRotaKartView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\P_SKalemListView_IW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\KartVerimInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\KartVerimListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\RaporlarModule\SatisDolulukRaporView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\OperasyonModule\SevkEmriListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\KaliteModule\KaliteStandartListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\KaliteModule\ReceteListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\KaliteModule\UrunListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\P_UretimEmriListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\P_SKalemListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\SiparisListeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\Stoklar\StokFiyatListeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\SurecArsivListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepDurumListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\TeklifListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimIsletmeModule\KestiriciBakim\FormYanitlarListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimIsletmeModule\KestiriciBakim\GunlukFormListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimIsletmeModule\MakinaPivotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimIsletmeModule\MakinaVeriRaporView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimIsletmeModule\MakinaVeriTabloView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\BakimTalepListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\LevhaBobinGenelDurum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\BobinGenelDurum\FolyoBobinGenelDurum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\BobinItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\DhOnDepoListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\DhSonDepoListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\DhOperatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\DurusEkleme\DurusEkleForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\LtfSonDepoListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\LtfOnDepoListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\LtfOperatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\BobinBitisFormlari\BobinBitirForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\MakinaAktiviteRapor\MakinaAktiviteTabloView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\ShSonDepoListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\ShOnDepoListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\UretimOperatorEkranlariModule\ShOperatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_DialogViews\IsMerkeziSecDialog\IsMerkeziSec.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\KapasiteTakip\KapasiteTakipListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\MusteriAramalar\MusteriAramaListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\MusteriAramalar\PTD_AramaEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\SeyahatRaporlari\GorusmeEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\SeyahatRaporlari\SeyahatListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\SeyahatRaporlari\SeyahatEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\Sikayetler\KaliteFormGirWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\StepControlWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_DialogViews\StokSecimDialog\StokListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepKalemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\TalepViews\TalepListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\KararFormView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\DepoCikis\DepoCikisFisListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\DepoCikis\DepoCikisView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\KulceKontratEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\KulceKontratListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\_KulceResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\KulceKontratTakip\ProformaEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\Sikayetler\SikayetListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\Sikayetler\SikayetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\SatinAlmaModuleYeni\Stoklar\StokListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_DialogViews\MusteriSecimDialog\MusteriSecView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\TeklifModule\TeklifKalemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\TeklifModule\TeklifIslemForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\TeklifModule\TeklifListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\TeklifModule\TeklifView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\LmeBaglamaList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\AppStyle\MyConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Content\AppStyle\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\SplashScreenModule\SplashScreenWindow1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\SplashScreenModule\SplashYukleniyor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\LoginModule\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\AppStyle\PandapTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\AlasimRenkConverter.cs" />
+    <Compile Include="Converters\Base64ImageConverter.cs" />
+    <Compile Include="Converters\MyBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\MyEmptyOrNullConverter.cs" />
+    <Compile Include="Converters\FormulRenkConverter.cs" />
+    <Compile Include="Converters\HorizontalToTextAlignmentConverter.cs" />
+    <Compile Include="Converters\ImageFromAssemblyConverter.cs" />
+    <Compile Include="Converters\ListboxControlColorConverter.cs" />
+    <Compile Include="Converters\RatioConverter.cs" />
+    <Compile Include="AppModules\SplashScreenModule\SplashScreenHelper.cs" />
+    <Compile Include="AppModules\SplashScreenModule\SplashScreenWindow1.xaml.cs">
+      <DependentUpon>SplashScreenWindow1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppModules\SplashScreenModule\SplashYukleniyor.xaml.cs">
+      <DependentUpon>SplashYukleniyor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ObjectExtensions.cs" />
+    <Compile Include="Helper\My_Extension.cs" />
+    <Compile Include="Helper\LineGridControl.cs" />
+    <Compile Include="Helper\MainMenuMessageData.cs" />
+    <Compile Include="Helper\MyDxViewModelBase.cs" />
+    <Compile Include="Helper\PandapFormulServis.cs" />
+    <Compile Include="Helper\PandapObjectHelper.cs" />
+    <Compile Include="Helper\PrintHelper.cs" />
+    <Compile Include="AppModules\Shared\AppMenuStrings.cs" />
+    <Compile Include="AppModules\Shared\RegionNames.cs" />
+    <Compile Include="AppModules\Shared\Roles.cs" />
+    <Compile Include="AppModules\Shared\ViewNames.cs" />
+    <Compile Include="AppModules\LoginModule\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Modules\DepoModule\DepoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\_SatisModule\KalemListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\_SatisModule\KalemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\KaliteModule\KaliteBobinWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\KaliteModule\KaliteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PaketlemeModule\PaketlemeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\RaporDesignerModule\PandapRaporDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\RaporDesignerModule\PandapRaporSimpleViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\PanoModule\PanoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\PlanlamaKalemListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\_SatisModule\LmeGunlukListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\LmeOrtalamaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\_SatisModule\SiparisListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\_SatisModule\SiparisView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\UretimEmriListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\UretimEmriView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\PlanlamaModule\UretimMiktarWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppModules\NavMenuModule\NavMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\UI_Controls\Loading.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI_TEST\TestForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Modules\PandapCariModule\GridBandli.md" />
+    <None Include="_MarkDown\MakinaVeriImport.md" />
+    <Resource Include="Upgrade\sqlUpgrade_12082018.txt" />
+    <Resource Include="IrsaliyeKaydet.txt" />
+    <Resource Include="GyModules\MesajModule\BeniOku.txt" />
+    <Content Include="Content\Basarili.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BoolImages\truck.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Content\palet.png" />
+    <Resource Include="Content\palet_green.png" />
+    <Resource Include="Content\container1.jpg" />
+    <Resource Include="Content\Panda1.png" />
+    <Resource Include="Content\FirmaIcons\image1.png" />
+    <Resource Include="Content\FirmaIcons\image2.png" />
+    <Resource Include="Content\FirmaIcons\image3.png" />
+    <Resource Include="Content\FirmaIcons\image4.png" />
+    <Resource Include="Content\FirmaIcons\image5.png" />
+    <Resource Include="Content\FirmaIcons\image6.png" />
+    <Resource Include="Content\FirmaIcons\image7.png" />
+    <Resource Include="Content\FirmaIcons\image8.png" />
+    <Content Include="Content\SmokeAlarm.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\zapsplat_positive.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Modules\FinansModule\FirmaIcons\image1.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image2.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image3.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image4.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image5.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image6.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image7.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image8.png" />
+    <Resource Include="Modules\FinansModule\FirmaIcons\image1_1.png" />
+    <Resource Include="Modules\UretimOperatorEkranlariModule\_BobinKural.txt" />
+    <Content Include="pandapdb_yeni.sql" />
+    <Resource Include="ikon 64x64.ico" />
+    <Resource Include="Content\Images\worker.jpg" />
+    <Resource Include="Content\Images\whatsapp.jpg" />
+    <Resource Include="Content\Images\tr.JPG" />
+    <Resource Include="Content\Images\tara.png" />
+    <Resource Include="Content\Images\satispazarlama.jpg" />
+    <Resource Include="Content\Images\photoViewer.png" />
+    <Resource Include="Content\Images\PandapLogin.jpg" />
+    <Resource Include="Content\Images\Pandap_logo150.png" />
+    <Resource Include="Content\Images\Pandap_logo_png.png" />
+    <Resource Include="Content\Images\panda.ico" />
+    <Resource Include="Content\Images\netsis.PNG" />
+    <Resource Include="Content\Images\message.png" />
+    <Resource Include="Content\Images\en.JPG" />
+    <Resource Include="Content\Images\ara.png" />
+    <Resource Include="Content\Images\1216438182.jpg" />
+    <Resource Include="AppModules\SplashScreenModule\logo.png" />
+    <EmbeddedResource Include="Modules\Dashboard\Dashboard1.resx">
+      <DependentUpon>Dashboard1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Docs\packingList1.repx" />
+    <None Include="Docs\sevkemri1.repx" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="readme.md" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AQ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\AZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BB.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BJ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\BZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CV.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\CZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\DE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\DJ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\DK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\DM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\DO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\DZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\EC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\EE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\EG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\EH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ES.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ET.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\EU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\FI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\FJ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\FK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\FM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\FO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\FR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GB.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GQ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\GY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\HK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\HN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\HR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\HT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\HU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ID.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IQ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\IT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\JE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\JM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\JO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\JP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\KZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LB.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LV.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\LY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ME.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ML.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MQ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MV.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\MZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\NZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\OM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\PY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\QA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\RO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\RS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\RU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\RW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SB.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ST.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SV.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\SZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TJ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TL.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TO.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TV.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\TZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\UA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\UG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\UK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\US.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\UY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\UZ.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VI.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\VU.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\WF.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\WS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\YE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\YT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ZA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ZM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\flags-iso\flat\24\ZW.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Content\Images\userfeedback.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pandap.Common\Pandap.Common.csproj">
+      <Project>{e4e1b8a4-1159-4728-aea8-619415d854a7}</Project>
+      <Name>Pandap.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pandap.Logic\Pandap.Logic.csproj">
+      <Project>{f2f86971-5cfc-4bdb-96d2-91b958f0e49d}</Project>
+      <Name>Pandap.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Content\Basarili.mp3">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Content\BoolImages\truck.png">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Content\Rulolar.repx">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Content\SmokeAlarm.mp3">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.exe">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>ManifestEntryPoint</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.exe.config">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.exe.manifest">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>ManifestEntryPoint</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.Logic">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.UIX.exe">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>ManifestEntryPoint</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.UIX.exe.config">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Pandap.UIX.exe.manifest">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>ManifestEntryPoint</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tr\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets'))" />
+  </Target>
+</Project>

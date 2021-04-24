@@ -1,0 +1,309 @@
+﻿<UserControl x:Class="Pandap.UI.AppModule._Planlama.P_SKalemListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Pandap.UI.AppModule._Planlama"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:helper="clr-namespace:Pandap.UI.Helper"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid"
+             xmlns:converters="clr-namespace:Pandap.UI.Converters"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+             mc:Ignorable="d"
+             x:Name="UcPalanlamaTakip"
+
+             d:DataContext="{d:DesignInstance Type=local:P_SKalemListVM, IsDesignTimeCreatable=False}" d:DesignWidth="905.6" d:DesignHeight="629.6">
+    <UserControl.Resources>
+
+        <ControlTemplate x:Key="checkTemplate">
+            <Image Name="PART_Editor" Height="30" Width="30" />
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="{Binding Source={dx:DXImage Image=Encrypt_16x16.png}}"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="Kapatılmış"></Setter>
+                    <Setter TargetName="PART_Editor" Property="Width" Value="20"></Setter>
+                </DataTrigger>
+
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="dxe:CheckEdit" x:Key="checkEditLockStyle">
+            <Setter Property="DisplayTemplate"  Value="{StaticResource checkTemplate}" />
+            <Setter Property="EditTemplate"  Value="{StaticResource checkTemplate}" />
+        </Style>
+
+        <Style x:Key="rowStyle" TargetType="{x:Type dxg:GridRow}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=RowStyle}}" >
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <converters:NullOrEmptyVisibilityConverter x:Key="myNullOrEmptyVisibilityConverter" />
+        <converters:NullOrEmptyVisibilityInvertConverter x:Key="myNullOrEmptyVisibilityInvertConverter" />
+        <converters:CellBgColorConverter x:Key="myCellBgColorConverter" />
+        
+        
+        
+        
+
+        <DataTemplate x:Key="ctemplate1">
+            <Border Name="br1" Background="Transparent" CornerRadius="1" Margin="1" BorderBrush="LightSteelBlue"  BorderThickness="1">
+                <dxe:TextEdit   HorizontalContentAlignment="Center"   dx:ThemeManager.ThemeName="XXX"
+                                                      Name="PART_Editor">
+                </dxe:TextEdit>
+            </Border>
+
+            <DataTemplate.Triggers>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=RowData.Row.UretimEmriKod}" Value="" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="br1" Property="BorderBrush" Value="Transparent" />
+                    <Setter TargetName="br1" Property="BorderThickness" Value="0" />
+                    <Setter TargetName="br1" Property="Margin" Value="10" />
+                    <Setter TargetName="br1" Property="Background" Value="Transparent" />
+                </MultiDataTrigger>
+
+                <DataTrigger Binding="{Binding Path=RowData.IsSelected }" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Foreground" Value="Red" />
+                    <Setter TargetName="br1" Property="Background" Value="White" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dxmvvm:NotificationService x:Name="AppNotificationService" UseWin8NotificationsIfAvailable="False" />
+        <dx:DXMessageBoxService />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <dxr:RibbonControl RibbonHeaderVisibility="Collapsed"  DockPanel.Dock="Top" RibbonStyle="Office2007" ShowApplicationButton="False" RibbonTitleBarVisibility="Collapsed" MinimizationButtonVisibility="Collapsed" AsyncMergingEnabled="False" MDIMergeStyle="Never" AutomationProperties.IsRowHeader="True" ToolbarShowMode="Hide">
+            <dxr:RibbonDefaultPageCategory>
+                <dxr:RibbonPage Caption="Planla">
+                    <dxr:RibbonPageGroup Caption="Planlama İşlemleri">
+                        <dxb:BarButtonItem Command="{Binding PlanlaCommand}"  Glyph="{dx:DXImage Image=Edit_32x32.png}" LargeGlyph="{dx:DXImage Image=HistoryItem_32x32.png}" Content="Planla..."  CommandParameter="Duzenle" />
+
+                        <dxb:BarButtonItem Command="{Binding SiparisEditCommand}"  Glyph="{dx:DXImage Image=Edit_32x32.png}" LargeGlyph="{dx:DXImage Image=Outbox_32x32.png}" Content="Paket Bilgisi Girişi"  CommandParameter="Duzenle" />
+
+                        <dxb:BarButtonItem Command="{Binding EkraniYenileCommand}"  Glyph="{dx:DXImage Image=RefreshAllPivotTable_32x32.png}" LargeGlyph="{dx:DXImage Image=RefreshAllPivotTable_32x32.png}" Content="Ekranı Güncelle" />
+                    </dxr:RibbonPageGroup>
+
+                    <dxr:RibbonPageGroup Caption="Tablo İşlemleri">
+                        <dxb:BarButtonItem  Glyph="{dx:DXImage Image=Print_32x32.png}" LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}" Content="Excele Aktar"
+                                            Command="{Binding ExcelExportCommand, ElementName=DxGridHelper}" />
+
+                        <dxb:BarButtonItem  LargeGlyph="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" Content="Yerleşimini Kaydet"
+                                            Command="{Binding LayoutSaveCommand, ElementName=DxGridHelper}"
+                                            CommandParameter="{Binding DataContext.SeciliYerlesim.XmlDosyaAd,RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+                        <dxb:BarStaticItem>
+                            <dxb:BarStaticItem.ContentTemplate>
+                                <DataTemplate>
+                                    <dxe:ListBoxEdit  MinWidth="50" MinHeight="50"
+                                        SelectedItem="{Binding DataContext.SeciliYerlesim,Mode=TwoWay,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        ItemsSource="{Binding DataContext.Yerlesimler, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                        <dxe:ListBoxEdit.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Width="50" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+                                            </ItemsPanelTemplate>
+                                        </dxe:ListBoxEdit.ItemsPanel>
+                                    </dxe:ListBoxEdit>
+                                </DataTemplate>
+                            </dxb:BarStaticItem.ContentTemplate>
+                        </dxb:BarStaticItem>
+                    </dxr:RibbonPageGroup>
+
+                    <dxr:RibbonPageGroup Caption="Yardım">
+                        <dxb:BarButtonItem   LargeGlyph="{dx:DXImage Image=Info_32x32.png}" Content="Bilgi"
+                                            Command="{Binding YardimCommand}" />
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+
+        <DockPanel Grid.Row="1">
+
+            <dxg:GridControl  Margin="5"   x:Name="grdSiparisKalemleri"  dx:ThemeManager.ThemeName="None"
+                              ItemsSource="{Binding PlanlamaDtoListe}"
+                              CurrentItem="{Binding SeciliPlanlamaTakipDto, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItems="{Binding SeciliPlanlamaTakipDtos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="{x:Type dxg:GridColumn}">
+                        <Setter Property="Width" Value="50" />
+                    </Style>
+
+                    <Style x:Key="customCellStyle"
+                               BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}"
+                                TargetType="{x:Type dxg:LightweightCellEditor}">
+                        <Setter Property="Background"
+                                            Value="{Binding Path=RowData.Row.UretimEmriKod, Converter={converters:IntoToColorConverter}}" />
+                    </Style>
+
+                    <Style x:Key="customCellStyleHesap"
+                               BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}"
+                                TargetType="{x:Type dxg:LightweightCellEditor}">
+                        <Setter Property="Foreground" Value="Red" />
+                        <Setter Property="Background" Value="LightGray" />
+                    </Style>
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem  DisplayFormat=" {0:n0}"  FieldName="KapatildiMi" SummaryType="Count" />
+                </dxg:GridControl.TotalSummary>
+
+                <dxmvvm:Interaction.Behaviors>
+                    <helper:GridControlBehavior x:Name="DxGridHelper"
+                                LayoutFileName="{Binding Path=DataContext.SeciliYerlesim.XmlDosyaAd,RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                </dxmvvm:Interaction.Behaviors>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView RowMinHeight="40"  AllowFixedColumnMenu="True" AutoWidth="False" AllowHorizontalScrollingVirtualization="True" AllowAdvancedVerticalNavigation="True" ColumnFilterPopupMode="Excel" ClipboardCopyOptions="Excel" ClipboardMode="Formatted" ExtendScrollBarToFixedColumns="True" EnableSelectedRowAppearance="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" ShowTotalSummary="True" ShowGroupPanel="False">
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <Grid Background="Transparent">
+                                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Stretch"  Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding ''}" Margin="0,-4" />
+                                </Grid>
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn AllowEditing="false" FieldName="KapatildiMi">
+
+                    <dxg:GridColumn.AutoFilterRowDisplayTemplate>
+                        <ControlTemplate />
+                    </dxg:GridColumn.AutoFilterRowDisplayTemplate>
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditLockStyle}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn Width="95"
+                                    Header="#"  IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel  Orientation="Horizontal">
+                                <Button  Style="{StaticResource MaterialDesignFlatButton}" 
+                                         IsEnabled="{Binding RowData.Row.KapatildiMi,Converter={converters:TrueFalseInvertConverter}}"
+                                Content="Kapat" Command="{Binding View.DataContext.KapatIslemCommand}" CommandParameter="Kapat" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn Header="%12 Kısıtta Mı" FieldName="Yuzde12_Kisit">
+                    <dxg:GridColumn.AutoFilterRowDisplayTemplate>
+                        <ControlTemplate />
+                    </dxg:GridColumn.AutoFilterRowDisplayTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn FilterPopupMode="Excel" AutoFilterCriteria="Contains" Header="Kalem Kod" FieldName="SiparisKalemKod" />
+
+                <dxg:GridColumn FieldName="SiparisDurum" />
+                <dxg:GridColumn FieldName="KalemSiparisDurum" />
+                <dxg:GridColumn FieldName="MusteriAd" />
+                <dxg:GridColumn FieldName="Alasim" />
+                <dxg:GridColumn FieldName="Kalinlik" />
+                <dxg:GridColumn FieldName="En" />
+                <dxg:GridColumn FieldName="IcCap" />
+                <dxg:GridColumn FieldName="MinCap" />
+                <dxg:GridColumn FieldName="MaxCap" />
+                <dxg:GridColumn FieldName="Kondusyon" />
+                <dxg:GridColumn FieldName="Ek" />
+                <dxg:GridColumn FieldName="Yuzey" />
+                <dxg:GridColumn FieldName="MasuraCins" />
+                <dxg:GridColumn FieldName="Metraj" />
+                <dxg:GridColumn FieldName="MetrajTolerans" />
+                <dxg:GridColumn FieldName="KalinlikToleransYuzde" />
+                <dxg:GridColumn FieldName="Ambalaj" />
+
+                <dxg:GridColumn Header="Kafes Ölçü" FieldName="AmbalajKafesOlcu" AllowEditing="true" />
+
+                <dxg:GridColumn FieldName="SevkHafta" />
+
+                <dxg:GridColumn  FieldName="Pas5"  AllowEditing="true" />
+                <dxg:GridColumn AllowEditing="true" FieldName="Pas4"  />
+                <dxg:GridColumn AllowEditing="true" FieldName="Pas3" />
+                <dxg:GridColumn AllowEditing="true" FieldName="Pas2" />
+                <dxg:GridColumn AllowEditing="true" FieldName="Pas1" />
+
+                <dxg:GridColumn FieldName="FolyoHaddeToplam" />
+                <dxg:GridColumn AllowEditing="true" FieldName="Seperator1"/>
+                <dxg:GridColumn AllowEditing="true" FieldName="Seperator2"  />
+                <dxg:GridColumn AllowEditing="true" FieldName="Dilme" />
+                <dxg:GridColumn AllowEditing="true" FieldName="TavaGirecek"  />
+                <dxg:GridColumn AllowEditing="true" FieldName="Tavda" />
+                <dxg:GridColumn AllowEditing="true" FieldName="TavdanCikan" />
+                <dxg:GridColumn AllowEditing="true" FieldName="Paketlenecek"  />
+                <dxg:GridColumn AllowEditing="true" FieldName="Sp_Dilme_Cikis" />
+                <dxg:GridColumn FieldName="UretimdekiMiktar" />
+
+                <dxg:GridColumn FieldName="UretimEmriSonPaketlenmeTarihi" />
+
+                <dxg:GridColumn AllowEditing="False"  FieldName="PaketlenenMiktar">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n0" />
+                    </dxg:GridColumn.EditSettings>
+
+                    <dxg:GridColumn.HeaderStyle>
+                        <Style TargetType="dxg:BaseGridHeader">
+                            <Setter Property="Background" Value="Red" />
+                        </Style>
+                    </dxg:GridColumn.HeaderStyle>
+                </dxg:GridColumn>
+                <dxg:GridColumn AllowEditing="False" CellStyle="{StaticResource customCellStyleHesap}" FieldName="KalemMiktar">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n0" />
+                    </dxg:GridColumn.EditSettings>
+
+                    <dxg:GridColumn.HeaderStyle>
+                        <Style TargetType="dxg:BaseGridHeader">
+                            <Setter Property="Background" Value="Red" />
+                        </Style>
+                    </dxg:GridColumn.HeaderStyle>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn Header="Planlanan Miktar" CellStyle="{StaticResource customCellStyleHesap}" FieldName="PlanlananMiktar">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n0" />
+                    </dxg:GridColumn.EditSettings>
+
+                    <dxg:GridColumn.HeaderStyle>
+                        <Style TargetType="dxg:BaseGridHeader">
+                            <Setter Property="Background" Value="Green" />
+                        </Style>
+                    </dxg:GridColumn.HeaderStyle>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn CellStyle="{StaticResource customCellStyleHesap}" FieldName="Bakiye">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="n0" />
+                    </dxg:GridColumn.EditSettings>
+
+                    <dxg:GridColumn.HeaderStyle>
+                        <Style TargetType="dxg:BaseGridHeader">
+                            <Setter Property="Background" Value="Green" />
+                        </Style>
+                    </dxg:GridColumn.HeaderStyle>
+                </dxg:GridColumn>
+            </dxg:GridControl>
+        </DockPanel>
+    </Grid>
+</UserControl>

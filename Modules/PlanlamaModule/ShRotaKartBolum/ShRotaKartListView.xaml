@@ -1,0 +1,284 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.PlanlamaModule.ShRotaKartBolum.ShRotaKartListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule.ShRotaKartBolum"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:uiControls="clr-namespace:mnd.UI.MyControls.UI_Controls"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
+                                     Type={x:Type local:ShRotaKartListVM}}"
+    d:DesignHeight="456.4"
+    d:DesignWidth="967.8"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="dxg:GridColumnHeader">
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dx:DXMessageBoxService />
+
+
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <md:Snackbar
+            x:Name="Snackbar"
+            Grid.Row="2"
+            Width="800"
+            Height="50"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Panel.ZIndex="1000"
+            MessageQueue="{Binding BoundMessageQueue}" />
+
+
+        <ToolBar
+            Grid.Row="0"
+            MinHeight="50"
+            ClipToBounds="False"
+            Style="{DynamicResource MaterialDesignToolBar}">
+
+
+
+            <Button
+                Command="{Binding ExcelExportCommand}"
+                CommandParameter="XLSX"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Excele Aktar" />
+                </StackPanel>
+            </Button>
+
+
+            <Button
+                Padding="0"
+                Command="{Binding EkranYenileCommand}"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Yenile" />
+                </StackPanel>
+            </Button>
+
+            <StackPanel Margin="100,0,0,0" Orientation="Horizontal">
+                <TextBlock
+                    Width="100"
+                    VerticalAlignment="Center"
+                    FontWeight="DemiBold"
+                    Foreground="Red"
+                    Text="{Binding FormUyariMesaj}" />
+            </StackPanel>
+
+
+        </ToolBar>
+
+        <DockPanel Grid.Row="1" Margin="8">
+            <DockPanel
+                Margin="0,8,8,8"
+                Background="WhiteSmoke"
+                DockPanel.Dock="Top">
+
+                <StackPanel
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Width="80"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Text="Yıl :" />
+
+                    <dxe:ComboBoxEdit
+                        Width="100"
+                        Margin="8,0,0,0"
+                        HorizontalContentAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        ItemsSource="{Binding Yillar}"
+                        SelectedItem="{Binding SeciliYil, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                
+
+                </StackPanel>
+
+
+
+            </DockPanel>
+
+            <dxg:GridControl
+                Margin="8"
+                ItemsSource="{Binding RotaKartlari}"
+                SelectedItem="{Binding SeciliKayit, UpdateSourceTrigger=PropertyChanged}">
+
+                <dxg:GridControl.TotalSummary>
+
+                    <dxg:GridSummaryItem
+                        DisplayFormat="Say:{0:n0}"
+                        FieldName="Id"
+                        SummaryType="Count" />
+
+
+                </dxg:GridControl.TotalSummary>
+
+
+
+
+
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        Name="View1"
+                        AllowPerPixelScrolling="True"
+                        AutoWidth="True"
+                        RowMinHeight="40"
+                        ShowAutoFilterRow="True"
+                        ShowGroupPanel="False"
+                        ShowTotalSummary="True">
+
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Height="30"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"
+                                    FontWeight="DemiBold"
+                                    Text="{Binding}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn
+                    Width="75"
+                    MaxWidth="75"
+                    AutoFilterCondition="Contains"
+                    FieldName="KartNo"
+                    FilterPopupMode="Excel"
+                    FixedWidth="True">
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dx:SimpleButton
+                                MaxWidth="90"
+                                Command="{Binding View.DataContext.DuzenleCommand}"
+                                CommandParameter="{Binding RowData.Row}"
+                                Content="{Binding RowData.Row.KartNo}"
+                                Style="{StaticResource MyLinkButtonAc}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn FieldName="Tarih" IsSmart="True" />
+                <dxg:GridColumn
+                    FieldName="AlasimKod"
+                    Header="Alaşım"
+                    IsSmart="True" />
+                <dxg:GridColumn FieldName="Kondisyon" IsSmart="True" />
+                <dxg:GridColumn FieldName="Kalinlik" IsSmart="True" />
+                <dxg:GridColumn FieldName="En" IsSmart="True" />
+
+                <dxg:GridColumn FieldName="AktifProses" IsSmart="True" />
+                <dxg:GridColumn FieldName="BitmeYuzde" IsSmart="True" />
+
+
+
+
+                <dxg:GridColumn FieldName="DokumBobinAdedi" IsSmart="True" />
+                <dxg:GridColumn FieldName="Olusturan" IsSmart="True" />
+                <dxg:GridColumn FieldName="Guncelleyen" IsSmart="True" />
+
+                <dxg:GridControl.DetailDescriptor>
+                    <dxg:ContentDetailDescriptor>
+                        <dxg:ContentDetailDescriptor.ContentTemplate>
+                            <DataTemplate>
+                                <dxg:GridControl
+                                    Name="fazlar"
+                                    MaxHeight="500"
+                                    AllowLiveDataShaping="True"
+                                    DockPanel.Dock="Top"
+                                    ItemsSource="{Binding Fazlar}">
+
+                                    <dxg:GridControl.Resources>
+                                        <Style TargetType="dxg:GridColumnHeader">
+                                            <Setter Property="Background" Value="OrangeRed" />
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Height" Value="40" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+
+
+                                            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                                        </Style>
+
+                                        <Style TargetType="dxg:GridColumn">
+
+                                            <Setter Property="AllowSorting" Value="False" />
+                                            <Setter Property="AllowColumnFiltering" Value="False" />
+
+                                            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                                        </Style>
+                                    </dxg:GridControl.Resources>
+
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView ShowGroupPanel="False" />
+                                    </dxg:GridControl.View>
+
+
+                                    <dxg:GridControl.Columns>
+                                        <dxg:GridColumn EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}" Width="80" FieldName="SiraNo" />
+                                        <dxg:GridColumn EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}" FieldName="MakinaIslem" />
+                                        <dxg:GridColumn EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}" FieldName="EzmeYuzde" />
+                                        <dxg:GridColumn EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}" FieldName="ProsesMetin" />
+                                    </dxg:GridControl.Columns>
+                                </dxg:GridControl>
+                            </DataTemplate>
+                        </dxg:ContentDetailDescriptor.ContentTemplate>
+                    </dxg:ContentDetailDescriptor>
+                </dxg:GridControl.DetailDescriptor>
+
+
+            </dxg:GridControl>
+        </DockPanel>
+
+
+
+    </Grid>
+</UserControl>

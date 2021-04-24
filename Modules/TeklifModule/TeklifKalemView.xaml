@@ -1,0 +1,289 @@
+﻿<Window xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"  
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        x:Class="mnd.UI.Modules.TeklifModule.TeklifKalemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.Modules.TeklifModule"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+            xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+            xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+            xmlns:mesajModule="clr-namespace:mnd.UI.GyModules.MesajModule"
+            WindowStartupLocation="CenterScreen"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type local:TeklifKalemViewModel}}"
+             mc:Ignorable="d" Height="481.87" Width="635.162">
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService/>
+        <dxmvvm:EventToCommand  Command="{Binding FormLoadedCommand}"  EventName="Loaded" />
+        <dx:DXMessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top"  MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="ContentSave"/>
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Tamam" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding IptalCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="Delete" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="İptal" />
+                </StackPanel>
+            </Button>
+            <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
+                <TextBlock FontWeight="Normal" Width="120" VerticalAlignment="Center" FontSize="14" Text="Teklif Kalem Kod : "/>
+                <TextBox Margin="0,13" FontWeight="DemiBold" BorderThickness="0" Width="140"  HorizontalAlignment="Left"  Style="{x:Null}" FontSize="14"
+                                 Text="{Binding SeciliTeklifKalem.TeklifKalemSiraKod,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </ToolBar>
+
+        <dxlc:GroupBox>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Width" Value="125"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Margin" Value="0,0,10,0"/>
+                        <Setter Property="TextAlignment" Value="Right"/>
+                    </Style>
+                </Grid.Resources>
+
+
+                <TabControl Grid.Row="1">
+
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Red" CornerRadius="4,4,0,0" Margin="2,0">
+                                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFDEFF00" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+
+
+                    <TabItem Header="Teslim Dönem">
+
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel  Orientation="Horizontal">
+                                    <md:PackIcon Width="24" VerticalAlignment="Center" Height="25"  HorizontalAlignment="Right" 
+                                                 Kind="CalendarRange"/>
+                                    <TextBlock VerticalAlignment="Center" Padding="5"  FontSize="14" Text="Teslim Dönem"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
+
+                        <StackPanel Margin="8" >
+                            <DockPanel Margin="5">
+                                <TextBlock Width="100" VerticalAlignment="Center" Text="Teslim Yıl"/>
+                                <TextBox Width="100" HorizontalAlignment="Left" Background="White" Text="{Binding SeciliTeklifKalem.TeslimYil}"/>
+
+                            </DockPanel>
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Dönem Grup :" VerticalAlignment="Center" Width="100" />
+                                <ComboBox ItemsSource="{Binding DonemGrupListesi}" Background="White" 
+                               DisplayMemberPath="DonemGrupAdi"
+                                  SelectedValue="{Binding SeciliTeklifKalem.DonemGrup}"
+                                 SelectedValuePath="DonemGrupAdi"
+                                  />
+                            </DockPanel>
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Dönem :" VerticalAlignment="Center" Width="100" />
+                                <ComboBox ItemsSource="{Binding DonemListesi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Background="White" 
+                                  DisplayMemberPath="DonemAdi"
+                                 SelectedValue="{Binding SeciliTeklifKalem.Donem}"  SelectedValuePath="DonemAdi" />
+                            </DockPanel>
+
+
+
+
+
+
+
+
+                        </StackPanel>
+
+                    </TabItem>
+
+                    <TabItem Header="Ürün Seçim">
+                        <TabItem.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel  Orientation="Horizontal">
+                                    <md:PackIcon Width="30" VerticalAlignment="Center" Height="24"  HorizontalAlignment="Right" 
+                                                 Kind="Album" />
+                                    <TextBlock VerticalAlignment="Center" Padding="5"  FontSize="14" Text="Ürün Seçim"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
+
+                        <StackPanel Margin="8">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <DockPanel Name="lookupUrunKod" HorizontalAlignment="Left" Width="300" Margin="0,0,0,5">
+                                        <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Ürün Kod:" Width="130" />
+                                        <dxg:LookUpEdit Height="25" AutoPopulateColumns="False" 
+                            EditValue="{Binding SeciliTeklifKalem.UrunKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                            DisplayMember="UrunKod" ValueMember="UrunKod"
+                            FontSize="12"                           
+                            SelectedItem="{Binding SeciliUrun, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding Urunler}"
+                            PopupMinWidth="500" PopupMinHeight="400">
+
+                                            <dxg:LookUpEdit.PopupContentTemplate>
+                                                <ControlTemplate>
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <dxg:GridControl Grid.Row="0" MaxHeight="500" x:Name="PART_GridControl">
+                                                            <dxg:GridControl.Resources>
+                                                                <Style TargetType="dxg:GridColumn">
+                                                                    <Setter Property="FilterPopupMode" Value="Excel" />
+                                                                    <Setter Property="AutoFilterCriteria" Value="Contains" />
+                                                                </Style>
+                                                            </dxg:GridControl.Resources>
+                                                            <dxg:GridControl.View>
+                                                                <dxg:TableView ShowAutoFilterRow="True" AutoWidth="True">
+                                                                    <dxg:TableView.ColumnHeaderTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Height="30" HorizontalAlignment="Center" TextAlignment="Center"
+                                                            TextWrapping="Wrap" Text="{Binding ''}" />
+                                                                        </DataTemplate>
+                                                                    </dxg:TableView.ColumnHeaderTemplate>
+                                                                </dxg:TableView>
+                                                            </dxg:GridControl.View>
+                                                            <dxg:GridColumn ColumnFilterMode="DisplayText" Header="Ürün Kodu" Width="60" FieldName="UrunKod" />
+                                                            <dxg:GridColumn Header="Ürün Adı" FieldName="UrunAdiEN" />
+                                                            <dxg:GridColumn Header="Ağırlık(gr.)" Width="50" FieldName="GR" />
+                                                        </dxg:GridControl>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </dxg:LookUpEdit.PopupContentTemplate>
+                                        </dxg:LookUpEdit>
+                                    </DockPanel>
+
+
+                                    <TextBlock Visibility="Hidden" TextAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Text="Teslim Tarihi"/>
+                                    <StackPanel Visibility="Hidden">
+                                        <dxe:DateEdit  Height="28" HorizontalAlignment="Left" Background="White"                                          
+                                        EditValue="{Binding SeciliTeklifKalem.TeslimTarihi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                          Mask="dd/MM/yyyy HH:mm" MaskUseAsDisplayFormat="True" 
+                                          MaskCulture="tr-TR"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+
+                                <DockPanel Width="550" HorizontalAlignment="Left"  Margin="5">
+                                    <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Ürün Adı:" Width="130" />
+                                    <TextBox Text="{Binding SeciliUrun.UrunAdiEN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                                </DockPanel>
+                                <DockPanel Width="550" HorizontalAlignment="Left" Margin="5">
+                                    <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="" Width="130" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Text="GR." Width="60"/>
+                                            <TextBox Text="{Binding SeciliUrun.GR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,0,5,0" IsReadOnly="True" HorizontalContentAlignment="Center"   />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Text="PCS" Width="60"  />
+                                            <TextBox Text="{Binding SeciliUrun.PCS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Margin="0,0,5,0" IsReadOnly="True" HorizontalContentAlignment="Center"  />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Text="BOX." Width="60" />
+                                            <TextBox Text="{Binding SeciliUrun.BOX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,0,5,0" IsReadOnly="True" HorizontalContentAlignment="Center"   />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Text="M3." Width="80" />
+                                            <TextBox Text="{Binding SeciliUrun.M3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,0,5,0" IsReadOnly="True" HorizontalContentAlignment="Center"   />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel>
+                                                <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Text="Dip Fiyat" Width="130"/>
+                                                <TextBox Text="{Binding SeciliUrun.BirimFiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}"  Margin="0,0,5,0" IsReadOnly="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DockPanel>
+
+
+
+                                <DockPanel Width="700" Height="10" HorizontalAlignment="Left" Margin="5">
+
+                                </DockPanel>
+                                <DockPanel x:Name="naklye">
+                                    <TextBlock Width="130" Text="Nakliye (Freight) :" VerticalAlignment="Center" FontWeight="Bold" />
+                                    <ComboBox Width="200" ItemsSource="{Binding NakliyeDurumTipleri}"
+                                              SelectedValue="{Binding SeciliTeklifKalem.NakliyeDurumTip}"
+                                            DisplayMemberPath="NakliyeDurumTipAdi"
+                                            SelectedValuePath="NakliyeDurumTip" />
+
+                                    <StackPanel Name="nakliyedetay" Margin="10,0,0,0"  Orientation="Horizontal"   Background="Transparent">
+
+                                    </StackPanel>
+                                </DockPanel>
+
+                                <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" TextAlignment="Right" FontWeight="Bold" Text="Birim Fiyatı :" Width="130"/>
+                                        <TextBox Width="200" Text="{Binding SeciliTeklifKalem.SatisFiyati, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}" HorizontalContentAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  Margin="0,5">
+                                        <TextBlock VerticalAlignment="Center" TextAlignment="Right" FontWeight="Bold" Text="Miktar(Koli) :" Width="130"/>
+                                        <TextBox Width="200" Text="{Binding SeciliTeklifKalem.Miktar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  FontWeight="Bold"  HorizontalContentAlignment="Left"  />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock  VerticalAlignment="Center" TextAlignment="Right" FontWeight="Bold" Text="Tutar :" Width="130" />
+                                        <TextBox Width="200" Text="{Binding SeciliTeklifKalem.Tutar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}"  FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  />
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </dxlc:GroupBox>
+
+
+
+    </DockPanel>
+</Window>

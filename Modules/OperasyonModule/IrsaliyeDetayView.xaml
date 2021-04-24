@@ -1,0 +1,292 @@
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="mnd.UI.Modules.OperasyonModule.IrsaliyeDetayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+               xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+                xmlns:mvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:mnd.UI.Modules.OperasyonModule"
+             x:Name="ucIrsaliyeDetay" 
+             HorizontalContentAlignment="Stretch"
+             mc:Ignorable="d" d:DesignWidth="904" d:DesignHeight="779.2" >
+
+    <dxmvvm:Interaction.Behaviors>
+        <mvvm:CurrentWindowService ClosingCommand="{Binding FormClosingCommand}" />
+        <dxmvvm:EventToCommand SourceName="SevkiyatForm" EventName="Loaded" Command="{Binding FormLoadedCommand}" />
+    </dxmvvm:Interaction.Behaviors>
+
+
+    <Grid Margin="10"  Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel   Grid.Row="0">
+            <ToolBarTray Grid.Row="0">
+                <ToolBar  ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+                    <Button IsDefault="True"  Command="{Binding KaydetKapatCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
+                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kaydet" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button IsCancel="True" Command="{Binding IptalCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon  VerticalAlignment="Center" Kind="Close" />
+                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                       Text="İptal" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button IsCancel="True" Command="{Binding FiyatlariYenidenHesaplaCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon  VerticalAlignment="Center" Kind="Calculator" />
+                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                       Text="Fiyatları Yeniden Hesapla" />
+                        </StackPanel>
+                    </Button>
+
+
+
+                </ToolBar>
+
+
+            </ToolBarTray>
+        </StackPanel>
+
+        <materialDesign:Card Margin="5" Grid.Row="1">
+            <StackPanel  DataContext="{Binding SeciliCariIrsaliye}" Margin="10" >
+
+
+
+            <TextBlock Margin="0,10,0,0" Text="İhracat Fatura No / Tarih:"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Style="{x:Null}" VerticalAlignment="Top" Text="{Binding IhracatFaturaNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                     HorizontalAlignment="Left"
+                     TextWrapping="Wrap"  Width="200" />
+
+
+                <dxe:DateEdit Margin="10,0,0,0" Width="200" HorizontalAlignment="Left" EditValue="{Binding IhracatFaturaTarih,Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged}"   MaskType="DateTimeAdvancingCaret" >
+
+                        <dxe:DateEdit.StyleSettings>
+                            <dxe:DateEditNavigatorStyleSettings/>
+                        </dxe:DateEdit.StyleSettings>
+                    </dxe:DateEdit>
+
+            </StackPanel>
+
+
+            <TextBlock Margin="0,10,0,0" Text="Fatura Adresi :"/>
+            <TextBox Style="{x:Null}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+                     Text="{Binding FaturaAdresi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 
+                    TextWrapping="Wrap"  Height="83"/>
+
+
+            <TextBlock Margin="0,10,0,0" Text="İrsaliye Adresi 1 :"/>
+            <TextBox Style="{x:Null}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+                     Text="{Binding IrsaliyeAdresi1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 
+                    TextWrapping="Wrap"  Height="83"/>
+
+            <TextBlock Margin="0,10,0,0" Text="İrsaliye Adresi 2 :"/>
+            <TextBox Style="{x:Null}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+                     Text="{Binding IrsaliyeAdresi2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                     
+                    TextWrapping="Wrap"  Height="83" />
+
+
+
+            <TextBlock Margin="0,10,0,0" Text="Firma İlgili Kişi :"/>
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBox Width="160"
+                         Text="{Binding FirmaIlgiliKisiAdSoyad,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                    materialDesign:HintAssist.Hint="Ad Soyad"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    TextWrapping="Wrap"  Height="50"   Margin="0,0,20,0" />
+
+
+                <TextBox VerticalAlignment="Top" Width="160"
+                         Text="{Binding FirmaIlgiliKisiTel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                    materialDesign:HintAssist.Hint="Firma Telefon"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    TextWrapping="Wrap"  Height="50"  Margin="0,0,20,0" />
+
+                <TextBox VerticalAlignment="Top" Width="180"
+                         Text="{Binding FirmaIlgiliKisiEposta,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                    materialDesign:HintAssist.Hint="Eposta"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    TextWrapping="Wrap"  Height="50"   Margin="0,0,20,0" />
+
+
+
+            </StackPanel>
+
+                
+            <TextBlock Margin="0,15,0,0" Text="Teslim Şekli :"/>
+            <TextBox Style="{x:Null}" AcceptsReturn="True"
+                     Text="{Binding TeslimSekli,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                    TextWrapping="Wrap" />
+
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="300">
+                        <TextBlock  Text="Odeme Şekli :"/>
+                        <TextBox Style="{x:Null}" AcceptsReturn="True" 
+                     Text="{Binding OdemeSekli,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                    TextWrapping="Wrap" />
+                    </StackPanel>
+
+
+                    <StackPanel Margin="20,0,0,0">
+                        <TextBlock Width="200"  Text="Finansal Garantör :"/>
+                        <TextBox Style="{x:Null}" AcceptsReturn="True" 
+                    Text="{Binding FinansalGarantorAd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                TextWrapping="Wrap" />
+
+                    </StackPanel>
+                </StackPanel>
+          
+          
+
+             <TextBlock Margin="0,15,0,0" Text="Banka :"/>
+            <dxe:ComboBoxEdit  AutoComplete="True"
+                            DisplayMember="BankaAd"
+                            EditValue="{Binding OdemeBankaKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding DataContext.Bankalar, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            ValueMember="BankaKod">
+                <dxe:ComboBoxEdit.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="2">
+                            <StackPanel HorizontalAlignment="Stretch">
+                                <TextBlock FontWeight="Bold" FontSize="12" Text="{Binding BankaAd}" />
+                                <TextBlock Text="{Binding Sube}" />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ParaCinsi}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Width="200"  Text="{Binding Iban}" />
+                                    <TextBlock Width="200"  Text="{Binding SwiftKod}" />
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Border>
+
+                    </DataTemplate>
+                </dxe:ComboBoxEdit.ItemTemplate>
+            </dxe:ComboBoxEdit>
+
+
+
+
+            </StackPanel>
+        </materialDesign:Card>
+
+        <materialDesign:Card Margin="5" Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Vertical" >
+
+                <TextBlock Margin="5" FontSize="12" FontWeight="DemiBold" Text="Lme Detayları"/>
+
+                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False"  SelectedItem="{Binding SeciliLmeInfo,Mode=TwoWay}" 
+                          ItemsSource="{Binding LmeBilgiler}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="KalemKod" Width="SizeToCells" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding KalemKod}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="LmeBirimFiyat" Width="SizeToCells">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <dxe:TextEdit   Width="80" 
+                                                  Style="{x:Null}" EditValue="{Binding LmeBirimFiyat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="LmeNot" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LmeDurumKod}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="LFX"  IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LfxKod}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="70" Header="LmeNot" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LmeNot}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+                        <DataGridTemplateColumn Visibility="Hidden" Width="70" Header="Yıl" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Yil,Mode=TwoWay}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+                        <DataGridTemplateColumn Visibility="Hidden" Width="70" Header="Ay" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Ay,Mode=TwoWay}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Visibility="Hidden" Width="70" Header="Doviz" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding DovizTip,Mode=TwoWay}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+                        <DataGridTemplateColumn Visibility="Hidden" Header="İşlem">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding DataContext.LmeOrtalamaGetirCommand, ElementName=ucIrsaliyeDetay}" 
+                                           CommandParameter="{Binding}"  Style="{x:Null}" Content="Ortalamalar" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+        </materialDesign:Card>
+     
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlhelpers="clr-namespace:Gok.UI.ControlHelpers.IsVisibleProperty"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:local="clr-namespace:mnd.UI.Content.AppStyle">
+
+
+    <converters:MyBoolToVisibilityConverter x:Key="MyBoolToVisibilityCnv" />
+
+    <converters:MyBoolToVisibilityInvertConverter x:Key="MyBoolToVisibilityInvertCnv" />
+
+
+
+
+</ResourceDictionary>

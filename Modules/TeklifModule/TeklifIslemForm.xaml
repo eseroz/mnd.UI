@@ -1,0 +1,76 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.TeklifModule.TeklifIslemForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:mnd.UI.Modules.TeklifModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Width="500"
+    Height="264.6"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
+                                     Type={x:Type local:TeklifIslemVM}}"
+    mc:Ignorable="d">
+    <md:Card Margin="10" Padding="8">
+        <StackPanel>
+            <TextBlock
+                Margin="0,0,0,10"
+                Padding="6"
+                Background="OrangeRed"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="Teklif İşlem" />
+
+
+
+            <DockPanel Margin="5">
+                <TextBlock
+                    Width="100"
+                    VerticalAlignment="Center"
+                    FontWeight="DemiBold"
+                    Text="Ret Nedenleri :" />
+                <ComboBox
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    Background="White"
+                    DisplayMemberPath="Aciklama"
+                    ItemsSource="{Binding TeklifIslemViewModel.RetNedenleri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValue="{Binding TeklifIslemViewModel.RetNeden}"
+                    SelectedValuePath="Id" />
+            </DockPanel>
+
+            <DockPanel Margin="5">
+                <TextBlock
+                    Width="100"
+                    VerticalAlignment="Top"
+                    FontWeight="DemiBold"
+                    Text="Açıklama :" />
+                <TextBox
+                    Height="80"
+                    VerticalContentAlignment="Top"
+                    AcceptsReturn="True"
+                    Style="{x:Null}"
+                    Text="{Binding TeklifIslemViewModel.IslemAciklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            </DockPanel>
+
+            <StackPanel
+                Margin="0,20,0,0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Margin="5"
+                    Command="{Binding DataContext.TeklifIslemCevapCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                    CommandParameter="CANCEL"
+                    Content="İptal" />
+
+                <Button
+                    Margin="5"
+                    Command="{Binding DataContext.TeklifIslemCevapCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                    CommandParameter="OK"
+                    Content="Tamam" />
+            </StackPanel>
+        </StackPanel>
+    </md:Card>
+
+</UserControl>

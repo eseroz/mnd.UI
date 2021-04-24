@@ -1,0 +1,205 @@
+﻿<UserControl
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid"
+    xmlns:model="clr-namespace:mnd.Logic.Model.App;assembly=Pandap.Logic"
+    xmlns:SatisRapormodel="clr-namespace:mnd.Logic.Model.Satis;assembly=Pandap.Logic"
+    x:Class="mnd.UI.AppModules.PanoModule.PanoView"
+             mc:Ignorable="d" d:DesignWidth="1572" d:DesignHeight="1255.965"
+    
+    
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    d:DataContext="{d:DesignInstance Type=helper:ViewModelLocator}"
+    >
+
+    <UserControl.Resources>
+        <dxmvvm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="287*" />
+        </Grid.RowDefinitions>
+
+        <Button Margin="5"  Grid.Row="0" Command="{Binding YenileCommand}" HorizontalAlignment="Right" Width="200" Content="Ekranı Yenile" />
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Duyurular">
+                <dxg:GridControl   ItemsSource="{Binding Duyurular, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  AutoExpandAllGroups="True">
+                    <dxg:GridControl.View>
+                        <dxg:TableView ShowGroupPanel="False" ShowGroupFooters="False" AllowEditing="False" />
+                    </dxg:GridControl.View>
+                    <dxg:GridColumn  FieldName="DuyuruGrup" IsSmart="True" GroupIndex="0" SortOrder="Ascending" />
+                    <dxg:GridColumn FieldName="Tarih" Width="120" IsSmart="True" SortOrder="Descending" SortIndex="0">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings DisplayFormat="dd/MM/yyyy hh:mm" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Width="*" FieldName="DuyuruMetin" IsSmart="True" />
+
+                    <dxg:GridColumn FieldName="MesajSayisi" Header="Mesaj" Width="55">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="30" Padding="0" Command="{Binding View.DataContext.PandapMessangerAcCommand}" CommandParameter="{Binding RowData.Row}">
+                                    <Grid>
+                                        <Image HorizontalAlignment="Stretch" Source="/Images/message.png" Width="22" />
+                                        <TextBlock Width="22" VerticalAlignment="Center" Text="{Binding RowData.Row.MesajSayisi}" TextAlignment="Center" HorizontalAlignment="Center" FontSize="10" FontWeight="Bold" Foreground="Red" />
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                </dxg:GridControl>
+            </TabItem>
+
+            <TabItem Header="Satışlar" Visibility="{Binding SatisRaporGorunsunMu, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="563*" />
+                    </Grid.RowDefinitions>
+
+                    <Button Margin="5"  Grid.Row="0" Command="{Binding GridControlExceleAktarCommand}" CommandParameter="{Binding ElementName=tw1}"
+                            HorizontalAlignment="Right" Width="200" Content="Excele Aktar" />
+
+                    <dxg:GridControl  Grid.Row="1"   ItemsSource="{Binding SatisRapor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSmartColumnsGeneration="True">
+                        <dxg:GridControl.View>
+                            <dxg:TableView x:Name="tw1"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" ShowGroupPanel="False" />
+                        </dxg:GridControl.View>
+
+                        <dxg:GridColumn FieldName="SiparisKalemKod" IsSmart="True" />
+                        <dxg:GridColumn FieldName="FAT_AY" IsSmart="True" SortOrder="Ascending" />
+                        <dxg:GridColumn FieldName="FATTARIH" IsSmart="True" />
+                        <dxg:GridColumn FieldName="FATUNO" IsSmart="True" />
+
+                        <dxg:GridColumn FieldName="PlasiyerAd" IsSmart="True" />
+                        <dxg:GridColumn FieldName="CariIsim" IsSmart="True" />
+                        <dxg:GridColumn FieldName="UlkeAd" IsSmart="True" />
+
+                        <dxg:GridColumn FieldName="AlasimTipKod" IsSmart="True" />
+                        <dxg:GridColumn FieldName="SertlikTipKod" IsSmart="True" />
+                        <dxg:GridColumn Header="Kalınlık" FieldName="Kalinlik_micron" IsSmart="True" />
+                        <dxg:GridColumn FieldName="En_mm" IsSmart="True" />
+
+                        <dxg:GridColumn Width="70" FieldName="IscilikTutar" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn FieldName="IscilikDovizTipKod" IsSmart="True" />
+
+                        <dxg:GridColumn FieldName="Miktar_kg" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn Header="Birim Fiyat" FieldName="BirimFiyat" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn FieldName="LmeDovizTipKod" IsSmart="True" />
+
+                        <dxg:GridColumn FieldName="LmeTutar" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="KulceTutar" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn FieldName="LmeTarih" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="dd/MM/yyyy" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn FieldName="KALEMMIKTAR" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn FieldName="DOVIZUSDTUTAR" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="F_MIK" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="DOVIZTUTAR" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn FieldName="F_DOVIZ" IsSmart="True" />
+
+                        <dxg:GridColumn FieldName="GENELTOPLAM" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="NETTOPLAM" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings DisplayFormat="n1" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                    </dxg:GridControl>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Satışlar (Pivot)">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="563*" />
+                    </Grid.RowDefinitions>
+
+                    <Button Margin="5"  Grid.Row="0" Command="{Binding PivotExceleAktarCommand}" CommandParameter="{Binding ElementName=pvt1}"
+                            HorizontalAlignment="Right" Width="200" Content="Excele Aktar" />
+
+                    <dxpg:PivotGridControl x:Name="pvt1" Grid.Row="1" DataSource="{Binding SatisRapor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-0.2,-0.4" Grid.RowSpan="2">
+                        <dxpg:PivotGridControl.Fields>
+                            <dxpg:PivotGridField Area="RowArea" FieldName="CariIsim" AreaIndex="1" />
+                            <dxpg:PivotGridField Area="RowArea" FieldName="UlkeAd" AreaIndex="0" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="PlasiyerAd" AreaIndex="0" />
+                            <dxpg:PivotGridField Area="DataArea" FieldName="GENELTOPLAM" AreaIndex="0" />
+
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="FAT_AY" AreaIndex="1" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="FATTARIH" AreaIndex="2" />
+                            <dxpg:PivotGridField Area="ColumnArea" FieldName="PlasiyerAd" AreaIndex="0" />
+
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="Kalinlik_micron" AreaIndex="5" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="En_mm" AreaIndex="3" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="AlasimTipKod" AreaIndex="4" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="SertlikTipKod" AreaIndex="6" />
+
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="IscilikTutar" AreaIndex="10" />
+
+                            <dxpg:PivotGridField Area="FilterArea"  FieldName="F_MIK" AreaIndex="7"  CellFormat="c2" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="GENELTOPLAM" AreaIndex="8" />
+                            <dxpg:PivotGridField Area="FilterArea" FieldName="KALEMMIKTAR" AreaIndex="9" />
+                        </dxpg:PivotGridControl.Fields>
+                    </dxpg:PivotGridControl>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

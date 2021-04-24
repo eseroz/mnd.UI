@@ -1,0 +1,166 @@
+﻿<UserControl 
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:planlama="clr-namespace:Pandap.UI.AppModule._Planlama"
+    xmlns:helper="clr-namespace:Pandap.UI.Helper"
+    x:Class="Pandap.UI.AppModule._Planlama.UretimEmriListView"
+mc:Ignorable="d" d:DesignWidth="1460.8" d:DesignHeight="632.8"
+MinWidth="600" MinHeight="500" x:Name="ucUretimEmri"
+
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+TextElement.FontWeight="Regular"
+TextElement.FontSize="13"
+TextOptions.TextFormattingMode="Ideal"
+TextOptions.TextRenderingMode="Auto"
+Background="{DynamicResource MaterialDesignPaper}"
+FontFamily="{DynamicResource MaterialDesignFont}"
+d:DataContext="{d:DesignInstance Type=planlama:UretimEmriListViewModel, IsDesignTimeCreatable=False}"
+
+>
+
+    <UserControl.Resources>
+        <Style TargetType="dxg:GridColumnHeader">
+            <Setter Property="Background" Value="#FFAEEA00" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dxmvvm:NotificationService x:Name="AppNotificationService" UseWin8NotificationsIfAvailable="False" />
+        <dx:DXMessageBoxService />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="559*"/>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" Text="Paketleme Tolerans %"/>
+            <TextBox Text="{Binding PaketlemeToleransYuzde,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <Button Command="{Binding PaketlemeToleransGuncelleCommand}" Margin="10,0,0,0" Content="Güncelle"/>
+        </StackPanel>
+
+
+        <StackPanel Margin="0,0,20,0" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Excele Aktar" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="124" 
+                        Command="{Binding ExcelExportCommand, ElementName=DxGridHelper}" />
+            <Button Content="Tablo Yerleşim Kaydet" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" 
+                        Command="{Binding LayoutSaveCommand, ElementName=DxGridHelper}" />
+
+        </StackPanel>
+
+
+        <dxg:GridControl  Grid.Row="1" x:Name="grdUretimEmirleri" ItemsSource="{Binding UretimEmirleri}"
+            CurrentItem="{Binding SeciliUretimEmri, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            SelectedItems="{Binding SeciliKalemler, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                          Margin="0,0,7.8,4.8" Grid.RowSpan="2">
+
+
+            <dxmvvm:Interaction.Behaviors>
+                <helper:GridControlBehavior x:Name="DxGridHelper" LayoutFileName="PlanlamaKalemList.xml"/>
+            </dxmvvm:Interaction.Behaviors>
+
+
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem Alignment="Right" FieldName="Id" SummaryType="Count" />
+                <dxg:GridSummaryItem   FieldName="Uretim_PlanlananMiktar" DisplayFormat=" {0:n0}" SummaryType="Sum" />
+                <dxg:GridSummaryItem   FieldName="Uretim_PaketlenenMiktar" DisplayFormat=" {0:n0}" SummaryType="Sum" />
+                <dxg:GridSummaryItem   FieldName="Uretim_UretimdekiMiktar" DisplayFormat=" {0:n0}" SummaryType="Sum" />
+
+            </dxg:GridControl.TotalSummary>
+
+
+            <dxg:GridControl.View>
+                <dxg:TableView
+                                CheckBoxSelectorColumnWidth="40" ShowCheckBoxSelectorColumn="True" ShowAutoFilterRow="True" x:Name="view1"
+                                ShowGroupPanel="False" AllowEditing="False"
+                                ShowTotalSummary="True" AutoWidth="True" ShowFixedTotalSummary="False" AllowGrouping="False">
+
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition ApplyToRow="True" FieldName="SonGecerliMi" Value1="True" ValueRule="Equal">
+                            <dx:Format Background="#FFFCC495" />
+                        </dxg:FormatCondition>
+
+                        <dxg:FormatCondition FieldName="Uretim_UretimdekiMiktar" Value1="0" ValueRule="LessOrEqual" >
+                            <dx:Format Background="Yellow"/>
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
+
+                    <dxg:TableView.ColumnHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Height="30" HorizontalAlignment="Center"
+TextAlignment="Center" TextWrapping="Wrap" Text="{Binding ''}" />
+                        </DataTemplate>
+                    </dxg:TableView.ColumnHeaderTemplate>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+
+            <dxg:GridColumn AutoFilterCondition="Contains" Width="250" FieldName="UretimEmriKod" Header="Uretim EmriKod" FilterPopupMode="Excel"
+IsSmart="True" VisibleIndex="0" />
+            <dxg:GridColumn Width="150" Header="KalemKod" FieldName="SiparisKalemKodNav.SiparisKalemKod" IsSmart="True" VisibleIndex="1" />
+
+            <dxg:GridColumn Width="150" Header="Anakart No" FieldName="AnaKartNo" IsSmart="True" VisibleIndex="2" />
+            <dxg:GridColumn Header="Cari İsim" FieldName="SiparisKalemKodNav.SiparisNav.CariKartNavigation.CariIsim" IsSmart="True" Width="150" VisibleIndex="3" />
+
+            <dxg:GridColumn FilterPopupMode="Excel" Header="Alaşım" FieldName="SiparisKalemKodNav.AlasimTipKod" IsSmart="True" VisibleIndex="6" />
+            <dxg:GridColumn FilterPopupMode="Excel" Header="Sertlik" FieldName="SiparisKalemKodNav.SertlikTipKod" IsSmart="True" VisibleIndex="7" />
+            <dxg:GridColumn FieldName="SiparisKalemKodNav.AmbalajTipKod" Header="Ambalaj" IsSmart="True" VisibleIndex="10" />
+
+            <dxg:GridColumn FilterPopupMode="CheckedList" Header="Kalınlık (mic)" FieldName="SiparisKalemKodNav.Kalinlik_micron" IsSmart="True" VisibleIndex="12" />
+            <dxg:GridColumn FieldName="SiparisKalemKodNav.En_mm" IsSmart="True" VisibleIndex="13" />
+
+            <dxg:GridColumn FilterPopupMode="Excel" FieldName="Uretim_PlanlananMiktar" Header="Planlanan" IsSmart="True" VisibleIndex="14">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FilterPopupMode="Excel" Header="Üretim Bakiye" FieldName="Uretim_UretimdekiMiktar" 
+                            IsSmart="True" VisibleIndex="16" SortOrder="Descending" SortIndex="0" >
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Width="70" Header="Paketlenen" FieldName="Uretim_PaketlenenMiktar" IsSmart="True" VisibleIndex="15">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Visible="False" Header="SonGecerli" FieldName="SonGecerli" IsSmart="True" VisibleIndex="19">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n0" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Visible="False" FieldName="SiparisKalemKodNav.PlanlamaDurum" IsSmart="True" />
+
+            <dxg:GridColumn FilterPopupMode="Excel" Header="Sevk Hafta" FieldName="SiparisKalemKodNav.SiparisNav.SevkYilHafta" IsSmart="True" VisibleIndex="4" />
+
+            <dxg:GridColumn FilterPopupMode="Excel" Header="Kullanım Alanı" FieldName="SiparisKalemKodNav.KullanimAlanTipKod" IsSmart="True" VisibleIndex="4" />
+
+
+            <dxg:GridColumn Width="230"
+                                    Header="#"  IsSmart="True" VisibleIndex="18">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <dx:SimpleButton Style="{StaticResource MyLinkButton}"
+                                Content="Kapat" Command="{Binding View.DataContext.KapatIslemCommand}" CommandParameter="Kapat" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

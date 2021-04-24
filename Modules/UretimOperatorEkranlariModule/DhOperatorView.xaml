@@ -1,0 +1,143 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.UretimOperatorEkranlariModule.DhOperatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.UretimOperatorEkranlariModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:uiControls="clr-namespace:mnd.UI.MyControls.UI_Controls"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    FontSize="16"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:AlasimRenkConverter x:Key="alasimRenkConverter" />
+        <converters:AlasimFontRenkConverter x:Key="alasimFontRenkConverter" />
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dx:DXMessageBoxService />
+
+
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+        <dxmvvm:EventToCommand Command="{Binding FormUnloadedCommand}" EventName="Unloaded" />
+
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <md:Snackbar
+            x:Name="Snackbar"
+            Grid.Row="2"
+            Width="800"
+            Height="50"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Panel.ZIndex="1000"
+            MessageQueue="{Binding BoundMessageQueue}" />
+
+
+        <ToolBar
+            Grid.Row="0"
+            MinHeight="50"
+            ClipToBounds="False"
+            Style="{DynamicResource MaterialDesignToolBar}">
+
+
+
+            <Border
+                Grid.ColumnSpan="2"
+                Height="50"
+                Margin="0,12,12,12"
+                Panel.ZIndex="100">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="2" />
+                </Border.Effect>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <dxe:TextEdit
+                        Width="190"
+                        Padding="20,0,0,0"
+                        EditValue="{Binding AramaMetin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000}"
+                        FontSize="22"
+                        FontWeight="Bold"
+                        NullText="Barkod No" />
+                    <md:PackIcon
+                        Width="52"
+                        Height="32"
+                        Margin="-50,0,0,0"
+                        VerticalAlignment="Center"
+                        Kind="Barcode" />
+                </StackPanel>
+            </Border>
+
+
+         
+        </ToolBar>
+
+
+        <TabControl Grid.Row="1" Margin="12">
+
+
+
+            <TabItem Header="Alternatif">
+
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="30"
+                                Height="35"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Kind="GamepadCircleOutline" />
+                            <TextBlock
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="Dökülecek Bobinler" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+
+                <ListBox Background="WhiteSmoke" ItemsSource="{Binding BobinItemVmListe}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel VerticalAlignment="Top" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <local:BobinItemView DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+
+
+
+        </TabControl>
+
+     
+
+
+
+    </Grid>
+</UserControl>

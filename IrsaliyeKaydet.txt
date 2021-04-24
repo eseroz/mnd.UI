@@ -1,0 +1,73 @@
+﻿  public static void SatisIrsaliyesiKaydet()
+        {
+            Kernel kernel = (Kernel)Activator.CreateInstance(Marshal.GetTypeFromCLSID(new Guid("65EB3876-89FF-459F-BF24-02E8DD7F2DB2")));
+            Sirket sirket = default(Sirket);
+            Fatura fatura = default(Fatura);
+            FatUst fatUst = default(FatUst);
+            FatKalem fatKalem = default(FatKalem);
+
+         
+
+            try
+            {
+                sirket = kernel.yeniSirket(TVTTipi.vtMSSQL, "PANDA2018", "TEMELSET", "", netsis_KullaniciAdi, netsis_parola, 0);
+                kernel.DBSessionId();
+
+                fatura = kernel.yeniFatura(sirket, TFaturaTip.ftSIrs);
+
+                fatUst = fatura.Ust();
+                //fatUst.FATIRS_NO = fatura.YeniNumara("000000000900101");
+
+                fatUst.CariKod = "120-01-01-180";
+
+                fatUst.Tarih = DateTime.Now;
+                fatUst.SIPARIS_TEST = DateTime.Now;
+                fatUst.FIYATTARIHI = DateTime.Now;
+                fatUst.FiiliTarih = DateTime.Now;
+
+                fatUst.KOD1 = "G";   // ihraç kayıtlı
+                fatUst.KOD2 = "H";
+
+                fatUst.TIPI = TFaturaTipi.ft_Ihracat;
+                fatUst.PLA_KODU = "6";
+                fatUst.Proje_Kodu = "1";
+                fatUst.KDV_DAHILMI = true;
+
+                fatUst.Aciklama = "PandapTest2";
+
+                fatUst.EKACK1 = "Pandap Test1";
+                fatUst.EKACK2 = "Pandap Test2";
+                fatUst.EKACK3 = "Pandap Test3";
+                fatUst.EKACK4 = "Pandap Test4";
+                fatUst.EKACK5 = "Pandap Test5";
+                fatUst.EKACK6 = "Pandap Test6";
+
+
+
+                //--------------------------------------------------------
+                fatKalem = fatura.kalemYeni("8006M-H0");
+                fatKalem.Ekalan = "Pandap Kalem Test";
+                fatKalem.Olcubr = 1;
+                fatKalem.Stra_FiyatBirimi = 1;
+                fatKalem.DEPO_KODU = 20;
+                fatKalem.STra_GCMIK = 1;
+                fatKalem.STra_NF = 6;
+                fatKalem.STra_BF = 5;
+                fatKalem.Stra_FiiliTar = DateTime.Now;
+                fatKalem.STra_testar = DateTime.Now;
+                fatKalem.DEPO_KODU = 20;
+
+
+                fatura.kayitYeni();
+
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(fatKalem);
+                Marshal.ReleaseComObject(fatUst);
+                Marshal.ReleaseComObject(fatura);
+                Marshal.ReleaseComObject(sirket);
+                kernel.FreeNetsisLibrary();
+                Marshal.ReleaseComObject(kernel);
+            }
+        }

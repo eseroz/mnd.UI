@@ -1,0 +1,15 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mnd.UI.Modules.Dashboard"
+        xmlns:dxdash="http://schemas.devexpress.com/winfx/2008/xaml/dashboard" x:Class="mnd.UI.Modules.Dashboard.DashboardWindow"
+        mc:Ignorable="d"
+        Title="DashboardWindow" Height="450" Width="800">
+    <Grid>
+
+        <dxdash:DashboardControl Name="MainDashBoard" MinHeight="150" DashboardSource="{x:Type local:Dashboard1}"/>
+
+    </Grid>
+</Window>

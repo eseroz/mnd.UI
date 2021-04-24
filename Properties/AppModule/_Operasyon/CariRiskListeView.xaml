@@ -1,0 +1,389 @@
+﻿<UserControl
+    x:Class="Pandap.UI.AppModule._Operasyon.CariRiskListeView"
+    x:Name="ucCariRiskListe"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+    xmlns:helper="clr-namespace:Pandap.UI.Helper"
+    xmlns:local="clr-namespace:Pandap.UI.AppModule._Operasyon"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type local:CariRiskListeViewModel}}"
+    d:DesignHeight="629.6"
+    d:DesignWidth="905.6"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto">
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:OpenFileDialogService />
+        <dxmvvm:EventToCommand
+            Command="{Binding FormLoadedCommand}"
+            EventName="Loaded"
+            SourceName="ucCariRiskListe" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <DockPanel x:Name="dockMain">
+        <Popup
+            IsOpen="{Binding RiskDetayPopupIsOpen,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            Placement="Center"
+            PlacementTarget="{Binding ElementName=dockMain}"
+            PopupAnimation="Slide">
+            <Border BorderBrush="DarkBlue" BorderThickness="2">
+                <md:Card Width="450" Background="{DynamicResource MaterialDesignPaper}">
+                    <StackPanel>
+                        <TextBlock
+                            Background="Purple"
+                            FontSize="20"
+                            Foreground="White"
+                            Padding="2"
+                            Text="{Binding SeciliNetsis_CariRiskKontrol.PandapCari }" />
+                        <DockPanel>
+                            <StackPanel Margin="20" HorizontalAlignment="Center">
+                                <StackPanel Margin="0,0,0,20">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="Şeherli Limit"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_SeherliLimit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="Exim Limit"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_EximLimit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="Garanti Factoring"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_GarantiFactoring,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="Ing Factoring"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_IngFactoring,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="Dbs Limit"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_DBS_Limit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="İpotek"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_Ipotek,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            md:HintAssist.Hint="Teminat Mektubu"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_Teminat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox
+                                            Width="200"
+                                            Background="LightYellow"
+                                            md:HintAssist.Hint="Yönetim"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding SeciliNetsis_CariRiskKontrol.P_Yonetim,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="0,40,10,10">
+                                <TextBlock Text="Bakiye" />
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    Background="DarkOrange"
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Padding="2"
+                                    Text="{Binding SeciliNetsis_CariRiskKontrol.BakiyeTek,StringFormat= : {0:n0}}"
+                                    TextAlignment="Right" />
+                                <TextBlock Text="Toplam Limit" />
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    Background="DarkOrange"
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Padding="2"
+                                    Text="{Binding SeciliNetsis_CariRiskKontrol.ToplamLimit,StringFormat= : {0:n0}}"
+                                    TextAlignment="Right" />
+                                <TextBlock Text="Kullanılabilir Limit" />
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    Background="DarkOrange"
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Padding="2"
+                                    Text="{Binding SeciliNetsis_CariRiskKontrol.KullanilabilirLimit,StringFormat= : {0:n0}}"
+                                    TextAlignment="Right" />
+                            </StackPanel>
+                        </DockPanel>
+                        <StackPanel
+                            Margin="10"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <Button
+                                Command="{Binding RiskPopupCloseCommand}"
+                                CommandParameter="cancel"
+                                Content="İptal"
+                                Style="{StaticResource MaterialDesignFlatButton}" />
+                            <Button
+                                Margin="10,0,0,0"
+                                Command="{Binding RiskPopupCloseCommand}"
+                                CommandParameter="ok"
+                                Content="Kaydet" />
+                        </StackPanel>
+                    </StackPanel>
+                </md:Card>
+            </Border>
+        </Popup>
+        <dxr:RibbonControl
+            AsyncMergingEnabled="False"
+            AutomationProperties.IsRowHeader="True"
+            DockPanel.Dock="Top"
+            MDIMergeStyle="Never"
+            MinimizationButtonVisibility="Collapsed"
+            RibbonStyle="Office2007"
+            RibbonTitleBarVisibility="Collapsed"
+            ShowApplicationButton="False"
+            ToolbarShowMode="Hide">
+            <dxr:RibbonDefaultPageCategory>
+                <dxr:RibbonPage Caption="Risk İşlemleri">
+                    <dxr:RibbonPageGroup Caption="Risk">
+                        <dxb:BarButtonItem
+                            Command="{Binding ExcelImportCommand}"
+                            Content="Excelden Al"
+                            Glyph="{dx:DXImage Image=Edit_32x32.png}"
+                            LargeGlyph="{dx:DXImageOffice2013 Image=NavigateNext_32x32.png}" />
+                        <dxb:BarButtonItem
+                            Command="{Binding VerileriGuncelleCommand}"
+                            Content="Ekranı Güncelle"
+                            Glyph="{dx:DXImage Image=RefreshAllPivotTable_32x32.png}"
+                            LargeGlyph="{dx:DXImage Image=RefreshAllPivotTable_32x32.png}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Tablo İşlemleri">
+                        <dxb:BarButtonItem
+                            Command="{Binding ExcelExportCommand, ElementName=DxGridHelper}"
+                            Content="Excele Aktar"
+                            Glyph="{dx:DXImage Image=Print_32x32.png}"
+                            LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}" />
+                        <dxb:BarButtonItem
+                            Command="{Binding LayoutSaveCommand, ElementName=DxGridHelper}"
+                            CommandParameter="{Binding DataContext.SeciliYerlesim.XmlDosyaAd,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            Content="Yerleşimini Kaydet"
+                            LargeGlyph="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" />
+                        <dxb:BarStaticItem>
+                            <dxb:BarStaticItem.ContentTemplate>
+                                <DataTemplate>
+                                    <dxe:ListBoxEdit
+                                        Width="50"
+                                      
+                                        ItemsSource="{Binding DataContext.Yerlesimler, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        SelectedItem="{Binding DataContext.SeciliYerlesim,Mode=TwoWay,RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                       
+                                    </dxe:ListBoxEdit>
+                                </DataTemplate>
+                            </dxb:BarStaticItem.ContentTemplate>
+                        </dxb:BarStaticItem>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+        <dxg:GridControl
+            EnableSmartColumnsGeneration="True"
+            ItemsSource="{Binding CariRiskListe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SeciliNetsis_CariRiskKontrol, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+            <dxmvvm:Interaction.Behaviors>
+                <helper:GridControlBehavior x:Name="DxGridHelper" LayoutFileName="{Binding Path=DataContext.SeciliYerlesim.XmlDosyaAd,RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+            </dxmvvm:Interaction.Behaviors>
+            <dxg:GridControl.Resources>
+                <Style TargetType="{x:Type dxg:GridColumn}">
+                    <Setter Property="Width" Value="50" />
+                </Style>
+            </dxg:GridControl.Resources>
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    AllowPerPixelScrolling="True"
+                    AutoWidth="True"
+                    NewItemRowPosition="Bottom"
+                    ShowAutoFilterRow="True"
+                    ShowGroupPanel="False"
+                    ShowTotalSummary="True">
+                    <dxg:TableView.ColumnHeaderTemplate>
+                        <DataTemplate>
+                            <Grid Background="Transparent">
+                                <TextBlock
+                                    Height="35"
+                                    Margin="0,-4"
+                                    HorizontalAlignment="Stretch"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding ''}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </dxg:TableView.ColumnHeaderTemplate>
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition
+                            FieldName="Bakiye"
+                            Value1="0"
+                            ValueRule="Less">
+                            <dx:Format Background="LightGreen" />
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn
+                Width="30"
+                FieldName="P_Id"
+                Header="Id"
+                IsSmart="True" />
+            <dxg:GridColumn FieldName="CariKod" IsSmart="True" />
+            <dxg:GridColumn FieldName="PandapCari" IsSmart="True" />
+            <dxg:GridColumn
+                AllowEditing="false"
+                FieldName="PandaFaturaToplam"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                AllowEditing="false"
+                FieldName="SeherliFaturaToplam"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                AllowEditing="false"
+                FieldName="KullanilabilirRisk"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                AllowEditing="false"
+                Header="Çek Asıl Risk"
+                FieldName="Cek_Asil_Riski"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="Çek Ciro Risk"
+                AllowEditing="false"
+                FieldName="Cek_Ciro_Riski"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                AllowEditing="false"
+                FieldName="Teminat"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="Yönetim Risk"
+                AllowEditing="false"
+                FieldName="P_Yonetim"
+                IsSmart="True">
+                <dxg:GridColumn.HeaderStyle>
+                    <Style TargetType="{x:Type dxg:BaseGridHeader}">
+                        <Setter Property="Background" Value="LightYellow" />
+                    </Style>
+                </dxg:GridColumn.HeaderStyle>
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            
+            <dxg:GridColumn
+                AllowEditing="false"
+                FieldName="RiskLimiti"
+                IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="Bakiye Tek" AllowEditing="false" FieldName="BakiyeTek" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Visible="False" AllowEditing="false" Header="Doviz Bakiye" FieldName="D_Bakiye" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn AllowEditing="false" Header="Döviz Türü" FieldName="DovizTuru" IsSmart="True">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings DisplayFormat="n1" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+
+            <dxg:GridColumn Visible="False" FieldName="Bakiye" IsSmart="True" >
+                <dxg:GridColumn.HeaderStyle>
+                    <Style TargetType="{x:Type dxg:BaseGridHeader}">
+                        <Setter Property="Background" Value="LightGreen" />
+                    </Style>
+                </dxg:GridColumn.HeaderStyle>
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit
+                            x:Name="PART_Editor"
+                            HorizontalContentAlignment="Right"
+                            DisplayFormatString="n0"
+                            Foreground="Red"
+                            MaskUseAsDisplayFormat="True" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn>
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <dx:SimpleButton
+                                Command="{Binding View.DataContext.DetayCommand}"
+                                Content="Detaylar"
+                                Style="{StaticResource MyLinkButton}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+        </dxg:GridControl>
+    </DockPanel>
+
+</UserControl>

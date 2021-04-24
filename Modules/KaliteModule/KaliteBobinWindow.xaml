@@ -1,0 +1,523 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+
+    x:Class="mnd.UI.Modules.KaliteModule.KaliteBobinWindow"
+    mc:Ignorable="d"
+    Title="KaliteBobinWindow"
+
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    d:DataContext="{d:DesignInstance Type=helper:ViewModelLocator}"
+
+    d:DesignWidth="2176.799" d:DesignHeight="1224.171">
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <dxg:GridControl SelectedItem="{Binding SeciliBobin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         ItemsSource="{Binding AktifUretimEmri.UretimBobinler}" Grid.Row="1"
+                         IsFilterEnabled="False">
+
+            <dxg:GridControl.Bands>
+
+                <dxg:GridControlBand  Header="FH">
+                    <dxg:GridColumn MinWidth="65"  FieldName="FH_CikisNo" Header="FH Çıkış No">
+                        <dxg:GridColumn.CellStyle>
+                            <Style TargetType="dxg:LightweightCellEditor">
+                                <Setter Property="Background" Value="Yellow" />
+                            </Style>
+                        </dxg:GridColumn.CellStyle>
+                    </dxg:GridColumn>
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand>
+
+                    <dxg:GridColumn MinWidth="65" HorizontalHeaderContentAlignment="Stretch" FieldName="BobinNo">
+                        <dxg:GridColumn.CellStyle>
+                            <Style TargetType="dxg:LightweightCellEditor">
+                                <Setter Property="Background" Value="Yellow" />
+                            </Style>
+                        </dxg:GridColumn.CellStyle>
+
+                        <dxg:GridColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                    <TextBlock Height="70" TextWrapping="Wrap"  Text="Bobin No / Coil No" />
+                                    <TextBlock Margin="2"
+                                                Text="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.Id,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Margin="2" Background="White" Text="Min-Max" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.HeaderTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn MinWidth="40"  FieldName="FirinNo" Header="Fırın No">
+                        <dxg:GridColumn.CellStyle>
+                            <Style TargetType="dxg:LightweightCellEditor">
+                                <Setter Property="Background" Value="Yellow" />
+                            </Style>
+                        </dxg:GridColumn.CellStyle>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn MinWidth="40"  FieldName="TavNo" Header="Tav No">
+                        <dxg:GridColumn.CellStyle>
+                            <Style TargetType="dxg:LightweightCellEditor">
+                                <Setter Property="Background" Value="Yellow" />
+                            </Style>
+                        </dxg:GridColumn.CellStyle>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn MinWidth="40"  FieldName="SehpaNo" Header="Sehpa No">
+                        <dxg:GridColumn.CellStyle>
+                            <Style TargetType="dxg:LightweightCellEditor">
+                                <Setter Property="Background" Value="Yellow" />
+                            </Style>
+                        </dxg:GridColumn.CellStyle>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn MinWidth="40" FieldName="BobinAdet" Header="B. Adet" Width="60">
+                        <dxg:GridColumn.CellStyle>
+                            <Style TargetType="{x:Type dxg:LightweightCellEditor}">
+                                <Setter Property="Background" Value="LightGray" />
+                            </Style>
+                        </dxg:GridColumn.CellStyle>
+                    </dxg:GridColumn>
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand Header="Kimyasal Bileşim">
+                    <dxg:GridControlBand.Bands>
+                        <dxg:GridControlBand Header="%">
+                            <dxg:GridColumn  Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Si_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Si" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Si_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Si_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn  Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Fe_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Fe" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Fe_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Fe_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Cu_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Cu" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Cu_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Cu_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Mn_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Mn" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Mn_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Mn_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Ti_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Ti" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Ti_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Ti_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Zn_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Zn" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Zn_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Zn_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Mg_yuzde">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Mg" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Mg_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Mg_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                        </dxg:GridControlBand>
+
+                        <dxg:GridControlBand Header="ppm">
+
+                            <dxg:GridColumn  Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Pb_ppm">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Pb" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Pb_ppm_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Pb_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Cr_ppm">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Cr" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Cr_ppm_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Cr_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Cd_ppm">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70"  Text="Cd" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Cd_ppm_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Cd_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                        </dxg:GridControlBand>
+                    </dxg:GridControlBand.Bands>
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand Header="Al %">
+                    <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="KB_Al_yuzde">
+                        <dxg:GridColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                    <TextBlock Height="70"  Text="Al" />
+                                    <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.KB_Al_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.HeaderTemplate>
+
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.KB_Al_yuzde}" />
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                </dxg:GridControlBand>
+
+                <dxg:GridControlBand Header="Mekanik Özellikler / Mechanical Properties">
+                    <dxg:GridControlBand.Bands>
+                        <dxg:GridControlBand Header="Rolling Direction (0)">
+                            <dxg:GridColumn FieldName="MO_RD_AkmaMukavemeti_N_mm2" HorizontalHeaderContentAlignment="Stretch" Width="55">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" Text="Akma Mukavemeti / Yield Strength (N/mm^2)" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.MO_RD_AkmaMukavemeti_N_mm2_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.MO_RD_AkmaMukavemeti_N_mm2}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="MO_RD_MekMukavemet_N_mm2" HorizontalHeaderContentAlignment="Stretch" Width="55">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock FontSize="10" Height="70" TextAlignment="Center" TextWrapping="Wrap"  Text="Mek.Mukavemet / Tensile Strength (N/mm^2)" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.MO_RD_MekMukavemet_N_mm2_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.MO_RD_MekMukavemet_N_mm2}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="MO_RD_Uzama_yuzde" HorizontalHeaderContentAlignment="Stretch" Width="55">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock FontSize="10" Height="70" TextAlignment="Center" TextWrapping="Wrap"  Text="Uzama / Elongation (%) A100" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.MO_RD_Uzama_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.MO_RD_Uzama_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                        </dxg:GridControlBand>
+                        <dxg:GridControlBand Header="Transverse Direction (90)">
+                            <dxg:GridColumn FieldName="MO_TD_AkmaMukavemeti_N_mm2" HorizontalHeaderContentAlignment="Stretch" Width="55">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock Height="70" FontSize="10" TextAlignment="Center" TextWrapping="Wrap"  Text="Akma Mukavemeti / Yield Strength ( N/mm^2" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.MO_TD_AkmaMukavemeti_N_mm2_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.MO_TD_AkmaMukavemeti_N_mm2}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="MO_TD_MekMukavemet_N_mm2" HorizontalHeaderContentAlignment="Stretch" Width="55">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock FontSize="10" TextAlignment="Center" TextWrapping="Wrap"  Height="70" Text="Mek.Mukavemet / Tensile Strength (N/mm^2)" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.MO_TD_MekMukavemet_N_mm2_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.MO_TD_MekMukavemet_N_mm2}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="MO_TD_Uzama_yuzde" HorizontalHeaderContentAlignment="Stretch" Width="55">
+                                <dxg:GridColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                            <TextBlock FontSize="10" TextAlignment="Center" TextWrapping="Wrap"  Height="70" Text="Uzama / Elongation (%) A100" />
+                                            <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.MO_TD_Uzama_yuzde_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.HeaderTemplate>
+
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.MO_TD_Uzama_yuzde}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                        </dxg:GridControlBand>
+                    </dxg:GridControlBand.Bands>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="Diğer Özellikler / Others">
+
+                    <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="DI_Erichsen_mm">
+                        <dxg:GridColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                    <TextBlock FontSize="10" TextAlignment="Center" TextWrapping="Wrap"  Height="70"  Text="Erichsen (mm)" />
+                                    <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.DI_Erichsen_mm_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.HeaderTemplate>
+
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.DI_Erichsen_mm}" />
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn Width="55" HorizontalHeaderContentAlignment="Stretch" FieldName="DI_KaydiriciMiktari_mgr_m2">
+                        <dxg:GridColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                    <TextBlock FontSize="10" TextAlignment="Center" TextWrapping="Wrap"  Height="70"  Text="Kaydırıcı Miktarı / Amount of Lubricant (mgr/m^2)" />
+                                    <dx:TextEdit Margin="2" Background="White"
+                                                EditValue="{Binding DataContext.AktifUretimEmri.KaliteSinirlari.DI_KaydiriciMiktari_mgr_m2_range,
+                                                RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}},
+                                                Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.HeaderTemplate>
+
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dx:TextEdit Height="40" BorderThickness="1" BorderBrush="DarkGray" Margin="5" x:Name="PART_Editor"
+                            EditValue="{Binding RowData.Row.DI_KaydiriciMiktari_mgr_m2}" />
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                </dxg:GridControlBand>
+            </dxg:GridControl.Bands>
+            <dxg:GridControl.View>
+                <dxg:TableView  AllowPerPixelScrolling="True" ShowTotalSummary="True" AutoWidth="True" AllowGrouping="False" ShowGroupPanel="False" AllowColumnFiltering="False" AllowFilterEditor="False" AllowSorting="False" ShowFilterPanelMode="Never" EditFormPostMode="Immediate" EditFormShowMode="None" NewItemRowPosition="Bottom" ErrorsWatchMode="Rows" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+
+        <DockPanel LastChildFill="False" Margin="5">
+            <Button Margin="6" Width="Auto" DockPanel.Dock="Left" Command="{Binding KapatCommand}"  Content="Sertifika Yazdır"   Height="42" />
+            <Button Margin="6" Width="Auto" DockPanel.Dock="Right"  Command="{Binding KapatCommand}"  Content="Kaydet Kapat"   Height="42" Click="Button_Click" />
+        </DockPanel>
+    </Grid>
+</Window>

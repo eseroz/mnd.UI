@@ -1,0 +1,616 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.UretimOperatorEkranlariModule.ShOperatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.UretimOperatorEkranlariModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:uiControls="clr-namespace:mnd.UI.MyControls.UI_Controls"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    FontSize="16"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:AlasimRenkConverter x:Key="alasimRenkConverter" />
+        <converters:AlasimFontRenkConverter x:Key="alasimFontRenkConverter" />
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dx:DXMessageBoxService />
+
+
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <md:Snackbar
+            x:Name="Snackbar"
+            Grid.Row="2"
+            Width="800"
+            Height="50"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Panel.ZIndex="1000"
+            MessageQueue="{Binding BoundMessageQueue}" />
+
+
+        <ToolBar
+            Grid.Row="0"
+            MinHeight="50"
+            ClipToBounds="False"
+            Style="{DynamicResource MaterialDesignToolBar}">
+
+
+
+            <Border
+                Grid.ColumnSpan="2"
+                Height="50"
+                Margin="0,12,12,12"
+                Panel.ZIndex="100">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="2" />
+                </Border.Effect>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <dxe:TextEdit
+                        Width="190"
+                        Padding="20,0,0,0"
+                        EditValue="{Binding AramaMetin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000}"
+                        FontSize="22"
+                        FontWeight="Bold"
+                        NullText="Barkod No" />
+                    <md:PackIcon
+                        Width="52"
+                        Height="32"
+                        Margin="-50,0,0,0"
+                        VerticalAlignment="Center"
+                        Kind="Barcode" />
+                </StackPanel>
+            </Border>
+
+
+            <StackPanel Margin="200,0,0,0" Orientation="Horizontal">
+
+
+                <md:Badged
+                    Height="50"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Badge="{Binding Pas1_Sayi}"
+                    BadgeColorZoneMode="PrimaryDark"
+                    BorderThickness="1">
+                    <Button
+                        Width="90"
+                        Height="45"
+                        MinWidth="70"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        Command="{Binding PasFiltreCommand}"
+                        CommandParameter="1"
+                        Content="PAS1"
+                        FontSize="24"
+                        Foreground="Black" />
+                </md:Badged>
+
+                <md:Badged
+                    Height="50"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Badge="{Binding Pas2_Sayi}"
+                    BadgeColorZoneMode="PrimaryDark"
+                    BorderThickness="1">
+                    <Button
+                        Width="90"
+                        Height="45"
+                        MinWidth="70"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        Command="{Binding PasFiltreCommand}"
+                        CommandParameter="2"
+                        Content="PAS2"
+                        FontSize="24"
+                        Foreground="Black" />
+                </md:Badged>
+
+
+                <md:Badged
+                    Height="50"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Badge="{Binding Pas3_Sayi}"
+                    BadgeColorZoneMode="PrimaryDark"
+                    BorderThickness="1">
+                    <Button
+                        Width="90"
+                        Height="45"
+                        MinWidth="70"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        Command="{Binding PasFiltreCommand}"
+                        CommandParameter="3"
+                        Content="PAS3"
+                        FontSize="24"
+                        Foreground="Black" />
+                </md:Badged>
+
+
+                <md:Badged
+                    Height="50"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Badge="{Binding Pas4_Sayi}"
+                    BadgeColorZoneMode="PrimaryDark"
+                    BorderThickness="1">
+                    <Button
+                        Width="90"
+                        Height="45"
+                        MinWidth="70"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        Command="{Binding PasFiltreCommand}"
+                        CommandParameter="4"
+                        Content="PAS4"
+                        FontSize="24"
+                        Foreground="Black" />
+                </md:Badged>
+
+
+                <md:Badged
+                    Height="50"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Badge="{Binding Pas5_Sayi}"
+                    BadgeColorZoneMode="PrimaryDark"
+                    BorderThickness="1">
+                    <Button
+                        Width="90"
+                        Height="45"
+                        MinWidth="70"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        Command="{Binding PasFiltreCommand}"
+                        CommandParameter="5"
+                        Content="PAS5"
+                        FontSize="24"
+                        Foreground="Black" />
+                </md:Badged>
+
+                <md:Badged
+                    Height="50"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Badge="{Binding Pas6_Sayi}"
+                    BadgeColorZoneMode="PrimaryDark"
+                    BorderThickness="1">
+                    <Button
+                        Width="90"
+                        Height="45"
+                        MinWidth="70"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        Command="{Binding PasFiltreCommand}"
+                        CommandParameter="6"
+                        Content="PAS6"
+                        FontSize="24"
+                        Foreground="Black" />
+                </md:Badged>
+
+
+            </StackPanel>
+
+        </ToolBar>
+
+
+        <TabControl Grid.Row="1" Margin="12">
+
+
+
+            <TabItem Header="Alternatif">
+
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="30"
+                                Height="35"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Kind="GamepadCircleOutline" />
+                            <TextBlock
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Text="Eklenen Bobinler" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+
+                <ListBox ItemsSource="{Binding DokumBobinListe}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel VerticalAlignment="Top" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.Background>
+                        <ImageBrush
+                            ImageSource="/Pandap;component/Content/Panda1.png"
+                            Opacity="0.05"
+                            Stretch="UniformToFill" />
+                    </ListBox.Background>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Padding="12"
+                                md:ShadowAssist.ShadowDepth="Depth4"
+                                md:ShadowAssist.ShadowEdges="All"
+                                BorderBrush="BlueViolet"
+                                BorderThickness="2"
+                                CornerRadius="6">
+
+                                <Border.Background>
+                                    <ImageBrush
+                                        ImageSource="/Pandap;component/Content/Images/1216438182.jpg"
+                                        Opacity="0.2"
+                                        Stretch="UniformToFill" />
+                                </Border.Background>
+
+
+                                <StackPanel Width="300" VerticalAlignment="Top">
+
+                                    <DockPanel Margin="0,4">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="18"
+                                            Text="Bobin No : " />
+                                        <TextBlock
+                                            HorizontalAlignment="Right"
+                                            FontFamily="Courier New"
+                                            FontSize="28"
+                                            FontWeight="DemiBold"
+                                            Foreground="Red"
+                                            Text="{Binding PlanBobinNo}" />
+                                    </DockPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Width="100">
+                                            <Label
+                                                Height="25"
+                                                Padding="0"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Center"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Background="White"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1"
+                                                Content="Alaşım"
+                                                FontSize="16" />
+
+                                            <dxe:TextEdit
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                Background="LightYellow"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1,0,1,1"
+                                                CharacterCasing="Upper"
+                                                EditValue="{Binding AlasimTipKod, UpdateSourceTrigger=PropertyChanged}"
+                                                FontSize="22"
+                                                FontWeight="DemiBold" />
+
+                                        </StackPanel>
+
+
+
+                                        <StackPanel Width="100">
+                                            <Label
+                                                Height="25"
+                                                Padding="0"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Center"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Background="White"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1"
+                                                Content="Kalınlık"
+                                                FontSize="16" />
+                                            <dxe:TextEdit
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                Background="LightYellow"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1,0,1,1"
+                                                CharacterCasing="Upper"
+                                                EditValue="{Binding ReelKalinlik, UpdateSourceTrigger=PropertyChanged}"
+                                                FontSize="24"
+                                                FontWeight="DemiBold" />
+                                        </StackPanel>
+
+                                        <StackPanel Width="100">
+                                            <Label
+                                                Height="25"
+                                                Padding="0"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Center"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Background="White"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1"
+                                                Content="En"
+                                                FontSize="16" />
+                                            <dxe:TextEdit
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                Background="LightYellow"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1,0,1,1"
+                                                CharacterCasing="Upper"
+                                                EditValue="{Binding ReelEn, UpdateSourceTrigger=PropertyChanged}"
+                                                FontSize="24"
+                                                FontWeight="DemiBold" />
+                                        </StackPanel>
+
+
+                                    </StackPanel>
+
+
+                                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                        <StackPanel Width="100">
+                                            <Label
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                Background="White"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1"
+                                                Content="Pas"
+                                                FontSize="20"
+                                                FontWeight="DemiBold" />
+
+                                            <dxe:TextEdit
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1,0,1,1"
+                                                CharacterCasing="Upper"
+                                                EditValue="{Binding AktifAdim.MakinaIslem, UpdateSourceTrigger=PropertyChanged}"
+                                                FontSize="20"
+                                                FontWeight="DemiBold"
+                                                Foreground="Red" />
+
+                                        </StackPanel>
+                                        <StackPanel Width="200">
+                                            <Label
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                Background="White"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1"
+                                                Content="Proses"
+                                                FontSize="20"
+                                                FontWeight="DemiBold" />
+                                            <dxe:TextEdit
+                                                Height="36"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1,0,1,1"
+                                                CharacterCasing="Upper"
+                                                EditValue="{Binding AktifAdim.ProsesMetin1, Mode=OneWay}"
+                                                FontSize="24"
+                                                FontWeight="DemiBold"
+                                                Foreground="Red" />
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <DockPanel Margin="0,10" HorizontalAlignment="Center">
+
+                                        <StackPanel Width="100">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="16"
+                                                Text="Başlama" />
+
+                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock
+                                                    FontSize="26"
+                                                    FontWeight="Bold"
+                                                    Foreground="Green"
+                                                    Text="{Binding AktifAdim.BaslamaTarihi, StringFormat=HH:mm}"
+                                                    TextAlignment="Center" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Text="{Binding AktifAdim.BaslamaTarihi, StringFormat=dd/MM ddd}"
+                                                    TextAlignment="Center" />
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+
+                                        <StackPanel Width="100" HorizontalAlignment="Center">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="16"
+                                                Text="Bitiş" />
+                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock
+                                                    FontSize="26"
+                                                    FontWeight="Bold"
+                                                    Foreground="Green"
+                                                    Text="{Binding AktifAdim.BitisTarihi, StringFormat=HH:mm}"
+                                                    TextAlignment="Center" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Text="{Binding AktifAdim.BitisTarihi, StringFormat=dd/MM ddd}"
+                                                    TextAlignment="Center" />
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Width="100" HorizontalAlignment="Center">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="16"
+                                                Text="Süre (h:m:s)" />
+                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock
+                                                    FontSize="24"
+                                                    FontWeight="Bold"
+                                                    Foreground="Green"
+                                                    Text="{Binding AktifAdim.GecenSureStr}"
+                                                    TextAlignment="Center" />
+
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+
+                                    <StackPanel
+                                        Margin="8,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+
+                                        <Button
+                                            md:ButtonProgressAssist.IsIndeterminate="True"
+                                            md:ButtonProgressAssist.IsIndicatorVisible="True"
+                                            md:ButtonProgressAssist.Value="-1"
+                                            Content="{md:PackIcon DotsHorizontal}"
+                                            Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                            Visibility="{Binding AktifAdim.CalisiyorMu, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+
+
+                                        <Button
+                                            Width="130"
+                                            Height="50"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding DataContext.IslemBaslatCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="24"
+                                            Visibility="{Binding AktifAdim.DuruyorMu, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <md:PackIcon
+                                                    Width="30"
+                                                    Height="30"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Play" />
+                                                <TextBlock Text="Başlat" />
+                                            </StackPanel>
+
+                                        </Button>
+
+                                        <Button
+                                            Width="70"
+                                            Height="50"
+                                            Margin="30,0,0,0"
+                                            Background="Red"
+                                            Foreground="White"
+                                            VerticalAlignment="Center"
+                                            md:ColorZoneAssist.Mode="PrimaryLight"
+                                            Command="{Binding DataContext.IslemDurdurCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="20"
+                                            Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                                            Visibility="{Binding AktifAdim.CalisiyorMu, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <md:PackIcon
+                                                    Width="30"
+                                                    Height="30"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Pause" />
+                                                <TextBlock />
+                                            </StackPanel>
+
+                                        </Button>
+
+
+                                        <Button
+                                            Width="120"
+                                            Height="50"
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            md:ColorZoneAssist.Mode="PrimaryLight"
+                                            Command="{Binding DataContext.IslemBitirCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="20"
+                                            Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                                            Visibility="{Binding AktifAdim.CalisiyorMu, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <md:PackIcon
+                                                    Width="30"
+                                                    Height="30"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Stop" />
+                                                <TextBlock Text="Bitir" />
+                                            </StackPanel>
+
+                                        </Button>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+
+
+                            </Border>
+
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+
+
+
+        </TabControl>
+
+
+
+
+    </Grid>
+</UserControl>

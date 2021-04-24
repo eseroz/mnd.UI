@@ -1,0 +1,620 @@
+﻿<Window
+    x:Class="mnd.UI.Modules.PlanlamaModule.UretimEmriView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="RotaKart"
+    Width="968"
+    Height="750"
+    d:DataContext="{d:DesignInstance Type=local:UretimEmriViewModel}"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+
+        <Style x:Key="ust_label" TargetType="TextBlock">
+
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="dxlc:LayoutItem">
+
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="ElementSpace" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <dxb:ToolBarControl
+            Margin="0,0"
+            Background="Aqua"
+            BarItemDisplayMode="Content"
+            DockPanel.Dock="Top">
+            <dxb:BarButtonItem
+                BarItemDisplayMode="ContentAndGlyph"
+                Command="{Binding UretimeGonderCommand}"
+                CommandParameter="{Binding}"
+                Content="Üretime Gönder"
+                Glyph="{dx:DXImage Image=SaveTheme_32x32.png}"
+                LargeGlyph="{dx:DXImage Image=MergeAcross_32x32.png}" />
+
+            <dxb:BarButtonItem
+                BarItemDisplayMode="ContentAndGlyph"
+                Command="{Binding GuncelleCommand}"
+                CommandParameter="{Binding}"
+                Content="Kartı Güncelle   "
+                Glyph="{dx:DXImage Image=SaveTheme_16x16.png}"
+                LargeGlyph="{dx:DXImage Image=SaveTheme_32x32.png}" />
+
+
+            <dxb:BarButtonItem
+                BarItemDisplayMode="ContentAndGlyph"
+                Command="{Binding YazdirCommand}"
+                CommandParameter="{Binding}"
+                Content="Yazdır"
+                Glyph="{dx:DXImageOffice2013 Image=Copy_16x16.png}"
+                LargeGlyph="{dx:DXImage Image=Print_32x32.png}" />
+        </dxb:ToolBarControl>
+
+        <ScrollViewer Background="LightGray">
+            <materialDesign:Card
+                x:Name="ciktiSayfa"
+                Width="800"
+                Margin="0,5,0,5"
+                Padding="20"
+                DataContext="{Binding UretimEmriDTO}">
+
+                <StackPanel>
+                    <StackPanel
+                        Height="30"
+                        Margin="0,0,0,10"
+                        Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                FontWeight="Bold"
+                                Text="Kart No :" />
+                            <TextBox
+                                Width="100"
+                                Padding="0"
+                                FontWeight="Bold"
+                                Text="{Binding KartNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                FontWeight="Bold"
+                                Text="Üretim Emri Kod :" />
+                            <TextBox
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                FontWeight="Bold"
+                                Text="{Binding UretimEmriKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                FontWeight="Bold"
+                                Text="Oluşturulma Tarihi :" />
+                            <TextBox
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                FontWeight="Bold"
+                                Text="{Binding EklenmeTarih, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border
+                        Margin="0,0,0,10"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+                        <helper:LineGridControl
+                            Height="200"
+                            VerticalAlignment="Top"
+                            GridLineBrush="Black"
+                            GridLineThickness="1"
+                            ShowCustomGridLines="True">
+                            <helper:LineGridControl.ColumnDefinitions>
+                                <ColumnDefinition Width="12*" />
+                                <ColumnDefinition Width="12*" />
+                                <ColumnDefinition Width="12*" />
+                                <ColumnDefinition Width="16*" />
+                                <ColumnDefinition Width="12*" />
+                                <ColumnDefinition Width="16*" />
+                                <ColumnDefinition Width="12*" />
+                                <ColumnDefinition Width="16*" />
+                            </helper:LineGridControl.ColumnDefinitions>
+                            <helper:LineGridControl.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                            </helper:LineGridControl.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Sip.Kalem No"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding SiparisKalemKod}" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Müşteri" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="3"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding Musteri}"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="4"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Kullanım Alanı"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="5"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding KullanimAlani}" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="6"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Sevk Tarihi" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="7"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding SevkTarihi}" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Yüzey" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Padding="5"
+                                Text="{Binding Yüzey}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Alaşım" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="3"
+                                Margin="4"
+                                Padding="5"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="LightGray"
+                                Content="{Binding Alasim}"
+                                FontSize="14"
+                                FontWeight="Bold" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="4"
+                                Padding="5"
+                                Style="{StaticResource ust_label}">
+                                Ölçü (µmxmm)<LineBreak />
+                                (Kalınlık x En)</TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="5"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding Olcu}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="6"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Ambalaj Tipi" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="7"
+                                Margin="4"
+                                Padding="5"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="LightGray"
+                                Content="{Binding AmbalajTipi}"
+                                FontSize="14"
+                                FontWeight="Bold" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Masura Cinsi" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding MasuraCinsi}" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Kondüsyon" />
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="3"
+                                Margin="4"
+                                Padding="5"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="LightGray"
+                                Content="{Binding Kondusyon}"
+                                FontSize="14"
+                                FontWeight="Bold" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="4"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                TextAlignment="Center">
+                                Rulo İç Çapı<LineBreak />
+                                (mm)</TextBlock>
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="5"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding RuloIcCap_mm}" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="6"
+                                Padding="5"
+                                Style="{StaticResource ust_label}">
+                                Rulo Dış Çapı<LineBreak />
+                                (mm) Max</TextBlock>
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="7"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Text="{Binding RuloDışçapMax}"
+                                TextAlignment="Center" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Sipariş Miktarı" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding SiparisMiktarı}" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                Padding="5"
+                                FontWeight="Bold"
+                                Style="{StaticResource ust_label}"
+                                Text="Planlama Bakiye"
+                                TextWrapping="Wrap" />
+
+                            <TextBox
+                                Grid.Row="3"
+                                Grid.Column="3"
+                                VerticalAlignment="Center"
+                                Background="LightYellow"
+                                BorderBrush="Black"
+                                BorderThickness="2"
+                                FontSize="14"
+                                Text="{Binding PlanlamaBakiye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextAlignment="Center" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="4"
+                                Padding="5"
+                                FontWeight="Bold"
+                                Style="{StaticResource ust_label}">
+                                Planlanan<LineBreak />
+                                Miktar (kg)</TextBlock>
+                            <TextBox
+                                Grid.Row="3"
+                                Grid.Column="5"
+                                VerticalAlignment="Center"
+                                Background="LightYellow"
+                                BorderBrush="Black"
+                                BorderThickness="2"
+                                FontSize="14"
+                                Text="{Binding PlanlananMiktar_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="6"
+                                Padding="5"
+                                Style="{StaticResource ust_label}">
+                                Rulo Dış Çapı<LineBreak />
+                                (mm) Min</TextBlock>
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="7"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Text="{Binding RuloDışçapMin}"
+                                TextAlignment="Center" />
+
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Padding="5"
+                                Style="{StaticResource ust_label}">
+                                Kalınlık Toleransı<LineBreak />
+                                (mm) Max-Min&quot;</TextBlock>
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding KalınlıkToleransı_mm}" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="2"
+                                Padding="5"
+                                Style="{StaticResource ust_label}">
+                                En Toleransı<LineBreak />
+                                (mm) Max-Min</TextBlock>
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="3"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding EnToleransı_mm}" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="4"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Max Ek Sayısı" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="5"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding MaksimumEkSayısı_mm}" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="6"
+                                Padding="5"
+                                Style="{StaticResource ust_label}"
+                                Text="Hazırlayan" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="7"
+                                Padding="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding Hazırlayan}" />
+                        </helper:LineGridControl>
+                    </Border>
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Teknik/Özel/Paketleme not :" />
+                            <TextBox
+                                Width="585"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                Text="{Binding OzelTalimat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Planlama not :" />
+                            <TextBox
+                                Width="500"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                AcceptsReturn="True"
+                                Text="{Binding PlanlamaNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Kaydırıcı :" />
+                            <Label
+                                Width="95"
+                                Margin="5,0,0,0"
+                                Padding="0"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="WhiteSmoke"
+                                Content="{Binding KaydiriciOraniMinMaxStr, Mode=OneWay}"
+                                FontWeight="DemiBold" />
+
+
+                        </StackPanel>
+
+                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Kombinler :" />
+                            <TextBox
+                                Width="270"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                AcceptsReturn="True"
+                                Text="{Binding Kombinler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="K. En Toplamı:" />
+                            <TextBox
+                                Width="50"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                AcceptsReturn="True"
+                                Text="{Binding KombinlerEnToplam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="K. Miktarı:" />
+                            <TextBox
+                                Width="50"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                Text="{Binding KombinMiktari_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Max K.Eni:" />
+                            <TextBox
+                                Width="50"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                Text="{Binding MaxKombinEni, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+
+
+                        </StackPanel>
+
+
+
+                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="DilmeSeperatorNot:" />
+                            <TextBox
+                                Width="585"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                AcceptsReturn="True"
+                                Text="{Binding DilmeSeperatorNot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <TabControl>
+                        <TabItem Header="Planlama Ruloları">
+                            <Grid Height="170">
+                                <dxg:GridControl ItemsSource="{Binding PlanlamaRulolari, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView
+                                            AllowGrouping="False"
+                                            NewItemRowPosition="Bottom"
+                                            ShowGroupPanel="False"
+                                            ShowIndicator="False" />
+                                    </dxg:GridControl.View>
+                                    <dxg:GridColumn FieldName="DokmeRuloNo" Header="Dökme Rulo No" />
+                                    <dxg:GridColumn FieldName="PlanlamaRuloNo" Header="Planlama Rulo No" />
+                                    <dxg:GridColumn FieldName="BaslangicNo_kg" Header="Başlangıç Mik (kg)" />
+                                    <dxg:GridColumn FieldName="BaslangicEni_mm" Header="Başlangıç Eni (mm)" />
+                                    <dxg:GridColumn FieldName="DokmeRuloAgirligi_kg" />
+
+                                    <dxg:GridColumn FieldName="DokumEni_mm" Header="Döküm Eni" />
+
+                                </dxg:GridControl>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Makina Aşamaları 1">
+                            <Grid Height="106">
+                                <dxg:GridControl ItemsSource="{Binding MakineAsamalari1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView
+                                            AllowGrouping="False"
+                                            AutoWidth="True"
+                                            NewItemRowPosition="Bottom"
+                                            ShowGroupPanel="False"
+                                            ShowIndicator="False" />
+                                    </dxg:GridControl.View>
+                                    <dxg:GridColumn FieldName="Makine" />
+                                    <dxg:GridColumn FieldName="KenarKesme" />
+                                    <dxg:GridColumn FieldName="ProsesMax" />
+                                    <dxg:GridColumn FieldName="ProsesMin" />
+                                </dxg:GridControl>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Makina Aşamaları 2">
+                            <Grid Height="106">
+                                <dxg:GridControl ItemsSource="{Binding MakineAsamalari2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView
+                                            AllowGrouping="False"
+                                            NewItemRowPosition="Bottom"
+                                            ShowGroupPanel="False"
+                                            ShowIndicator="False" />
+                                    </dxg:GridControl.View>
+                                    <dxg:GridColumn FieldName="Makine" />
+                                    <dxg:GridColumn FieldName="KenarKesme" />
+                                    <dxg:GridColumn FieldName="ProsesMax" />
+                                    <dxg:GridColumn FieldName="ProsesMin" />
+                                </dxg:GridControl>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+            </materialDesign:Card>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

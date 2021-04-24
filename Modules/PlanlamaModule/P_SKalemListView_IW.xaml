@@ -1,0 +1,54 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule"
+        xmlns:dxre="http://schemas.devexpress.com/winfx/2008/xaml/richedit" 
+    xmlns:Custom="http://schemas.devexpress.com/winfx/2008/xaml/charts/rangecontrolclient" 
+    x:Class="mnd.UI.Modules.PlanlamaModule.P_SKalemListView_IW"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        FontSize="16"
+        Title="KartVerim Info" Height="450" Width="800">
+    <Grid>
+        <RichTextBox Style="{x:Null}" Margin="10">
+            <FlowDocument>
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Üretimde Yürüyen Miktar=</Run>
+                    <Run FontWeight="Normal"> Uretim_PlanlananMiktar - (Uretim_PaketlenenMiktar + KaliteRedMiktar)
+
+                    </Run>
+                </Paragraph>
+                <Paragraph FontWeight="DemiBold">
+                    <Run FontWeight="Normal">Üretim emri kapalıysa Üretimde Yürüyen Miktar=0 alınır. 
+                    </Run>
+                </Paragraph>
+
+
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Kalan Planlanacak =</Run>
+                    <Run FontWeight="Normal">
+                        c.KalemMiktar -(c.PaketlenenMiktar + c.UretimdeYuruyenMiktar)
+                        +c.KaliteRedMiktar + c.PaketKarantinaMiktar;
+
+               </Run>
+                </Paragraph>
+
+
+                <Paragraph FontWeight="DemiBold">
+                    <Run Foreground="Red">Formül sipariş kalemine ait tüm  
+                    üretim emirleri için yapılarak toplam alınır.
+                    </Run>
+                   
+                </Paragraph>
+              
+
+
+
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</Window>

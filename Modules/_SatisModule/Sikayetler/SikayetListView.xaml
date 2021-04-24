@@ -1,0 +1,376 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules._SatisModule.Sikayetler.SikayetListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules._SatisModule.Sikayetler"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
+                                     Type={x:Type local:SikayetListVM}}"
+    d:DesignHeight="495"
+    d:DesignWidth="950"
+    mc:Ignorable="d">
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dx:DXMessageBoxService />
+
+        <helper:ExportService x:Name="servis1" View="{x:Reference View1}" />
+
+
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar
+                MinHeight="50"
+                ClipToBounds="False"
+                Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding YeniCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileDocument" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yeni" />
+                    </StackPanel>
+                </Button>
+
+                <Separator />
+
+                <Button Command="{Binding SilCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Delete" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Sil" />
+                    </StackPanel>
+                </Button>
+
+
+                <Button
+                    Padding="0"
+                    Command="{Binding EkraniYenileCommand}"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yenile" />
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding YerlesimKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Yerleşim Kaydet" />
+                    </StackPanel>
+                </Button>
+
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Margin="5"
+            Padding="5"
+            VerticalAlignment="Stretch"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+            <dxg:GridControl ItemsSource="{Binding Sikayetler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumnHeader">
+                        <Setter Property="Background" Value="OrangeRed" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                    </Style>
+
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                        <Setter Property="ReadOnly" Value="True" />
+                    </Style>
+
+
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem
+                        Alignment="Default"
+                        FieldName="Id"
+                        SummaryType="Count" />
+                    <dxg:GridSummaryItem
+                        Alignment="Default"
+                        DisplayFormat="n0"
+                        FieldName="SikayetMiktari"
+                        SummaryType="Sum" />
+                    <dxg:GridSummaryItem
+                        Alignment="Default"
+                        DisplayFormat="n0"
+                        FieldName="IadeMiktari"
+                        SummaryType="Sum" />
+                </dxg:GridControl.TotalSummary>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        x:Name="View1"
+                        AllowPerPixelScrolling="True"
+                        AlternateRowBackground="WhiteSmoke"
+                        AutoWidth="True"
+                        NewItemRowPosition="None"
+                        ShowAutoFilterRow="True"
+                        ShowGroupPanel="False"
+                        ShowTotalSummary="True">
+
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Height="30"
+                                    Margin="0,-4"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding ''}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+
+
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn
+                    Width="75"
+                    MaxWidth="50"
+                    AutoFilterCondition="Contains"
+                    FieldName="Id"
+                    FilterPopupMode="Excel"
+                    FixedWidth="True"
+                    Header="Id">
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dx:SimpleButton
+                                MaxWidth="90"
+                                Command="{Binding View.DataContext.DuzenleCommand}"
+                                CommandParameter="{Binding RowData.Row}"
+                                Content="{Binding RowData.Row.Id}"
+                                Style="{StaticResource MyLinkButtonAc}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    MinWidth="60"
+                    AutoFilterCriteria="Contains"
+                    FieldName="GelisYolu_Ref"
+                    Header="Geliş Yolu"
+                    IsSmart="True" />
+
+
+                <dxg:GridColumn
+                    MinWidth="70"
+                    AutoFilterCriteria="Contains"
+                    FieldName="SikayetTarihi"
+                    Header="Tarih"
+                    IsSmart="True" />
+
+                <dxg:GridColumn
+                    MinWidth="150"
+                    AutoFilterCriteria="Contains"
+                    FieldName="FirmaSikayetEdenBirlesik"
+                    Header="Şikayet Eden Firma Ad / Kişi"
+                    IsSmart="True">
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Foreground="Red"
+                                    Text="{Binding RowData.Row.SikayetFirmaAd}" />
+                                <TextBlock Text="{Binding RowData.Row.SikayetEdenKisi}" TextWrapping="Wrap" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    MinWidth="80"
+                    AutoFilterCriteria="Contains"
+                    FieldName="KonuKategoriAdi"
+                    Header="Konu Kategori" />
+
+
+                <dxg:GridColumn
+                    MinWidth="200"
+                    AutoFilterCriteria="Contains"
+                    FieldName="KonuDetayBirlesik"
+                    Header="Konu ve Detayı">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.Konusu}" />
+                                <TextBlock Text="{Binding RowData.Row.KonuDetay}" TextWrapping="Wrap" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    MinWidth="80"
+                    AutoFilterCriteria="Contains"
+                    FieldName="SikayetKonuBolumleriMetin"
+                    Header="Şikayet Bölümler"
+                    IsSmart="True" />
+
+                <dxg:GridColumn
+                    MinWidth="100"
+                    AutoFilterCriteria="Contains"
+                    FieldName="PaletListe"
+                    Header="Paletler"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold" Text="Sip. Kodu : " />
+                                    <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.PandaSiparisKod}" />
+                                </StackPanel>
+
+                                <TextBlock Text="{Binding RowData.Row.PaletListe}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding RowData.Row.SikayetKonuUrun}" TextWrapping="Wrap" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    MinWidth="60"
+                    AutoFilterCriteria="Contains"
+                    FieldName="SikayetMiktari"
+                    Header="Şikayet Miktari"
+                    IsSmart="True" />
+                <dxg:GridColumn
+                    MinWidth="60"
+                    AutoFilterCriteria="Contains"
+                    FieldName="IadeMiktari"
+                    Header="İade Miktari"
+                    IsSmart="True" />
+                <dxg:GridColumn
+                    MinWidth="80"
+                    AutoFilterCriteria="Contains"
+                    FieldName="DuzeltmeOnlemeFaliyetNo"
+                    Header="Duzeltme Onleme Faaliyet"
+                    IsSmart="True" />
+
+
+                <dxg:GridColumn
+                    MinWidth="60"
+                    AutoFilterCriteria="Contains"
+                    FieldName="SikayetDurum"
+                    Header="Durum"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" Text="{Binding RowData.Row.SikayetDurum}" />
+                                <TextBlock Text="{Binding RowData.Row.SurecKonum}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                    MinWidth="50"
+                    MaxWidth="50"
+                    FieldName="MesajSayisi"
+                    Header="Mesaj"
+                    Style="{StaticResource MesajKolon}" />
+
+                <dxg:GridColumn
+                    Width="55"
+                    MinWidth="55"
+                    MaxWidth="55"
+                    Header="İşlem">
+                    <dxg:GridColumn.AutoFilterRowDisplayTemplate>
+                        <ControlTemplate />
+                    </dxg:GridColumn.AutoFilterRowDisplayTemplate>
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+
+                            <materialDesign:PopupBox>
+                                <StackPanel>
+
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.KaliteyeGonderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="{Binding RowData.Row}"
+                                            Content="Kaliteye Gönder" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.SatisaGonderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="{Binding RowData.Row}"
+                                            Content="Satışa Gönder" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.ArsiveGonderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="{Binding RowData.Row}"
+                                            Content="Arşive Gönder" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Margin="5"
+                                            Command="{Binding DataContext.KaliteFormGirCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            CommandParameter="{Binding RowData.Row}"
+                                            Content="Kalite Data Giriş Formu" />
+                                    </StackPanel>
+
+
+
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+            </dxg:GridControl>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

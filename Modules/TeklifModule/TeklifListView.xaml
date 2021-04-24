@@ -1,0 +1,301 @@
+﻿<UserControl
+    x:Class="mnd.UI.Modules.TeklifModule.TeklifListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.TeklifModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
+                                     Type={x:Type local:TeklifListViewModel}}"
+    d:DesignHeight="456.4"
+    d:DesignWidth="967.8"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService />
+        <helper:ExportService x:Name="servis1" View="{x:Reference View1}" />
+        <dxmvvm:EventToCommand Command="{Binding FormLoadedCommand}" EventName="Loaded" />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Panel.ZIndex="100"
+            controlHelpers:VisibilityHelpler.IsVisible="{Binding IsOpenTeklifIslemForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Visibility="Collapsed">
+            <Border.Background>
+                <SolidColorBrush Opacity=".2" Color="Black" />
+            </Border.Background>
+            <local:TeklifIslemForm DataContext="{Binding}" />
+        </Border>
+        <ToolBar
+            Grid.Row="0"
+            MinHeight="50"
+            ClipToBounds="False"
+            Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Command="{Binding YeniCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="FileDocument" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Yeni" />
+                </StackPanel>
+            </Button>
+            <Button
+                Padding="0"
+                Command="{Binding EkranTazeleCommand}"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Ekran Tazele" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding YerlesimKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Yerleşim Kaydet" />
+                </StackPanel>
+            </Button>
+            <ListBox
+                MinWidth="200"
+                Background="Transparent"
+                BorderThickness="0"
+                ItemsSource="{Binding TeklifInfo.Liste}"
+                SelectedItem="{Binding TeklifInfo.SeciliMenu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{x:Null}">
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border
+                                        Name="Border"
+                                        Margin="0"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <md:Badged
+                            Width="auto"
+                            Margin="10,10,10,5"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            Badge="{Binding BadgeValue}"
+                            BadgeColorZoneMode="Accent"
+                            BorderBrush="MediumPurple"
+                            BorderThickness="1">
+                            <RadioButton
+                                Width="Auto"
+                                MinWidth="70"
+                                Margin="5"
+                                Padding="0"
+                                Background="Transparent"
+                                Command="{Binding DataContext.SorguSecCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}"
+                                CommandParameter="{Binding}"
+                                Content="{Binding ItemNameMy}"
+                                Cursor="Hand"
+                                IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
+                                Style="{x:Null}" />
+                        </md:Badged>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ToolBar>
+        <dxg:GridControl
+            Grid.Row="1"
+            Margin="8"
+            AllowLiveDataShaping="True"
+            ItemsSource="{Binding Teklifler}"
+            SelectedItem="{Binding SeciliTeklifListModel}">
+            <dxg:GridControl.Resources>
+                <Style TargetType="dxg:GridColumnHeader">
+                    <Setter Property="Background" Value="#FF673AB7" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                </Style>
+
+                <Style TargetType="dxg:GridColumn">
+                    <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                </Style>
+
+            </dxg:GridControl.Resources>
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    Name="View1"
+                    AllowPerPixelScrolling="True"
+                    AutoWidth="True"
+                    AllowConditionalFormattingMenu="True"
+                    ShowAutoFilterRow="True"
+                    ShowGroupPanel="False">
+                    <dxg:TableView.FormatConditions>
+
+                        <dxg:FormatCondition Expression="[TeklifTarih] Is Not Null" FieldName="TeklifTarih" ApplyToRow="True">
+                            <dx:Format Background="#FFA589C7"/>
+                        </dxg:FormatCondition>
+
+                    </dxg:TableView.FormatConditions>
+                    <dxg:TableView.ColumnHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Height="30"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Stretch"
+                                FontWeight="DemiBold"
+                                Text="{Binding}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </dxg:TableView.ColumnHeaderTemplate>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn
+                Width="105"
+                MaxWidth="105"
+                AutoFilterCondition="Contains"
+                FieldName="SiparisKod"
+                FilterPopupMode="Excel"
+                FixedWidth="True"
+                Header="Teklif Sıra Kod">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dx:SimpleButton
+                            MaxWidth="120"
+                            Command="{Binding View.DataContext.DuzenleCommand}"
+                            CommandParameter="{Binding RowData.Row}"
+                            Content="{Binding RowData.Row.TeklifSiraKod}"
+                            Style="{StaticResource MyLinkButtonAc}" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                Width="200"
+                FieldName="PlasiyerTeklifSiraKod"
+                Header="Temsilci Sıra Kod"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="150"
+                FieldName="TeklifTarih"
+                FilterPopupMode="ExcelSmart"
+                IsSmart="True" />
+            <dxg:GridColumn 
+                Width="150"                            
+                FieldName="SonGecerlilikTarihi" 
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="300"
+                FieldName="CariAd"
+                IsSmart="True" />
+            <dxg:GridColumn 
+                Width="210"
+                FieldName="SatisTemsilcisiAdSoyad" 
+                IsSmart="True" />
+            <dxg:GridColumn
+                Visible="True"
+                Width="100"
+                FieldName="Potansiyel" IsEnabled="False"/>
+            <dxg:GridColumn
+                Width="150"
+                FieldName="TeklifDurum"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="130"
+                FieldName="DonusturulenSiparisKod"
+                Header="Dönüş. Sipariş"
+                IsSmart="True" />
+            <dxg:GridColumn
+                Width="100"
+                FieldName="RetNeden"
+                Header="T.Ret Neden"
+                IsSmart="True" />
+            <dxg:GridColumn
+                FieldName="IslemNot"
+                Header="T.Durum Not"
+                IsSmart="True"
+                ReadOnly="False">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:MemoEditSettings />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                Width="90"
+                FieldName="CariPlasiyerKod"
+                Header="Cari Plas.Kod"
+                IsSmart="True" />
+            <dxg:GridColumn
+                FieldName="CariDovizTipKod"
+                Header="Döviz Tip"
+                IsSmart="True" />
+            <dxg:GridColumn FieldName="SevkYil" IsSmart="True" Visible="False" />
+            <dxg:GridColumn FieldName="SevkHafta" IsSmart="True" Visible="False" />
+            <dxg:GridColumn MaxWidth="55" Header="İşlem">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <md:PopupBox>
+                            <StackPanel>
+                                <Button
+                                    Margin="4"
+                                    Command="{Binding View.DataContext.BeklemeyeAlCommand}"
+                                    Content="Beklemeye Al" />
+                                <Button
+                                    Margin="4"
+                                    Command="{Binding View.DataContext.OnaylandiCommand}"
+                                    Content="Onaylandı" />
+                                <Button
+                                    Margin="4"
+                                    Command="{Binding View.DataContext.TeklifIslemFormOpenCommand}"
+                                    Content="Teklif Reddedildi" />
+                            </StackPanel>
+                        </md:PopupBox>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                MinWidth="50"
+                MaxWidth="50"
+                FieldName="MesajSayisi"
+                Header="Mesaj"
+                Style="{StaticResource MesajKolon}" />
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

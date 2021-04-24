@@ -1,0 +1,235 @@
+﻿<UserControl x:Class="mnd.UI.Modules._SatisModule.SeyahatRaporlari.SeyahatListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.Modules._SatisModule.SeyahatRaporlari"
+                       xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+             d:DataContext="{d:DesignInstance {x:Type local:SeyahatListVM}}"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             FontSize="14"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="MyLinkButton2">
+
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF2B7AD2" x:Name="TextBlock">
+                            <ContentPresenter />
+                            </TextBlock>
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="TextBlock" Property="TextBlock.TextDecorations" Value="Underline" />
+                                <Setter  Property="Cursor" Value="Hand" />
+                                <Setter Property="Foreground" Value="Firebrick"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="TextBlock" Property="TextBlock.Foreground" Value="Gray" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+            <Button Command="{Binding SeyahatAddEditCommand}" CommandParameter="0" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="FileDocument" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Yeni Seyahat" />
+                </StackPanel>
+            </Button>
+
+         
+
+            <Button  Padding="0" Command="{Binding EkranYenileCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Ekran Yenile" />
+                </StackPanel>
+            </Button>
+
+            <Button Command="{Binding ExcelExportCommand}" Style="{DynamicResource MaterialDesignFlatButton}" CommandParameter="XLSX">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Excele Aktar" />
+                </StackPanel>
+            </Button>
+
+
+        </ToolBar>
+
+        <dxg:GridControl
+          
+            SelectedItem="{Binding SeciliSeyahat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                         ItemsSource="{Binding SeyahatRaporList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Grid.Row="1">
+            <dxg:GridControl.Resources>
+                <Style TargetType="dxg:GridColumnHeader">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+                </Style>
+
+                <Style TargetType="dxg:GridColumn">
+                    <Setter Property="ReadOnly" Value="True"/>
+                    <Setter Property="HorizontalHeaderContentAlignment" Value="Center"/>
+                    <Setter Property="AllowSorting" Value="False"/>
+                    <Setter Property="AllowColumnFiltering" Value="False"/>
+                    <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+                </Style>
+
+            </dxg:GridControl.Resources>
+
+            <dxg:GridControl.View>
+                <dxg:TableView RowMinHeight="35" x:Name="View1" AllowPerPixelScrolling="True" 
+                                  AutoWidth="False"
+                                   ShowAutoFilterRow="True" ShowGroupPanel="False" ShowTotalSummary="True">
+
+                    <dxg:TableView.ColumnHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock   Text="{Binding}" TextAlignment="Center"
+                                           VerticalAlignment="Stretch" FontWeight="DemiBold" Height="35" 
+                                         TextWrapping="Wrap"  />
+                        </DataTemplate>
+                    </dxg:TableView.ColumnHeaderTemplate>
+
+                </dxg:TableView>
+            </dxg:GridControl.View>
+
+            <dxg:GridColumn Width="40" EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}" Header="Id" FieldName="Id" IsSmart="True"/>
+
+            <dxg:GridColumn HorizontalHeaderContentAlignment="Center" Width="70" IsSmart="True">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Button  Style="{StaticResource MyLinkButton2}" Margin="4" Width="50" Height="40" 
+                                       Command="{Binding View.DataContext.SeyahatAddEditCommand}"
+                                       CommandParameter="{Binding RowData.Row.Id}"
+                                       Content="Düzenle" FontSize="12"
+                                       HorizontalAlignment="Center" />
+                        </DockPanel>
+
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            
+            <dxg:GridColumn Header="Başlangıç Tarihi" FieldName="BaslangicTarihi" IsSmart="True"/>
+
+            <dxg:GridColumn Header="Bitiş Tarihi" FieldName="BitisTarihi" IsSmart="True"/>
+
+            <dxg:GridColumn FieldName="UlkeAd" IsSmart="True"/>
+
+
+            <dxg:GridColumn FieldName="Ekleyen"/>
+
+
+            <dxg:GridColumn  Header="#">
+
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button HorizontalContentAlignment="Center" Height="50" Padding="0"
+                                       
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Margin="4,0" DockPanel.Dock="Top" HorizontalAlignment="Left"
+                                        Command="{Binding View.DataContext.GorusmeAddCommand}" 
+                                        CommandParameter="{Binding RowData.Row.Id}" >
+                            <DockPanel Width="100" >
+                                <md:PackIcon HorizontalAlignment="Center" DockPanel.Dock="Top" Width="20" Height="20"  Kind="CommentPerson" />
+                                <TextBlock FontSize="12" HorizontalAlignment="Center"  TextAlignment="Center"
+                                                                           TextWrapping="Wrap" Text="Görüşme Ekle"/>
+                            </DockPanel>
+
+                        </Button>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+
+
+            <dxg:GridControl.DetailDescriptor>
+                <dxg:DataControlDetailDescriptor ItemsSourcePath="Gorusmeler">
+                    <dxg:GridControl AutoPopulateColumns="False" >
+
+                        <dxg:GridControl.View>
+                            <dxg:TableView ShowTotalSummary="True" ShowGroupPanel="False"/>
+                        </dxg:GridControl.View>
+
+                        <dxg:GridColumn Width="60" EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                                        FieldName="Id" IsSmart="True"/>
+
+                        <dxg:GridColumn HorizontalHeaderContentAlignment="Center" Width="70" IsSmart="True">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <Button  Style="{StaticResource MyLinkButton2}" Margin="4" Width="50" Height="40" 
+                                    
+                                       Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                            Path=DataContext.GorusmeEditCommand}"
+                                       CommandParameter="{Binding RowData.Row}"
+                                       Content="Düzenle" FontSize="12"
+                                       HorizontalAlignment="Center" />
+                                    </DockPanel>
+
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+
+                        <dxg:GridColumn HorizontalHeaderContentAlignment="Center" Width="40" IsSmart="True">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <Button  Style="{StaticResource MyLinkButton2}" Margin="4" 
+                                    
+                                       Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                            Path=DataContext.GorusmeSilCommand}"
+                                       CommandParameter="{Binding RowData.Row}"
+                                       Content="Sil" FontSize="12"
+                                       HorizontalAlignment="Center" />
+                                    </DockPanel>
+
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+
+
+                        <dxg:GridColumn Width="80" FieldName="Tarih" IsSmart="True"/>
+                        <dxg:GridColumn Width="60" FieldName="Sehir" IsSmart="True"/>
+
+                        <dxg:GridColumn Width="90"  FieldName="MusteriUnvan"/>
+                        
+                        <dxg:GridColumn Width="80" Header="Grş. Kişi" FieldName="GorusulenKisiAdSoyad"/>
+                        <dxg:GridColumn Width="60" Header="Tel" FieldName="GorusulenKisiTel"/>
+                        <dxg:GridColumn Width="60" Header="Mail" FieldName="GorusulenKisiEmail"/>
+                        <dxg:GridColumn Width="60" Header="Görev" FieldName="GorusulenKisiGorev"/>
+
+                        <dxg:GridColumn Width="80" Header="Konu" FieldName="KonuDetay"/>
+                        <dxg:GridColumn Width="80" FieldName="AlinacakAksiyon"/>
+                    </dxg:GridControl>
+                </dxg:DataControlDetailDescriptor>
+            </dxg:GridControl.DetailDescriptor>
+
+
+        </dxg:GridControl>
+
+    </Grid>
+</UserControl>

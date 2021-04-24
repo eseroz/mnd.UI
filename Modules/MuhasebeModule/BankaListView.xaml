@@ -1,0 +1,69 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:helper="clr-namespace:mnd.UI.Helper"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:local="clr-namespace:mnd.UI.Modules.MuhasebeModule"
+             x:Class="mnd.UI.Modules.MuhasebeModule.BankaListView"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type local:BankaListView}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon x:Name="PackIcon" VerticalAlignment="Center" Kind="ContentSave" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Kaydet" />
+                    </StackPanel>
+                </Button>
+                <Separator />
+                <Button Command="{Binding ExcelExportCommand}" CommandParameter="XLSX">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Excele Aktar" />
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding YerlesimKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Yerleşim Kaydet" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <dxg:GridControl Grid.Row="1"  ItemsSource="{Binding Bankalar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="View1" AllowPerPixelScrolling="True" AutoWidth="True" NewItemRowPosition="Bottom"
+                                   ShowAutoFilterRow="True" ShowGroupPanel="False" ShowTotalSummary="True"/>
+            </dxg:GridControl.View>
+
+            <dxg:GridColumn FieldName="BankaKod" />
+            <dxg:GridColumn FieldName="BankaAd" />
+            <dxg:GridColumn FieldName="Sube" />
+            <dxg:GridColumn FieldName="Hesap" />
+            <dxg:GridColumn FieldName="SubeKodu" />
+            <dxg:GridColumn FieldName="ParaCinsi" />
+            <dxg:GridColumn FieldName="Iban" />
+            <dxg:GridColumn FieldName="SwiftKod" />
+            <dxg:GridColumn FieldName="HesapSahibi" />
+            <dxg:GridColumn FieldName="BankaSablonHtml" >
+                <dxg:GridColumn.EditSettings>
+                    <dxe:MemoEditSettings/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,454 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v20.1"
+             xmlns:converters="clr-namespace:Pandap.UI.Converters"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:siparisKalem="clr-namespace:Pandap.UI.Modules._SatisModule"
+    x:Class="Pandap.UI.Modules._SatisModule.KalemView"
+mc:Ignorable="d"
+x:Name="KalemUserControl"
+d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type siparisKalem:KalemViewModel}}"
+Visibility="{Binding IsVisible, Converter={dx:BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+    <UserControl.Resources>
+
+        <converters:AlasimRenkConverter x:Key="alasimRenkConverter" />
+        <converters:FormulRenkConverter x:Key="formulRenkConverter" />
+
+       
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DialogService DialogWindowStartupLocation="CenterOwner" />
+    </dxmvvm:Interaction.Behaviors>
+
+
+    <Grid x:Name="KalemGridContainer" DataContext="{Binding TempKalem}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="KalemSol_AnaSutun" Margin="3" Background="LightGray" Grid.Column="0">
+
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Width" Value="70" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="TextAlignment" Value="Right" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="5,0" Grid.Column="0" Name="LmeSutun">
+                <Label Content="LME" HorizontalContentAlignment="Center" FontWeight="Bold" />
+
+                <DockPanel>
+                    <TextBlock Text="Tipi :" DockPanel.Dock="Left" />
+                    <dxe:TextEdit Background="#FFEFEFF2" IsReadOnly="False" 
+                                    EditValue="{Binding LmeTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBlock Text="Fix Tarih:" />
+                    <dxe:TextEdit IsReadOnly="True" Background="#FFEFEFF2" EditValue="{Binding LmeTarih,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+
+
+                <DockPanel>
+                    <TextBlock Text="{Binding DataContext.DovizTipKod,ElementName=KalemUserControl, StringFormat='{}{0} / Ton'}" />
+                    <dxe:TextEdit IsReadOnly="True" Background="#FFEFEFF2" EditValue="{Binding LmeTutar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBlock Text="Fix Kod:" />
+                    <dxe:ButtonEdit AllowDefaultButton="False" IsTextEditable="True"    
+                                    EditValue="{Binding LmeBaglamaKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <dxe:ButtonInfo Command="{Binding DataContext.LmxFixTemizleCommand,ElementName=KalemUserControl}" GlyphKind="Cancel" 
+                                            ToolTipService.ToolTip="Sil" />
+                    </dxe:ButtonEdit>
+                </DockPanel>
+
+
+
+            </StackPanel>
+
+            <StackPanel Margin="5,0" Grid.Column="1" Name="KulceSutun">
+
+                <Label Content="Külçe Primi" HorizontalContentAlignment="Center" FontWeight="Bold" />
+                <DockPanel>
+
+                    <TextBlock Text="Tipi:" />
+                    <dxe:ComboBoxEdit AutoComplete="True" DisplayMember="Aciklama"
+                                        ValueMember="KulcePrimTipKod"
+                                        EditValue="{Binding KulcePrimTipKod}"
+                                        ItemsSource="{Binding DataContext.KulceTipleri, ElementName=KalemUserControl}" />
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBlock Text="Fix Tarih:" />
+                    <dxe:DateEdit EditValue="{Binding KulceTarih}" />
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBlock Text="{Binding DataContext.DovizTipKod,ElementName=KalemUserControl, StringFormat='{}{0} / Ton'}" />
+                    <dxe:TextEdit EditValue="{Binding KulceTutar, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+
+                </DockPanel>
+
+            </StackPanel>
+
+            <StackPanel Margin="5,0" Grid.Column="2" x:Name="IsciliSutun">
+                <Label Content="İşçilik" HorizontalContentAlignment="Center" FontWeight="Bold" />
+                <DockPanel>
+                    <TextBlock Text="{Binding DataContext.DovizTipKod,ElementName=KalemUserControl, StringFormat='{}{0} / Ton'}" />
+                    <dxe:TextEdit EditValue="{Binding IscilikTutar, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBlock Text="Vade F.Oran:" />
+                    <dxe:TextEdit EditValue="{Binding IscilikVadeFarkiOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n4" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="İşç.V.F.:" />
+                    <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding IscilikVadeFarkiTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n4" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFEFEFF2" />
+                </DockPanel>
+
+                <TextBlock />
+
+            
+            </StackPanel>
+
+            <StackPanel Margin="5,0" Grid.Column="3" Name="BirimSutun">
+                <Label Content="Birim Fiyat" HorizontalContentAlignment="Center" Foreground="DarkRed" FontWeight="Bold" />
+                <DockPanel>
+                    <TextBlock Text="Kdv O.:" />
+                    <dxe:TextEdit Background="#FFEFEFF2" IsReadOnly="True" EditValue="{Binding KdvOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding DataContext.DovizTipKod,ElementName=KalemUserControl, StringFormat='{}{0} / Kg : '}" />
+                    <dxe:TextEdit Background="#FFF0F0F0" IsReadOnly="True" EditValue="{Binding BirimFiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n3" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Miktar kg:" />
+                    <dxe:TextEdit EditValue="{Binding Miktar_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                </DockPanel>
+            </StackPanel>
+
+            <Border Grid.Row="1" Margin="0,5,0,0" Grid.ColumnSpan="4" BorderThickness="0,1,0,0" BorderBrush="Red">
+                <UniformGrid Rows="1" Name="SutunAltFiyatSatir"
+                         HorizontalAlignment="Stretch">
+
+                    <Label />
+                    <DockPanel>
+                        <Label DockPanel.Dock="Top" HorizontalContentAlignment="Center" Content="Toplam" />
+                        <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding ToplamTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFF0F0F0" />
+                    </DockPanel>
+                    <Label />
+
+                  
+
+                    <DockPanel Width="100">
+                        <Label Content="Kdv" HorizontalContentAlignment="Center" DockPanel.Dock="Top" />
+                        <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding KdvTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" Background="#FFEFEFF2" />
+                    </DockPanel>
+
+
+                    <DockPanel Width="100">
+                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Top" Content="Genel Toplam" />
+                        <dxe:TextEdit IsTabStop="False" IsReadOnly="True" EditValue="{Binding GenelToplamTutar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Mask="n" MaskType="Numeric" MaskUseAsDisplayFormat="True" MaskCulture="tr" />
+                    </DockPanel>
+
+
+                </UniformGrid>
+            </Border>
+
+        </Grid>
+
+        <Grid Name="KalemSağ_AnaSutun" Margin="3" Background="LightGray" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Margin="5,3" Name="UrünÖzellik" VerticalAlignment="Stretch">
+
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Width" Value="60" />
+                        <Setter Property="Margin" Value="0,0,2,0" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="TextAlignment" Value="Right" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <DockPanel Name="lookupUrunKod" Margin="0,0,0,5">
+                    <TextBlock FontWeight="Bold" Text="Ürün Kod:" />
+                    <dxg:LookUpEdit AutoPopulateColumns="False" 
+                            EditValue="{Binding UrunKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                            DisplayMember="UrunKod" ValueMember="UrunKod"
+                           FontSize="12"
+                            
+                            SelectedItem="{Binding DataContext.SeciliUrun, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged,
+                            RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            ItemsSource="{Binding DataContext.Urunler, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            PopupMinWidth="500" PopupMinHeight="400">
+                     
+                        <dxg:LookUpEdit.PopupContentTemplate>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <dxg:GridControl Grid.Row="0" MaxHeight="500" x:Name="PART_GridControl">
+                                        <dxg:GridControl.Resources>
+                                            <Style TargetType="dxg:GridColumn">
+                                                <Setter Property="FilterPopupMode" Value="Excel" />
+                                                <Setter Property="AutoFilterCriteria" Value="Contains" />
+                                            </Style>
+                                        </dxg:GridControl.Resources>
+
+
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView ShowAutoFilterRow="True" AutoWidth="True">
+                                                <dxg:TableView.ColumnHeaderTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Height="30" HorizontalAlignment="Center" TextAlignment="Center"
+                                                            TextWrapping="Wrap" Text="{Binding ''}" />
+                                                    </DataTemplate>
+                                                </dxg:TableView.ColumnHeaderTemplate>
+                                            </dxg:TableView>
+                                        </dxg:GridControl.View>
+                                        <dxg:GridColumn Width="130" FieldName="UrunKod" />
+                                        <dxg:GridColumn Width="80" Header="Kullanım Alanı" FieldName="UrunGrubu" />
+                                        <dxg:GridColumn Width="80" FieldName="AlasimKod" />
+                                        <dxg:GridColumn Width="80" FieldName="YuzeyKod" />
+                                        <dxg:GridColumn Width="80" FieldName="KalinlikAralik" />
+                                        <dxg:GridColumn Width="80" FieldName="Sertlik" />
+                                    </dxg:GridControl>
+
+                                    <Button Grid.Row="1" Margin="10" Style="{StaticResource MyLinkButton1}" Content="Urun Tanımla" />
+
+                                </Grid>
+                            </ControlTemplate>
+                        </dxg:LookUpEdit.PopupContentTemplate>
+                    </dxg:LookUpEdit>
+
+                </DockPanel>
+
+                <DockPanel Margin="0,2,0,6" Name="kullanım_alanı">
+                    <TextBlock Text="Kul.Alanı:" />
+                    <dxe:TextEdit IsReadOnly="True" EditValue="{Binding KullanimAlanTipKod}" />
+                </DockPanel>
+
+                <DockPanel Margin="0,8,0,2" Name="alaşım">
+                    <TextBlock Text="Alaşım:" />
+                    <dxe:TextEdit IsReadOnly="True" EditValue="{Binding AlasimTipKod}" />
+                </DockPanel>
+
+                <DockPanel Margin="0,0,0,2" Name="yuzey">
+                    <TextBlock Text="Yüzey:" />
+                    <dxe:TextEdit IsReadOnly="True" EditValue="{Binding YuzeyTipKod}" />
+                </DockPanel>
+
+                <DockPanel Margin="0,0,0,6" Name="sertlik">
+                    <TextBlock Text="Sertlik:" />
+                    <dxe:TextEdit IsReadOnly="True" EditValue="{Binding SertlikTipKod}" />
+                </DockPanel>
+
+               
+
+            </StackPanel>
+            <StackPanel Margin="5,15,0,0" Name="Sutun1" Grid.Column="1">
+
+                <DockPanel Name="KalınlıkKutu">
+                    <TextBlock DockPanel.Dock="Top" Text="Kalınlık μm(%-)(%+)" />
+
+
+                    <UniformGrid Background="Yellow" Rows="1">
+                        <dxe:TextEdit NullText="μm" EditValue="{Binding Kalinlik_micron, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+
+                        <dxe:TextEdit IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                    EditValue="{Binding KalinlikEksi_yuzde,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+
+                        <dxe:TextEdit IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi}"
+                                    EditValue="{Binding KalinlikArti_yuzde,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+                    </UniformGrid>
+
+                </DockPanel>
+
+
+                <DockPanel Name="EnKutu">
+
+                    <TextBlock DockPanel.Dock="Top" Text="En (mm)   (-)     (+)" />
+
+                    <UniformGrid Rows="1">
+                        <dxe:TextEdit NullText="mm"
+                                    EditValue="{Binding En_mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                    Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+
+
+                        <dxe:TextEdit NullText="mm"
+                                    IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                    EditValue="{Binding EnEksi_mm,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                                    Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+
+                        <dxe:TextEdit NullText="mm"
+                                    IsEnabled="{Binding SiparisNav.KalemToleranslariStandartDisiMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                    EditValue="{Binding EnArti_mm,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                                    Mask="n1" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+                    </UniformGrid>
+
+
+                </DockPanel>
+
+                <DockPanel Margin="0,10,0,0" Name="ambalaj">
+                    <TextBlock DockPanel.Dock="Top" Text="Ambalaj:" />
+                    <dxe:ComboBoxEdit AutoComplete="True" FontSize="12"
+                                    DisplayMember="Aciklama"
+                                        ValueMember="AmbalajKod"
+                                    EditValue="{Binding AmbalajTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ItemsSource="{Binding DataContext.AmbalajTipleri,ElementName=KalemUserControl}" />
+                </DockPanel>
+
+               
+
+              
+            </StackPanel>
+
+            <StackPanel Margin="5,15,0,0" Name="Sutun2" Grid.Column="2">
+                <DockPanel>
+
+                    <TextBlock DockPanel.Dock="Top" Text="İç Çap ve Max.Ek" />
+
+                    <UniformGrid Rows="1">
+                        <dxe:TextEdit NullText="mm"
+                                    Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        EditValue="{Binding RuloIcCap_mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+
+
+                        <dxe:TextEdit NullText="" EditValue="{Binding MaxEk,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+                    </UniformGrid>
+
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Dışçap Min Max" />
+
+                    <UniformGrid Rows="1">
+                        <dxe:TextEdit NullText="mm"
+                                    Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        EditValue="{Binding RuloDiscapMin_mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" />
+
+
+
+                        <dxe:TextEdit NullText="mm"
+                                    EditValue="{Binding RuloDiscapMax_mm,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+                    </UniformGrid>
+
+
+                 
+                </DockPanel>
+
+                <StackPanel Margin="0,10">
+                    <TextBlock DockPanel.Dock="Top" Text="Müş Ürün Kodu" />
+                    <dxe:TextEdit EditValue="{Binding MusteriUrunKodu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Command="{Binding DataContext.MusteriUrunKodundan_UrunBilgileriGetirCommand,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                            Style="{x:Null}" Content="Ürün Bilgileri Getir" />
+                </StackPanel>
+
+
+            </StackPanel>
+
+            <StackPanel Margin="5,15,0,0" Name="Sutun3" Grid.Column="3">
+
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Rulo Ağır (min-max)" />
+
+                    <UniformGrid Rows="1">
+                        <dxe:TextEdit NullText="kg" EditValue="{Binding RuloAgirligiMin_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        />
+
+
+                        <dxe:TextEdit NullText="kg" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        EditValue="{Binding RuloAgirligiMax_kg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </UniformGrid>
+
+
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Metraj        (-)  (+)" />
+
+                    <UniformGrid Rows="1">
+                        <dxe:TextEdit NullText="mt" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        EditValue="{Binding Metraj_mt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+
+
+
+                        <dxe:TextEdit NullText="mt" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        EditValue="{Binding MetrajEksi_mt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+
+                        <dxe:TextEdit NullText="mt" Mask="n0" MaskType="Numeric" MaskUseAsDisplayFormat="True"
+                        EditValue="{Binding MetrajArti_mt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+
+                    </UniformGrid>
+
+                </DockPanel>
+
+            </StackPanel>
+
+
+        </Grid>
+
+    </Grid>
+
+
+</UserControl>

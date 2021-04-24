@@ -1,0 +1,314 @@
+﻿<Window x:Class="mnd.UI.Modules.SatinAlmaModuleYeni.KulceKontratTakip.ProformaEditView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:local="clr-namespace:mnd.UI.Modules.SatinAlmaModuleYeni.KulceKontratTakip"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        
+           d:DataContext="{d:DesignInstance local:ProformaEditVM}"
+        
+          xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+  xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:mesajModule="clr-namespace:mnd.UI.GyModules.MesajModule"
+        TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        
+        Title="ProformaEditView" Height="601.4" Width="773.2">
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService/>
+        <dxmvvm:EventToCommand  Command="{Binding FormLoadedCommand}"  EventName="Loaded" />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+
+        </Grid.RowDefinitions>
+
+
+
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </Grid.Resources>
+
+        <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+
+            <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Kaydet" />
+                </StackPanel>
+            </Button>
+
+
+            <Button Command="{Binding TeklifFormGosterCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel  Orientation="Horizontal">
+                    <md:PackIcon  VerticalAlignment="Center"  HorizontalAlignment="Right"
+                                                 Kind="Cancel" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="İptal"/>
+                </StackPanel>
+            </Button>
+
+
+
+        </ToolBar>
+
+
+        <md:Card  Grid.Row="1" Margin="4" Padding="4,4,4,10">
+            <Grid>
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Width" Value="125"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Margin" Value="0,0,10,0"/>
+                        <Setter Property="TextAlignment" Value="Right"/>
+                    </Style>
+                </Grid.Resources>
+
+
+                <TabControl>
+                    <TabItem Header="Proforma" 
+                             mesajModule:VisibilityHelpler.IsVisible="{Binding SolSutunEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   >
+                        <StackPanel  Margin="5">
+
+
+                            <DockPanel Margin="5">
+                                <TextBlock  Text="Tarih :" VerticalAlignment="Center"/>
+                               
+                                <DatePicker Margin="10,0,0,0" HorizontalAlignment="Left"  Width="100" 
+                                    Text="{Binding KulceProforma.ProformaTarih}"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Prim BF ($) :" VerticalAlignment="Center" />
+                                <TextBox Background="LightGray" HorizontalAlignment="Left" Width="200"  
+                                 Text="{Binding KulceProforma.PrimTon_BF,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+
+                                <TextBlock Text="Metal Bulletin :" VerticalAlignment="Center" />
+                                <TextBox  HorizontalAlignment="Left" Width="200"  
+                                 Text="{Binding KulceProforma.MetalBulletin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+
+
+                            </DockPanel>
+
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Miktar Ton :" VerticalAlignment="Center" />
+                                <TextBox FontWeight="Bold" Foreground="Red" HorizontalAlignment="Left" Width="200" Background="White" 
+                                 Text="{Binding KulceProforma.MiktarTon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DockPanel>
+
+                            <StackPanel Background="LightYellow">
+                                
+                         
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Lme BF ($) :" VerticalAlignment="Center" />
+                                <TextBox HorizontalAlignment="Left" Width="200" Background="White" 
+                                 Text="{Binding KulceProforma.LmeTon_BF,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Kontango($) :" VerticalAlignment="Center" />
+                                <TextBox HorizontalAlignment="Left" Width="200" Background="White" 
+                                 Text="{Binding KulceProforma.Kontango,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n0}}"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="5" >
+                                <TextBlock Text="Döviz Tip  :" VerticalAlignment="Center" />
+
+                                <ComboBox Width="200" HorizontalAlignment="Left" Background="White" 
+                                          SelectedValue="{Binding KulceProforma.DovizTip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValuePath="Tag">
+                                    <ComboBoxItem Content="USD" Tag="USD"/>
+                                    <ComboBoxItem Content="EUR" Tag="EUR"/>
+                                    <ComboBoxItem Content="GBP" Tag="GBP"/>
+                                </ComboBox>
+
+                            </DockPanel>
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="Parite (FX) :" VerticalAlignment="Center" />
+                                <dxe:TextEdit HorizontalAlignment="Left" Width="200" Background="White" 
+                                 Text="{Binding KulceProforma.Parite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Text="Parite Tarih :" VerticalAlignment="Center" />
+                                    <DatePicker Width="200" Background="White" Margin="0,0,0,0" HorizontalAlignment="Left" 
+                                Text="{Binding KulceProforma.PariteTarih,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                                </DockPanel>
+
+                            </StackPanel>
+
+
+
+
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="{Binding TextFormatDoviz, StringFormat= Lme BF ({0}) :}" VerticalAlignment="Center" />
+                                <TextBox HorizontalAlignment="Left" Width="200" Background="LightGray" 
+                                 
+                                    ToolTip="(LME Birim Fiyat + Kontango) / Parite "     
+                                    Text="{Binding KulceProforma.LmeDovizTipBF, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,
+                                    StringFormat={}{0:n2}}"/>
+
+                                <TextBlock Text="{Binding TextFormatDoviz, StringFormat= Prim BF ({0}) :}" VerticalAlignment="Center" />
+                                <TextBox HorizontalAlignment="Left" Width="200" Background="LightGray" 
+                                 Text="{Binding KulceProforma.PrimDovizTipBF, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,
+                                    StringFormat={}{0:n2}}"/>
+
+                            </DockPanel>
+
+                          
+
+                            <DockPanel Margin="5,20,0,0">
+                             
+                                <TextBlock Text="{Binding TextFormatDoviz, StringFormat= Kulce BF ({0}) :}" VerticalAlignment="Center" />
+                                <TextBox IsReadOnly="True" Background="LightGray" HorizontalAlignment="Left" Width="200"  
+                                 Text="{Binding KulceProforma.KulceDovizTipBF,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="5">
+                                <TextBlock Text="{Binding TextFormatDoviz, StringFormat= Yaklaşık Tutar ({0}) :}" VerticalAlignment="Center" />
+                                <TextBox IsReadOnly="True" Background="LightGray" HorizontalAlignment="Left" Width="200"  
+                                 Text="{Binding KulceProforma.ProformaDovizTipToplamTutar,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,
+                                    StringFormat={}{0:n2}}"/>
+                            </DockPanel>
+
+
+
+
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem Header="Fiili Durum"  
+                             mesajModule:VisibilityHelpler.IsVisible="{Binding SagSutunEnabled,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"    >
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" IsEnabled="{Binding SagSutunEnabled}" Margin="5">
+
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="FiiliGelenTarih :" VerticalAlignment="Center" />
+
+                                    <DatePicker Margin="10,0,0,0" HorizontalAlignment="Left"  Width="100" 
+                                    Text="{Binding KulceProforma.FiiliGelenTarih,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+
+
+                              
+
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="NakliyeFirmaAd :" VerticalAlignment="Center" />
+                                    <TextBox HorizontalAlignment="Left" Width="200"
+                                 Text="{Binding KulceProforma.NakliyeFirmaAd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="Nakliye Fatura No :" VerticalAlignment="Center" />
+                                    <TextBox HorizontalAlignment="Left" Width="200"  Background="White" 
+                                 Text="{Binding KulceProforma.NakliyeFaturaNo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+
+                                <StackPanel Grid.Column="1" IsEnabled="{Binding SagSutunEnabled}" Margin="5">
+
+
+
+
+                                    <DockPanel Margin="5">
+                                        <TextBlock Text="Lme (Knt dahil) BF :" VerticalAlignment="Center" />
+                                        <TextBox HorizontalAlignment="Left" Width="200" Background="White" 
+                                 Text="{Binding KulceProforma.FiilLmeTon_BF,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+                                    </DockPanel>
+
+
+                                    <DockPanel Margin="5">
+                                        <TextBlock Text="Prim BF :" VerticalAlignment="Center" />
+                                        <TextBox HorizontalAlignment="Left" Width="200"  Background="White" 
+                                 Text="{Binding KulceProforma.FiilPrimTon_BF,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+                                    </DockPanel>
+
+                                
+
+
+                                    <DockPanel Margin="5">
+                                        <TextBlock Text="Kulce BF :" VerticalAlignment="Center" />
+                                        <TextBox IsReadOnly="True" Background="LightGray" HorizontalAlignment="Left" Width="200"  
+                                 Text="{Binding KulceProforma.FiilKulceTon_BF,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+                                    </DockPanel>
+
+                                    <DockPanel Margin="5">
+                                        <TextBlock Text="FiiliGelenMiktarTon :" VerticalAlignment="Center" />
+                                        <TextBox FontWeight="Bold"  Foreground="Red" HorizontalAlignment="Left" Width="200" 
+                                 Text="{Binding KulceProforma.FiiliGelenMiktarTon,Mode=TwoWay,StringFormat={}{0:n2}}"/>
+                                    </DockPanel>
+
+                                    <DockPanel Margin="5">
+                                        <TextBlock Text="Proforma :" VerticalAlignment="Center" />
+                                        <TextBox IsReadOnly="True" Background="LightGray" HorizontalAlignment="Left" Width="200"  
+                                 Text="{Binding KulceProforma.FiilProformaTutari,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}"/>
+                                    </DockPanel>
+
+
+                                 
+
+
+
+                                </StackPanel>
+
+
+
+                            </StackPanel>
+
+
+                            <StackPanel Grid.Column="1" IsEnabled="{Binding SagSutunEnabled}" Margin="5">
+
+
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="Fark Miktar :" VerticalAlignment="Center" />
+                                    <TextBox HorizontalAlignment="Left" Width="200" Background="LightCoral" 
+                                 Text="{Binding KulceProforma.FarkMiktar,Mode=OneWay,StringFormat={}{0:n0}}"/>
+                                </DockPanel>
+
+                                <DockPanel Margin="5">
+                                    <TextBlock Text="Fark Tutar :" VerticalAlignment="Center" />
+                                    <TextBox HorizontalAlignment="Left" Width="200" Background="LightCoral" 
+                                 Text="{Binding KulceProforma.FarkTutar,Mode=OneWay,StringFormat={}{0:n0}}"/>
+                                </DockPanel>
+
+
+
+                            </StackPanel>
+                        </Grid>
+
+
+                    </TabItem>
+                </TabControl>
+
+
+
+
+            </Grid>
+        </md:Card>
+
+    </Grid>
+
+</Window>

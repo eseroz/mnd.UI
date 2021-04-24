@@ -1,0 +1,374 @@
+﻿<Window
+    x:Class="mnd.UI.Modules.PlanlamaModule.RotaKartBolum.ShRotaKartView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule.ShRotaKartBolum"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="RotaKart"
+    Width="968"
+    Height="750"
+    d:DataContext="{d:DesignInstance Type=local:ShRotaKartVM}"
+    FontSize="16"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+
+        <Style x:Key="ust_label" TargetType="TextBlock">
+
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="dxlc:LayoutItem">
+
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="ElementSpace" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <dxb:ToolBarControl
+            Margin="0,0"
+            Background="Aqua"
+            BarItemDisplayMode="Content"
+            DockPanel.Dock="Top">
+
+            <dxb:BarButtonItem
+                BarItemDisplayMode="ContentAndGlyph"
+                Command="{Binding GuncelleCommand}"
+                CommandParameter="{Binding}"
+                Content="Kaydet  "
+                Glyph="{dx:DXImage Image=SaveTheme_16x16.png}"
+                LargeGlyph="{dx:DXImage Image=SaveTheme_32x32.png}" />
+
+
+            <dxb:BarButtonItem
+                BarItemDisplayMode="ContentAndGlyph"
+                Command="{Binding YazdirCommand}"
+                CommandParameter="{Binding}"
+                Content="Yazdır"
+                Glyph="{dx:DXImageOffice2013 Image=Copy_16x16.png}"
+                LargeGlyph="{dx:DXImage Image=Print_32x32.png}" />
+        </dxb:ToolBarControl>
+
+        <ScrollViewer Background="LightGray">
+            <materialDesign:Card
+                x:Name="ciktiSayfa"
+                Width="800"
+                Margin="0,5,0,5"
+                Padding="20">
+
+                <StackPanel>
+                    <StackPanel Height="30" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="DemiBold"
+                                Text="Kart No :" />
+                            <TextBox
+                                Width="200"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                FontSize="22"
+                                FontWeight="Bold"
+                                Foreground="Red"
+                                Text="{Binding ShRotaKartModel.KartNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="10,10,0,20" Orientation="Horizontal">
+                        <StackPanel Width="200">
+                            <Label
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="White"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                Content="ALAŞIM"
+                                FontSize="20"
+                                FontWeight="Bold" />
+                           
+                            <dxe:TextEdit
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="LightYellow"
+                                BorderBrush="Gray"
+                                BorderThickness="1,0,1,1"
+                                CharacterCasing="Upper"
+                                EditValue="{Binding ShRotaKartModel.AlasimKod, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+
+                        </StackPanel>
+
+                        <StackPanel Width="200">
+                            <Label
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="White"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                Content="KOND"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                            <dxe:TextEdit
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="LightYellow"
+                                BorderBrush="Gray"
+                                BorderThickness="1,0,1,1"
+                                CharacterCasing="Upper"
+                                EditValue="{Binding ShRotaKartModel.Kondisyon, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                        </StackPanel>
+
+                        <StackPanel Width="200">
+                            <Label
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="White"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                Content="KALINLIK"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                            <dxe:TextEdit
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="LightYellow"
+                                BorderBrush="Gray"
+                                BorderThickness="1,0,1,1"
+                                CharacterCasing="Upper"
+                                EditValue="{Binding ShRotaKartModel.Kalinlik, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                        </StackPanel>
+
+                        <StackPanel Width="200">
+                            <Label
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="White"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                Content="EN"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                            <dxe:TextEdit
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="LightYellow"
+                                BorderBrush="Gray"
+                                BorderThickness="1,0,1,1"
+                                CharacterCasing="Upper"
+                                EditValue="{Binding ShRotaKartModel.En, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                        </StackPanel>
+
+                        <StackPanel Width="200">
+                            <Label
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="White"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                Content="BOBİN ADEDİ"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                            <Label
+                                Height="36"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="White"
+                                BorderBrush="Gray"
+                                BorderThickness="1,0,1,1"
+                                Content="{Binding ShRotaKartModel.DokumBobinAdedi}"
+                                FontSize="20"
+                                FontWeight="DemiBold" />
+                        </StackPanel>
+
+
+                    </StackPanel>
+
+                    <dxg:GridControl
+                        MinHeight="220"
+                        MaxHeight="1000"
+                        Margin="10,0,0,10"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        FontSize="14"
+                        ItemsSource="{Binding ShRotaKartModel.DokumBobinler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowBorder="True">
+
+                        <dxg:GridControl.Resources>
+                            <Style TargetType="dxg:GridColumn">
+                                <Setter Property="ReadOnly" Value="True" />
+                                <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                                <Setter Property="AllowSorting" Value="False" />
+                                <Setter Property="AllowColumnFiltering" Value="False" />
+                            </Style>
+
+                            <Style TargetType="dxg:BaseGridHeader">
+                                <Setter Property="Background" Value="FloralWhite" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="Height" Value="40" />
+                                <Setter Property="FontSize" Value="14" />
+                            </Style>
+
+                        </dxg:GridControl.Resources>
+
+                        <dxg:GridControl.View>
+                            <dxg:TableView
+                                AllowGrouping="False"
+                                Header="Seçilen Bobinler"
+                                NewItemRowPosition="None"
+                                ShowGroupPanel="False"
+                                ShowIndicator="False">
+                                <dxg:TableView.ColumnHeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Height="40"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Stretch"
+                                            FontWeight="DemiBold"
+                                            Text="{Binding}"
+                                            TextAlignment="Center"
+                                            TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </dxg:TableView.ColumnHeaderTemplate>
+                            </dxg:TableView>
+                        </dxg:GridControl.View>
+                        <dxg:GridColumn
+                            MaxWidth="70"
+                            EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                            FieldName="SiraNo"
+                            Header="SıraNo" />
+                        <dxg:GridColumn
+                            EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                            FieldName="BobinNo"
+                            Header="BobinNo" />
+                        <dxg:GridColumn
+                            MaxWidth="90"
+                            EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                            FieldName="DokumMiktari"
+                            Header="Döküm Mik (kg)" />
+                        <dxg:GridColumn
+                            MaxWidth="90"
+                            EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                            FieldName="DokumEni"
+                            Header="Döküm Eni (mm)" />
+                        <dxg:GridColumn Width="*" FieldName="Aciklama" />
+                    </dxg:GridControl>
+
+                    <dxg:GridControl
+                        MinHeight="240"
+                        MaxHeight="1000"
+                        Margin="10,0,0,0"
+                        FontSize="14"
+                        ItemsSource="{Binding ShRotaKartModel.Fazlar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                        <dxg:GridControl.Resources>
+                            <Style TargetType="dxg:GridColumn">
+                                <Setter Property="ReadOnly" Value="True" />
+                                <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                                <Setter Property="AllowSorting" Value="False" />
+                                <Setter Property="AllowColumnFiltering" Value="False" />
+                            </Style>
+
+                            <Style x:Key="g2" TargetType="dxg:BaseGridHeader">
+                                <Setter Property="Background" Value="FloralWhite" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="Height" Value="40" />
+                                <Setter Property="FontSize" Value="14" />
+                            </Style>
+
+                        </dxg:GridControl.Resources>
+
+                        <dxg:GridControl.View>
+                            <dxg:TableView
+                                AllowGrouping="False"
+                                Header="Makina Aşamaları (Reçeteden)"
+                                NewItemRowPosition="None"
+                                PrintBandHeaderStyle="{StaticResource g2}"
+                                ShowGroupPanel="False"
+                                ShowIndicator="False">
+                                <dxg:TableView.ColumnHeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Height="40"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Stretch"
+                                            FontWeight="DemiBold"
+                                            Text="{Binding}"
+                                            TextAlignment="Center"
+                                            TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </dxg:TableView.ColumnHeaderTemplate>
+                            </dxg:TableView>
+                        </dxg:GridControl.View>
+
+                        <dxg:GridColumn
+                            MaxWidth="70"
+                            EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                            FieldName="SiraNo"
+                            Header="SıraNo" />
+
+                        <dxg:GridColumn
+                            Width="80"
+                            FieldName="MakinaIslem"
+                            Header="Makina Islem" />
+
+                        <dxg:GridColumn
+                            Width="120"
+                            EditSettings="{dxe:TextSettings HorizontalContentAlignment=Center}"
+                            FieldName="ProsesMetin"
+                            Header="Proses Parametreleri" />
+
+
+
+                        <dxg:GridColumn
+                            Width="100"
+                            FieldName="EzmeYuzde"
+                            Header="Ezme Oranı (varsa)">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayFormat="p0" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+
+
+                        <dxg:GridColumn Width="*" FieldName="Aciklama" />
+                    </dxg:GridControl>
+
+                </StackPanel>
+            </materialDesign:Card>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

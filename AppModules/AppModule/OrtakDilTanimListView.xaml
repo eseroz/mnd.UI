@@ -1,0 +1,235 @@
+﻿<UserControl
+    x:Class="mnd.UI.AppModules.AppModule.OrtakDilTanimListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:helper="clr-namespace:mnd.UI.Helper"
+    xmlns:local="clr-namespace:mnd.UI.AppModules.AppModule"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False,
+                                     Type={x:Type local:OrtakDilTanimListViewModel}}"
+    d:DesignHeight="284.974"
+    d:DesignWidth="699.883"
+    FontSize="14"
+    mc:Ignorable="d">
+    <dxmvvm:Interaction.Behaviors>
+        <helper:ExportService View="{x:Reference View1}" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="104*" />
+        </Grid.RowDefinitions>
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar
+                MinHeight="50"
+                ClipToBounds="False"
+                Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            x:Name="PackIcon"
+                            VerticalAlignment="Center"
+                            Kind="ContentSave" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Kaydet" />
+                    </StackPanel>
+                </Button>
+                <Separator />
+                <Button
+                    Command="{Binding ExcelExportCommand}"
+                    CommandParameter="XLSX"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Excele Aktar" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Margin="3"
+            Padding="5"
+            VerticalAlignment="Stretch"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+
+            <dxg:GridControl EnableSmartColumnsGeneration="True" ItemsSource="{Binding OrtakDilListe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <dxg:GridControl.Resources>
+                    <Style TargetType="{x:Type dxg:GridColumnHeader}">
+                        <Setter Property="Background" Value="Black" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Height" Value="55" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                    </Style>
+
+                    <Style TargetType="{x:Type dxg:GridColumn}">
+                        <Setter Property="HorizontalHeaderContentAlignment" Value="Center" />
+                        <Setter Property="AllowSorting" Value="False" />
+                        <Setter Property="AllowColumnFiltering" Value="False" />
+                        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                    </Style>
+
+                </dxg:GridControl.Resources>
+
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        x:Name="View1"
+                        AutoWidth="False"
+                        ShowAutoFilterRow="True"
+                        NewItemRowPosition="Bottom"
+                        ShowGroupPanel="False">
+
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Height="35"
+                                    VerticalAlignment="Stretch"
+                                    FontWeight="DemiBold"
+                                    Text="{Binding}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+
+
+                        <dxmvvm:Interaction.Behaviors>
+                            <controlHelpers:ItemRowBehavior InitNewItem="{Binding YeniKayitOlusturuluyorCommand}" RowUpdated="{Binding KayitGuncellendiCommand}" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+                <dxg:GridColumn
+                    Width="100"
+                    Header="Bölüm"
+                    FieldName="Bolum"
+                    IsSmart="True"
+                   />
+                <dxg:GridColumn
+                    Width="200"
+                    FieldName="TanimAd"
+                    Header="Tanım"
+                    IsSmart="True" />
+                <dxg:GridColumn
+                    Width="*"
+                    FieldName="Tanim"
+                    Header="Tanım Detay"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellEditTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit VerticalScrollBarVisibility="Visible"
+                                AcceptsReturn="True"
+                                EditValue="{Binding RowData.Row.Tanim}"
+                                TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellEditTemplate>
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn
+                    Width="60"
+                    FieldName="MesajSayisi"
+                    Style="{StaticResource MesajKolon}">
+                    <dxg:GridColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock HorizontalAlignment="Center" FontSize="12" Text="Yorum ve" />
+                                <TextBlock FontSize="12" Text="Dökümanlar" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.HeaderTemplate>
+
+                </dxg:GridColumn>
+
+                <dxg:GridColumn
+                        Width="120"
+                        FieldName="Onay"
+                        IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="100">
+
+                                <Button
+                                        materialDesign:ColorZoneAssist.Mode="Standard"
+                                        Command="{Binding DataContext.OnaylaCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                        CommandParameter="{Binding RowData.Row}"
+                                        Content="Onayla"
+                                        FontSize="12"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                                <Button
+                                        materialDesign:ColorZoneAssist.Mode="PrimaryLight"
+                                        Command="{Binding DataContext.SilCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                        CommandParameter="{Binding RowData.Row}"
+                                        Content="Sil"
+                                        FontSize="12"
+                                        Foreground="Red"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+
+                </dxg:GridColumn>
+
+
+                <dxg:GridColumn  AutoFilterCriteria="Contains" FieldName="EklemeData" Width="230" IsSmart="True">
+
+                    <dxg:GridColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="12" Text="Ekleyen" />
+                                <TextBlock FontSize="12" Text="Güncelleyen" />
+                                <TextBlock FontSize="12" Text="Onaylayan" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.HeaderTemplate>
+
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel  Margin="13,0,0,0">
+                                <DockPanel >
+                                    <TextBlock FontSize="11" Width="100" Text="{Binding RowData.Row.Ekleyen}" />
+                                    <TextBlock FontSize="11" Text="{Binding RowData.Row.EklenmeTarihi}" />
+                                </DockPanel>
+
+                                <DockPanel>
+                                    <TextBlock FontSize="11" Width="100" Text="{Binding RowData.Row.Guncelleyen}" />
+                                    <TextBlock FontSize="11" Text="{Binding RowData.Row.GuncellenmeTarihi}" />
+                                </DockPanel>
+
+                                <DockPanel>
+                                    <TextBlock FontSize="11" Width="100" Text="{Binding RowData.Row.Onaylayan}" />
+                                    <TextBlock FontSize="11" Text="{Binding RowData.Row.OnaylanmaTarihi}" />
+                                </DockPanel>
+
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                </dxg:GridColumn>
+
+            </dxg:GridControl>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

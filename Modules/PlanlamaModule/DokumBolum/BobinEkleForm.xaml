@@ -1,0 +1,151 @@
+﻿<Window
+    x:Class="mnd.UI.Modules.PlanlamaModule.DokumBolum.BobinEkleForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:local="clr-namespace:mnd.UI.Modules.PlanlamaModule.DokumBolum"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Döküm Planı Ekle"
+    Width="460"
+    Height="475.9"
+    FontSize="16"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <converters:AlasimRenkConverter x:Key="alasimRenkConverter" />
+        <converters:AlasimFontRenkConverter x:Key="alasimFontRenkConverter" />
+    </Window.Resources>
+
+    <StackPanel Margin="10">
+        <StackPanel
+            Grid.Column="0"
+            Margin="10"
+            VerticalAlignment="Top">
+
+
+
+            <DockPanel>
+                <TextBlock
+                    Width="200"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="Tarih :" />
+
+                <TextBox
+                    Width="200"
+                    Background="WhiteSmoke"
+                    Text="{Binding DokumKafileEdit.PlanTarihi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=dd.MM.yyyy}" />
+            </DockPanel>
+
+
+
+            <DockPanel Margin="0,15,0,0">
+                <TextBlock Foreground="Red"
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="Alaşım :" />
+                <ComboBox
+                    Width="200"
+                    DisplayMemberPath="Aciklama"
+                    ItemsSource="{Binding AlasimTipleri}"
+                    SelectedItem="{Binding SeciliAlasim}"
+                    SelectedValue="{Binding DokumKafileEdit.AlasimTipKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="AlasimKod" />
+            </DockPanel>
+
+            <DockPanel Margin="0,15,0,0">
+                <TextBlock
+                    Width="200" Foreground="Red"
+                    VerticalAlignment="Center"
+                    Text="Kondisyon :" />
+                <TextBox
+                    Width="200"
+                    Background="White"
+                    Text="{Binding DokumKafileEdit.Kondisyon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            </DockPanel>
+
+            <DockPanel>
+                <TextBlock
+                    Width="200" Foreground="Red"
+                    VerticalAlignment="Center"
+                    Text="SH Nihai Kalınlık (µm) :" />
+
+                <TextBox
+                      Text="{Binding DokumKafileEdit.ShReceteNihaiKalinlik, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    
+                    Width="200"
+                    Background="White"
+                    />
+            </DockPanel>
+
+            <DockPanel>
+                <TextBlock
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="Kalınlık :" />
+
+                <TextBox
+                    Width="200"
+                    Background="White"
+                    Text="{Binding DokumKafileEdit.PlanKalinlik, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <DockPanel>
+                <TextBlock
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="En :" />
+
+                <TextBox
+                    Width="200"
+                    Background="White"
+                    Text="{Binding DokumKafileEdit.PlanEn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <DockPanel>
+                <TextBlock
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="Bobin Adedi :" />
+
+                <TextBox
+                    Width="200"
+                    Background="White"
+                   
+                    Text="{Binding DokumKafileEdit.BobinAdet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+
+            <DockPanel>
+                <TextBlock
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="Plan Miktar (kg) :" />
+
+                <TextBox
+                    Width="200"
+                    Background="White"
+                    FontWeight="Bold"
+                    Foreground="Red"
+                    Text="{Binding DokumKafileEdit.PlanMiktar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+
+
+        </StackPanel>
+        <StackPanel
+            Margin="50,30,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button Click="Button_Click_1" Style="{StaticResource MaterialDesignFlatButton}">İptal</Button>
+            <Button Margin="10,0,0,0" Click="Button_Click">Tamam</Button>
+        </StackPanel>
+
+
+    </StackPanel>
+</Window>

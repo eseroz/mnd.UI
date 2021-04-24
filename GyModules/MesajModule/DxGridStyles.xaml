@@ -1,0 +1,231 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mesajModule="clr-namespace:mnd.UI.GyModules.MesajModule">
+
+
+    <Style x:Key="TransparanButton" TargetType="Button">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <TextBlock
+                        x:Name="TextBlock"
+                        VerticalAlignment="Center"
+                        Foreground="#FF2B7AD2">
+                        <ContentPresenter />
+                    </TextBlock>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Foreground" Value="Firebrick" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="MesajButon" TargetType="Button">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border>
+                        <Grid>
+
+
+                            <Border
+                                Width="32"
+                                Height="23"
+                                BorderBrush="Green"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+
+
+
+                            <TextBlock
+                                Margin="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Foreground="DarkGreen"
+                                Text="{Binding DataContext.MesajSayisi, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=Self}}"
+                                TextAlignment="Center" />
+
+
+                            <Border
+                                Width="15"
+                                Height="15"
+                                Margin="0,0,-5,15"
+                                HorizontalAlignment="Right"
+                                mesajModule:VisibilityHelpler.IsVisible="{DXBinding Expr='OkunmamisMesajSayisi!=0'}"
+                                Background="Red"
+                                BorderBrush="Purple"
+                                BorderThickness="1"
+                                CornerRadius="3">
+
+                                <TextBlock
+                                    Width="15"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding OkunmamisMesajSayisi, UpdateSourceTrigger=PropertyChanged}"
+                                    TextAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style x:Key="MesajKolon" TargetType="dxg:GridColumn">
+        <Setter Property="CellTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Button
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Command="{x:Static mesajModule:AppMesaj.GyMesajAcCommand}"
+                        CommandParameter="{Binding RowData.Row}"
+                        Style="{StaticResource TransparanButton}">
+
+                        <Grid>
+
+
+                            <Border
+                                Width="32"
+                                Height="23"
+                                BorderBrush="Green"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+
+
+
+                            <TextBlock
+                                Margin="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Foreground="DarkGreen"
+                                Text="{Binding RowData.Row.MesajSayisi, UpdateSourceTrigger=PropertyChanged}"
+                                TextAlignment="Center" />
+
+
+                            <Border
+                                Width="15"
+                                Height="15"
+                                Margin="0,0,-5,15"
+                                HorizontalAlignment="Right"
+                                mesajModule:VisibilityHelpler.IsVisible="{DXBinding Expr='RowData.Row.OkunmamisMesajSayisi!=0'}"
+                                Background="Red"
+                                BorderBrush="Purple"
+                                BorderThickness="1"
+                                CornerRadius="3">
+
+                                <TextBlock
+                                    Width="15"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding RowData.Row.OkunmamisMesajSayisi, UpdateSourceTrigger=PropertyChanged}"
+                                    TextAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="MyMesajButton">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Button
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Command="{x:Static mesajModule:AppMesaj.GyMesajAcCommand}"
+                        CommandParameter="{TemplateBinding Tag}"
+                        Style="{StaticResource TransparanButton}">
+
+                        <Grid>
+
+
+                            <Border
+                                Width="32"
+                                Height="23"
+                                BorderBrush="Green"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+
+                            <TextBlock
+                                Margin="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Foreground="DarkGreen"
+                                Text="{Binding Tag.MesajSayisi, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                TextAlignment="Center" />
+
+
+
+
+
+                            <Border
+                                Width="15"
+                                Height="15"
+                                Margin="0,0,-5,15"
+                                HorizontalAlignment="Right"
+                                mesajModule:VisibilityHelpler.IsVisible="{DXBinding Expr='OkunmamisMesajSayisi!=0'}"
+                                Background="Red"
+                                BorderBrush="Purple"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                DataContext="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+
+                                <TextBlock
+                                    Margin="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="11"
+                                    FontWeight="Bold"
+                                    Foreground="Wheat"
+                                    Text="{Binding OkunmamisMesajSayisi, UpdateSourceTrigger=PropertyChanged}"
+                                    TextAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </Button>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+
+</ResourceDictionary>

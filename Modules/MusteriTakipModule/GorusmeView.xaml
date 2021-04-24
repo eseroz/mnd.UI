@@ -1,0 +1,387 @@
+﻿<UserControl x:Class="mnd.UI.Modules.MusteriTakipModule.GorusmeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:mnd.UI.Modules.MusteriTakipModule"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:converters="clr-namespace:mnd.UI.Converters"
+                xmlns:helper="clr-namespace:mnd.UI.Helper"
+             mc:Ignorable="d" 
+               xmlns:fa="http://schemas.fontawesome.io/icons/"
+               xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+               xmlns:GyMesajApp="clr-namespace:mnd.UI.GyModules.MesajModule"
+
+               TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}" d:DesignWidth="921" d:DesignHeight="587" >
+
+    <UserControl.Resources>
+
+        <Style TargetType="{x:Type Grid}">
+            <Style.Triggers>
+                <DataTrigger Binding = "{Binding IsOpenKisiEkleForm}" Value = "true">
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=txt1}"/>
+
+
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <converters:ImageFromAssemblyConverter  x:Key="ImageFromAssemblyCnv" />
+
+        <Style x:Key="CustomFlyoutControlStyle" TargetType="{x:Type dxe:FlyoutControl}">
+            <Setter Property="StaysOpen" Value="True"/>
+            <Setter Property="Settings">
+                <Setter.Value>
+                    <dxe:FlyoutSettings Placement="Right" ShowIndicator="True" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="Custom FlyoutControl's Content template:" FontSize="10"/>
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <dxmvvm:Interaction.Behaviors>
+
+        <dxmvvm:CurrentWindowService/>
+        <dxmvvm:EventToCommand  Command="{Binding FormLoadedCommand}"  EventName="Loaded" />
+        <dxmvvm:EventToCommand Command="{Binding FormUnLoadedCommand}" EventName="Unloaded" />
+    </dxmvvm:Interaction.Behaviors>
+
+    <Grid Name="mainGrd">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="537.6"/>
+        </Grid.RowDefinitions>
+
+
+        <Border Grid.Row="0" Grid.RowSpan="4" Name="TempGorusmeKisi" Panel.ZIndex="100"  Visibility="Collapsed"         
+                 controlHelpers:VisibilityHelpler.IsVisible="{Binding IsOpenKisiEkleForm,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+            <Border.Background>
+                <SolidColorBrush Color="Black" Opacity=".8" />
+            </Border.Background>
+
+            <StackPanel Background="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                <StackPanel   Width="200"  Margin="20" >
+                    <TextBox Name="txt1"  Text="{Binding TempCariGorusmeKisi.AdSoyad,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  materialDesign:HintAssist.Hint="Ad Soyad" />
+                    <TextBox  Text="{Binding TempCariGorusmeKisi.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Email" />
+                    <TextBox  Text="{Binding TempCariGorusmeKisi.Tel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  materialDesign:HintAssist.Hint="Tel" />
+
+                    <ComboBox  Height="28" 
+                                materialDesign:HintAssist.Hint="Ünvan"
+                                Text="{Binding TempCariGorusmeKisi.Unvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                DisplayMemberPath="UnvanTr"
+                                SelectedValue="UnvanTr"
+                                ItemsSource="{Binding Unvanlar}"
+                                HorizontalAlignment="Stretch"  >
+                    </ComboBox>
+
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right"   Orientation="Horizontal">
+                    <Button  Margin="5"  Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding KisiEkleCancelCommand}" Content="İptal" />
+                    <Button  Margin="5" Width="100" Command="{Binding KisiEkleOkCommand}" Content="Ekle" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+                <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon x:Name="PackIcon" VerticalAlignment="Center" Kind="ContentSave" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Kaydet" />
+                    </StackPanel>
+                </Button>
+
+                <!--<Button Command="{Binding YazdirCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="FilePdf" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Pdf Olarak Kaydet" />
+                    </StackPanel>
+                </Button>-->
+
+
+
+                <Separator />
+
+
+                <Button  Command="{x:Static GyMesajApp:AppMesaj.GyMesajAcCommand}" 
+                         CommandParameter="{Binding Gorusme}"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon  VerticalAlignment="Center" Kind="MessageBulleted" />
+                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Mesajlar" />
+                    </StackPanel>
+                </Button>
+
+                <ToggleButton GyMesajApp:VisibilityHelpler.IsVisible="{Binding IsEditable}" BorderThickness="1" BorderBrush="Gray" Style="{x:Null}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock Margin="8 0 8 0" FontSize="14"  FontWeight="DemiBold" 
+                                       VerticalAlignment="Center" Text="Kayıt Geçmişi" Foreground="#FF673AB7" />
+                            <materialDesign:PackIcon Foreground="#FF673AB7" VerticalAlignment="Center" Kind="ArrowDownBoldBox"/>
+                        </StackPanel>
+
+                        <Popup StaysOpen="false"  IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}">
+
+                            <Border Padding="5" Background="White" BorderThickness="1" BorderBrush="Gray">
+                                <ItemsControl MinWidth="150" MinHeight="50" Padding="0" 
+                                              ItemsSource="{Binding EntityLogs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button  Margin="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                    Command="{Binding DataContext.EntityLogGosterCommand,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type ToggleButton}}}"
+                                    CommandParameter="{Binding}" Style="{x:Null}" >
+                                                <StackPanel>
+                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=KayitTarihi,StringFormat={}{0:dd/MM/yyyy hh:mm:ss}}" MinHeight="0" />
+                                                    <TextBlock Text="{Binding Path=KullaniciAdSoyad}" MinHeight="0" />
+                                                </StackPanel>
+
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                </ToggleButton>
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <materialDesign:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" Grid.Row="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="271*"/>
+                    <RowDefinition Height="246*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel HorizontalAlignment="Left" Width="850" Margin="10,10,0,1.2" >
+
+                    <DockPanel Margin="5">
+                        <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Content="Görüşme Tip / Tarih : "/>
+                        <ComboBox DisplayMemberPath="Ad" SelectedValuePath="Id" Width="270"
+                                ItemsSource="{Binding GorusmeTipleri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                SelectedValue="{Binding Gorusme.GorusmeTipId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                HorizontalAlignment="Left" />
+
+                        <dxe:DateEdit Margin="20,0,0,0" Width="200" HorizontalAlignment="Left" EditValue="{Binding Gorusme.GorusmeTarih}"/>
+
+                    </DockPanel>
+
+
+                    <DockPanel  Margin="5">
+                        <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Content="Görüşme Konusu : "/>
+                        <ComboBox DisplayMemberPath="Ad" SelectedValuePath="Id"
+                              SelectedValue="{Binding Gorusme.GorusmeKonuTipId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding GorusmeKonuTipleri}"
+                              Width="270" HorizontalAlignment="Left"/>
+                    </DockPanel>
+
+
+                    <DockPanel   Margin="5,10,0,0">
+                        <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Top" Content="Müşteri : "/>
+
+                        <dxg:LookUpEdit IsTextEditable="False" IsSynchronizedWithCurrentItem="True"
+                                     HorizontalAlignment="Stretch" AutoPopulateColumns="False"
+                            DisplayMember="CariIsim"
+                            SelectedItem="{Binding SeciliMusteri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            EditValue="{Binding Gorusme.MusteriCariKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding PandapCariler}"
+                            ValueMember="CariKod">
+
+                            <dxg:LookUpEdit.EditNonEditableTemplate>
+                                <ControlTemplate>
+                                    <StackPanel>
+                                        <StackPanel  Orientation="Horizontal">
+                                            <Image Width="24" Source="{Binding SelectedItem.UlkeKod,Converter={StaticResource ImageFromAssemblyCnv},ConverterParameter='Binding  RowData.Row'}" />
+                                            <TextBlock Padding="2"  Text="{Binding SelectedItem.CariIsim}" />
+                                            <TextBlock Text="-"/>
+                                            <TextBlock Foreground="Blue" Padding="2"  Text="{Binding SelectedItem.PlasiyerAd}" />
+
+
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBlock Margin="26,0,0,0" Foreground="Green" Padding="2"  Text="{Binding SelectedItem.PandaTemsilcisi}" />
+                                            <TextBlock Text="-"/>
+                                            <TextBlock Foreground="Green" Padding="2"  Text="{Binding SelectedItem.PandaSahaSorumlusu}" />
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                </ControlTemplate>
+                            </dxg:LookUpEdit.EditNonEditableTemplate>
+
+                            <dxg:LookUpEdit.StyleSettings>
+                                <dxg:SearchLookUpEditStyleSettings />
+                            </dxg:LookUpEdit.StyleSettings>
+
+
+
+                            <dxg:LookUpEdit.PopupContentTemplate>
+                                <ControlTemplate>
+                                    <dxg:GridControl x:Name="PART_GridControl">
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView SearchPanelCriteriaOperatorType="And" AutoWidth="False" />
+                                        </dxg:GridControl.View>
+
+                                        <dxg:GridColumn Width="*"  MinWidth="140" AutoFilterCondition="Contains" FieldName="CariIsim" Header="Cari İsim">
+                                            <dxg:GridColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel  Orientation="Horizontal">
+                                                        <Image Width="24" Source="{Binding RowData.Row.UlkeKod,Converter={StaticResource ImageFromAssemblyCnv},ConverterParameter='Binding  RowData.Row'}" />
+                                                        <TextBlock Padding="2"  Text="{Binding RowData.Row.CariIsim}" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </dxg:GridColumn.CellTemplate>
+                                        </dxg:GridColumn>
+
+                                        <dxg:GridColumn Width="50" Header="Agent" FieldName="PandaTemsilcisi"/>
+                                        <dxg:GridColumn Width="50" Header="Saha Sorumlusu" FieldName="PandaSahaSorumlusu"/>
+                                        <dxg:GridColumn Width="50" FieldName="PlasiyerAd"/>
+
+                                    </dxg:GridControl>
+                                </ControlTemplate>
+                            </dxg:LookUpEdit.PopupContentTemplate>
+                        </dxg:LookUpEdit>
+                    </DockPanel>
+
+                    <DockPanel  Margin="0" Visibility="Hidden">
+                        <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Content="Kullanım Alanı : "/>
+                        <ComboBox DisplayMemberPath="Aciklama_EN"  Width="270" 
+                                SelectedValue="{Binding Gorusme.KullanimAlanTipKod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedValuePath="KullanimAlanKod"
+                                ItemsSource="{Binding KullanimAlanlari,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              
+                                HorizontalAlignment="Left" />
+                    </DockPanel>
+
+                    <StackPanel  Margin="0,0,0,20"  Background="WhiteSmoke">
+
+                        <DockPanel Margin="5">
+                            <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Bottom" Content="Görüşülen Kişi : "/>
+                            <dxe:ComboBoxEdit Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
+                                SelectedItem="{Binding SeciliCariEmail,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                DisplayMember="AdSoyad"  Width="270" 
+                                EditValue="{Binding Gorusme.GorusulenKisiNetsisId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                ValueMember="Id"
+                                          
+                                ItemsSource="{Binding CariGorusmeKisiListe,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                HorizontalAlignment="Left"  >
+
+
+                                <dxe:ComboBoxEdit.PopupBottomAreaTemplate>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Button BorderBrush="Gray" BorderThickness="1" Margin="5,10,5,5" FontSize="12" IsDefault="True" FontWeight="SemiBold" Command="{Binding KisiEkleFormAcCommand}" 
+                                            Padding="0" HorizontalAlignment="Stretch" Height="20" Style="{DynamicResource MaterialDesignFlatButton}">
+                                                + Yeni Kişi Ekle
+                                            </Button>
+                                        </Grid>
+
+                                    </ControlTemplate>
+                                </dxe:ComboBoxEdit.PopupBottomAreaTemplate>
+
+
+                            </dxe:ComboBoxEdit>
+
+
+                            <materialDesign:PackIcon Margin="0,0,8,0" VerticalAlignment="Center"
+                                                 Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Kind="Account" />
+
+                            <DockPanel Margin="5">
+                                <Label Margin="30,0,0,0" Width="50" VerticalAlignment="Bottom"  HorizontalContentAlignment="Right" 
+                                   Content="Ünvan: "/>
+
+                                <dxe:ComboBoxEdit  Height="28" AutoComplete="True"
+                                EditValue="{Binding Gorusme.GorusulenKisiUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                DisplayMember="UnvanTr" 
+                                ValueMember="UnvanTr"
+
+                                ItemsSource="{Binding Unvanlar}"
+                                HorizontalAlignment="Stretch" ImmediatePopup="True" >
+                                </dxe:ComboBoxEdit>
+
+                            </DockPanel>
+
+
+                        </DockPanel>
+
+                        <DockPanel Margin="5">
+                            <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Bottom"  Content="E-Mail : "/>
+                            <TextBox Width="270"  Text="{Binding Gorusme.GorusulenKisiEmail,Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}" 
+                            
+                              HorizontalAlignment="Left"/>
+
+                            <materialDesign:PackIcon Margin="0,0,8,0" VerticalAlignment="Center"
+                                                 Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Kind="Email" />
+
+
+                            <DockPanel Margin="5">
+                                <Label Width="85" HorizontalContentAlignment="Right"  VerticalAlignment="Bottom" Content="Telefon : "/>
+                                <TextBox Width="223"  Text="{Binding Gorusme.GorusulenKisiTel,Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged}" 
+                              HorizontalAlignment="Left"/>
+                                <materialDesign:PackIcon Margin="0,0,8,0" VerticalAlignment="Center"
+                                                 Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Kind="Phone" />
+
+                            </DockPanel>
+
+
+                        </DockPanel>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+                <DockPanel  Grid.Row="1" VerticalAlignment="Stretch" Margin="5,5.8,4.8,4.6">
+                    <Label Width="200" HorizontalContentAlignment="Right" VerticalAlignment="Top" Content="Detay : "/>
+                    <TextBox   VerticalAlignment="Stretch" Style="{x:Null}" TextWrapping="Wrap"
+                             Text="{Binding Gorusme.GorusmeDetay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                             VerticalScrollBarVisibility="Visible" 
+                             AcceptsReturn="True"   HorizontalAlignment="Stretch"/>
+                </DockPanel>
+
+            </Grid>
+
+
+
+
+        </materialDesign:Card>
+
+
+        <materialDesign:Snackbar Grid.Row="2"  Width="270" MessageQueue="{Binding BoundMessageQueue}" 
+                     x:Name="Snackbar"
+                     HorizontalAlignment="Stretch"/>
+    </Grid>
+</UserControl>
