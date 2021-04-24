@@ -12,14 +12,13 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type={x:Type local:TeklifViewModel}}"             
-              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-              xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
-             
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"             
              TextElement.FontWeight="Regular"
              TextElement.FontSize="13"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
-              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"             
              d:DesignHeight="602.8" d:DesignWidth="916">
@@ -415,7 +414,7 @@
                                   SelectedValuePath="OdemeTipKod"
                                   />
 
-                        <TextBox  Margin="20,0,0,0" HorizontalAlignment="Left" Background="White" Text="{Binding SeciliTeklif.OdemeSekliDetay}"/>
+                        <TextBox Width="320"  Margin="20,0,0,0" HorizontalAlignment="Left" Background="White" Text="{Binding SeciliTeklif.OdemeSekliDetay}"/>
                     </DockPanel>
                         <DockPanel Margin="5">
                             <TextBlock Text="Genel Not" VerticalAlignment="Center"  />

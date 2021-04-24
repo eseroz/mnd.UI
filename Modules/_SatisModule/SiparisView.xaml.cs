@@ -11,7 +11,6 @@ namespace mnd.UI.Modules._SatisModule
         {
             InitializeComponent();
 
-
         }
 
     }

@@ -40,13 +40,14 @@ namespace mnd.UI.Modules._SatisModule
 
         public DelegateCommand<bool> SiparisYeniCommand => new DelegateCommand<bool>(SiparisYeni, b => SiparisKayitModu != KayitModu.Add);
 
+        public string KalemEklePanel { get => kalemEklePanel; set => SetProperty(ref kalemEklePanel, value); }
         public DelegateCommand<string> SiparisEditCommand => new DelegateCommand<string>(SiparisEdit, true);
         //public DelegateCommand SiparisKopyalaCommand => new DelegateCommand(SiparisKopyala, () => SiparisKayitModu != KayitModu.Add);
         public DelegateCommand SiparisKaydetCommand => new DelegateCommand(SiparisKaydet, canSiparisKaydet);
 
         public DelegateCommand VerileriTazeleCommand => new DelegateCommand(VerileriTazele);
 
-        //public DelegateCommand KalemYeniCommand => new DelegateCommand(YeniKalem, canYeniKalem);
+        public DelegateCommand KalemYeniCommand => new DelegateCommand(YeniKalem, true);
         //public DelegateCommand KalemKopyalaCommand => new DelegateCommand(KopyadanYeniKalem, canKopyadanYeniKalem);
 
         //public DelegateCommand KalemEditCommand => new DelegateCommand(KalemEdit, canKalemEdit);
@@ -187,7 +188,8 @@ namespace mnd.UI.Modules._SatisModule
 
         public void Load(Siparis siparis)
         {
-            uow = new UnitOfWork(); // reload işleminden kurtulmak için başka yerden de çağrılıyor çünkü
+            KalemEklePanel = "Hidden";
+               uow = new UnitOfWork(); // reload işleminden kurtulmak için başka yerden de çağrılıyor çünkü
 
             var uowLookUp = new UnitOfWork();
 
@@ -418,13 +420,14 @@ namespace mnd.UI.Modules._SatisModule
 
         private CariKart _seciliMusteri;
         private ObservableCollection<LmeBaglama> _lmeBaglamaListe;
- 
+        private string kalemEklePanel;
+
         private void YeniKalem()
         {
-            
-            KalemVM = new KalemViewModel();
-            KalemVM.KayitModu = KayitModu.Add;
-            
+            KalemEklePanel = "Visible";
+            //KalemVM = new KalemViewModel();
+            //KalemVM.KayitModu = KayitModu.Add;
+
             //KalemVM.DovizTipKod = DovizTipleri.First(c => c.DovizTipKod == SeciliSiparis.TakipDovizTipKod).Simge;
             //if (KapasitiftenSiparisMi)
             //{

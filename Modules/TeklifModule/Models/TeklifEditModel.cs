@@ -22,6 +22,7 @@ namespace mnd.UI.Modules.TeklifModule.Models
         private string bankaHesapKod;
         private string proformaNo;
         private string donusturulenSiparisKod;
+        private string nakliyeDurumTip;
 
         public string DonusturulenSiparisKod { get => donusturulenSiparisKod; set => SetProperty(ref donusturulenSiparisKod, value); }
         public string BankaHesapKod { get => bankaHesapKod; set => SetProperty(ref bankaHesapKod, value); }
@@ -106,6 +107,8 @@ namespace mnd.UI.Modules.TeklifModule.Models
             set => SetProperty(ref tasimaSekliAdi_EN, value);
         }
         public string TasimaSekli { get => tasimaSekli; set => SetProperty(ref tasimaSekli, value); }
+
+        public string NakliyeDurumTip { get => nakliyeDurumTip; set => SetProperty(ref nakliyeDurumTip , value); }
         public string GidecegiUlke { get; set; }
 
         public string ProformaNo { get => proformaNo; set => proformaNo = value; }

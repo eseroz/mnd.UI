@@ -785,27 +785,15 @@ namespace mnd.UI.Modules.TeklifModule
                 UlkeRepository ulkeRepo = new UlkeRepository(new Logic.BC_App.Data.AppDataContext());
                 string ulkeKodu = ulkeRepo.UlkeKoduVer(SeciliTeklif.GidecegiUlke);
 
-                var yeniNo = "";
-                int sayi = 0;
-                var sonKayit = service.SonKayitNoGetir();
+                int ulkeTeklifSayisi = teklifRepo.UlkeTeklifSayisiVer(SeciliTeklif.GidecegiUlke);
 
-                if (sonKayit == null)
-                {
-                    sayi = 100;
-
-                } else {
-                    sayi = (int.Parse(sonKayit.Split('/')[2]) + 1);
-                }
-
-
-                yeniNo = DateTime.Now.Year.ToString() + "/" + ulkeKodu + "/" + sayi;
+                string yeniNo = DateTime.Now.Year.ToString() + "/" + ulkeKodu + "/" + (ulkeTeklifSayisi+1);
 
                 SeciliTeklif.ProformaNo = yeniNo;
                 SeciliTeklif.TeklifSiraKod = yeniNo;
                 SeciliTeklif.TeklifDurum = "Bekliyor";
                 SeciliTeklif.SatisTemsilcisiAdSoyad = AppPandap.AktifKullanici.AdSoyad;
                 SeciliTeklif.SatisTemsilcisiMail = AppPandap.AktifKullanici.Email;
-
                 SeciliTeklif.CreateUserId = AppPandap.AktifKullanici.KullaniciId;
                 SeciliTeklif.CreateTime = DateTime.Now;
 

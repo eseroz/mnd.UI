@@ -250,10 +250,10 @@
                                 </DockPanel>
                                 <DockPanel x:Name="naklye">
                                     <TextBlock Width="130" Text="Nakliye (Freight) :" VerticalAlignment="Center" FontWeight="Bold" />
-                                    <ComboBox Width="200" ItemsSource="{Binding NakliyeDurumTipleri}"
+                                    <ComboBox Width="200" ItemsSource="{Binding NakliyeDurumTipleri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               SelectedValue="{Binding SeciliTeklifKalem.NakliyeDurumTip}"
                                             DisplayMemberPath="NakliyeDurumTipAdi"
-                                            SelectedValuePath="NakliyeDurumTip" />
+                                            SelectedValuePath="NakliyeDurumTipAdi" />
 
                                     <StackPanel Name="nakliyedetay" Margin="10,0,0,0"  Orientation="Horizontal"   Background="Transparent">
 
