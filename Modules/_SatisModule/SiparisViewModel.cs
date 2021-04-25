@@ -40,12 +40,12 @@ namespace mnd.UI.Modules._SatisModule
         public KayitModu SiparisKayitModu { get; set; }
         public KayitModu KalemKayitModu { get; set; }
 
-        public DelegateCommand<bool> SiparisYeniCommand => new DelegateCommand<bool>(SiparisYeni, b => SiparisKayitModu != KayitModu.Add);
+        public DelegateCommand SiparisYeniCommand => new DelegateCommand(SiparisYeni, SiparisKayitModu != KayitModu.Add);
 
         public string KalemEklePanel { get => kalemEklePanel; set => SetProperty(ref kalemEklePanel, value); }
         public DelegateCommand<string> SiparisEditCommand => new DelegateCommand<string>(SiparisEdit, true);
         //public DelegateCommand SiparisKopyalaCommand => new DelegateCommand(SiparisKopyala, () => SiparisKayitModu != KayitModu.Add);
-        public DelegateCommand SiparisKaydetCommand => new DelegateCommand(SiparisKaydet, canSiparisKaydet);
+        public DelegateCommand<bool> SiparisKaydetCommand => new DelegateCommand<bool>(SiparisKaydet, canSiparisKaydet);
 
         public DelegateCommand VerileriTazeleCommand => new DelegateCommand(VerileriTazele);
 
@@ -64,7 +64,7 @@ namespace mnd.UI.Modules._SatisModule
             siparisKod = siparisKod.Split('/')[0];
 
 
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
 
             var title = "";
 
@@ -114,6 +114,8 @@ namespace mnd.UI.Modules._SatisModule
 
 
         }
+
+        public bool TekliftenMi { get; set; }
 
         public DelegateCommand<object> SiparisKalemMesajYazCommand => new DelegateCommand(SiparisKalemMesajYaz);
 
@@ -168,12 +170,13 @@ namespace mnd.UI.Modules._SatisModule
 
         //public TeklifDataService TeklifService { get => teklifService; set => SetProperty(ref teklifService, value); }
         //public TeklifEditModel SeciliTeklif { get => seciliTeklif; set => SetProperty(ref seciliTeklif, value); }
-        public SiparisViewModel()
+        public SiparisViewModel(bool tekliftenMi)
         {
-            //if(_seciliTeklif !=null) SeciliTeklif = _seciliTeklif;
-            //if(_teklifService!=null) TeklifService = _teklifService;
+            TekliftenMi = tekliftenMi;
+               //if(_seciliTeklif !=null) SeciliTeklif = _seciliTeklif;
+               //if(_teklifService!=null) TeklifService = _teklifService;
 
-            _isFormLoaded = false;
+               _isFormLoaded = false;
             IsEditableForm = true;
         }
 
@@ -378,7 +381,7 @@ namespace mnd.UI.Modules._SatisModule
 
         #endregion LookUpData
 
-        private bool canSiparisKaydet()
+        private bool canSiparisKaydet(bool tekliftenMi)
         {
             return (SeciliSiparis.SiparisSurecDurum == SIPARISSURECDURUM.SATISTA
                     || SeciliSiparis.SiparisSurecDurum == SIPARISSURECDURUM.YENIKAYIT
@@ -411,15 +414,15 @@ namespace mnd.UI.Modules._SatisModule
             AppMesaj.MesajFormAc(SeciliKalem);
         }
 
-        private void SiparisYeni(bool kapasitifMi)
+        private void SiparisYeni()
         {
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             vm.SiparisKayitModu = KayitModu.Add;
 
-            //var siparis = Siparis.SiparisOlustur(AppPandap.AktifKullanici.KullaniciId, null, kapasitifMi, null);
+            var siparis = Siparis.SiparisOlustur(AppPandap.AktifKullanici.KullaniciId, null, null);
 
             var title = "Yeni Sipariş";
-            //vm.Load(siparis);
+            vm.Load(siparis);
 
             var doc = AppPandap.pDocumentManagerService.CreateDocument("SiparisView", vm);
             doc.Title = title;
@@ -645,7 +648,7 @@ namespace mnd.UI.Modules._SatisModule
             return teyitFormDtoListe;
         }
 
-        private void SiparisKaydet()
+        private void SiparisKaydet(bool tekliftenMi)
         {
             var uow_ayarlar = new UnitOfWork();
 
@@ -661,9 +664,9 @@ namespace mnd.UI.Modules._SatisModule
                 SeciliSiparis.TemsilciAdSoyad = SeciliSiparis?.CariKartNavigation?.PlasiyerAd;
 
 
-                //SeciliSiparis.KalemKodlariAta(SeciliSiparis);
+                ////SeciliSiparis.KalemKodlariAta(SeciliSiparis);
 
-                var xxxx = seciliSiparis.SiparisKalemleri;
+                //var xxxx = seciliSiparis.SiparisKalemleri;
 
 
 
@@ -680,11 +683,16 @@ namespace mnd.UI.Modules._SatisModule
 
                 uow.Commit();
 
-                TeklifRepository teklifRepo = new TeklifRepository();
-                var teklif = teklifRepo.TeklifGetir(SeciliSiparis.TeklifSiraKod);
-                teklif.TeklifDurum = "Onaylandi";
-                teklif.DonusturulenSiparisKod = SeciliSiparis.SiparisKod;
-                teklifRepo.Kaydet();
+
+                if (tekliftenMi)
+                {
+                    TeklifRepository teklifRepo = new TeklifRepository();
+                    var teklif = teklifRepo.TeklifGetir(SeciliSiparis.TeklifSiraKod);
+                    teklif.TeklifDurum = "Onaylandi";
+                    teklif.DonusturulenSiparisKod = SeciliSiparis.SiparisKod;
+                    teklifRepo.Kaydet();
+                }
+
 
                 AppPandap.pDocumentManagerService.ActiveDocument.Title = SeciliSiparis.SiparisKod;
 
@@ -834,7 +842,7 @@ namespace mnd.UI.Modules._SatisModule
 
                 if (sonuc == MessageResult.Cancel) { e.Cancel = true; return; };
 
-                if (sonuc == MessageResult.Yes) { this.SiparisKaydet(); e.Cancel = false; };
+                if (sonuc == MessageResult.Yes) { this.SiparisKaydet(TekliftenMi); e.Cancel = false; };
 
                 if (sonuc == MessageResult.No) { e.Cancel = false; };
             }

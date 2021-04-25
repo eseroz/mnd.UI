@@ -532,7 +532,7 @@ namespace mnd.UI.Modules.TeklifModule
             siparisNo = (int.Parse(siparisNo.Split('-')[1]) + 1).ToString();
             siparisNo = "P" + yil + siparisNo;
 
-            var siparis = Siparis.SiparisOlustur(SeciliTeklif.TeklifSiraKod, AppPandap.AktifKullanici.KullaniciId);
+            var siparis = Siparis.TekliftenSiparisOlustur(SeciliTeklif.TeklifSiraKod, AppPandap.AktifKullanici.KullaniciId);
 
             siparis.RowGuid = new Guid();
             siparis.SiparisSurecDurum = SIPARISSURECDURUM.SATISTA;
@@ -544,7 +544,7 @@ namespace mnd.UI.Modules.TeklifModule
             siparis.TeslimSehir = SeciliTeklif.TeslimYeri;
             siparis.FaturaDovizTipKod = SeciliTeklif.CariDovizTipKod;
 
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(true);
             vm.SiparisKayitModu = KayitModu.Add;
 
             vm.Load(siparis);

@@ -550,7 +550,7 @@ namespace mnd.UI.Modules._SatisModule
 
         private void SiparisAc(KayitModu kayitModu, bool? kapasitifMi = null)
         {
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             this.KayitModu = kayitModu;
 
             var title = "";

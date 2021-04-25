@@ -245,7 +245,7 @@ namespace mnd.UI.Modules.OperasyonModule
             var siparisKod = siparisKodKalem.Split('/')[0];
 
             var uow1 = new UnitOfWork();
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             var sip = uow1.SiparisRepo.SiparisGetir(siparisKod);
 
             vm.Load(sip);
@@ -263,7 +263,7 @@ namespace mnd.UI.Modules.OperasyonModule
 
             var uow1 = new UnitOfWork();
 
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             vm.SiparisKayitModu = KayitModu.Edit;
 
             var sip = uow1.SiparisRepo.SiparisGetir(siparisKod);

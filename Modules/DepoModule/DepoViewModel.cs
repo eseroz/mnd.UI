@@ -464,7 +464,7 @@ namespace mnd.UI.Modules.DepoModule
             var siparisKod = siparisKodKalem.Split('/')[0];
 
             var uow1 = new UnitOfWork();
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             var sip = uow1.SiparisRepo.SiparisGetir(siparisKod);
 
             vm.Load(sip);

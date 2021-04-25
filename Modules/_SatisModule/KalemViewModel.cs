@@ -108,9 +108,13 @@ namespace mnd.UI.Modules._SatisModule
         public SiparisKalem TempKalem
         {
             get => tempKalem;
-            set {
-                SetProperty(ref tempKalem, value);
-                tempKalem.PropertyChanged += TempKalem_PropertyChanged;          
+            set
+            {
+                if (SetProperty(ref tempKalem, value) == true)
+                {
+                    if (tempKalem != null) 
+                    tempKalem.PropertyChanged += TempKalem_PropertyChanged;
+                }
             }
         }
 

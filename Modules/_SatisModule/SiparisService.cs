@@ -9,7 +9,7 @@ namespace mnd.UI.Modules._SatisModule
         public static void SiparisAc(string sipkod)
         {
             var uow1 = new UnitOfWork();
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             var sip = uow1.SiparisRepo.SiparisGetir(sipkod);
 
             vm.Load(sip);

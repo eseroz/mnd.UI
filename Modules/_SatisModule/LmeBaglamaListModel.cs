@@ -206,7 +206,7 @@ namespace mnd.UI.Modules._SatisModule
             //if (satir is LmeBaglama) siparisKod = (satir as LmeBaglama).BagliSiparisKodlari;
 
 
-            var vm = new SiparisViewModel();
+            var vm = new SiparisViewModel(false);
             var sip = uow1.SiparisRepo.SiparisGetir(siparisKod);
 
             vm.Load(sip);
