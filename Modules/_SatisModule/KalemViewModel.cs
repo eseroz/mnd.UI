@@ -4,10 +4,7 @@ using mnd.Logic.Model;
 using mnd.Logic.Model._Ref;
 using mnd.Logic.Model.Satis;
 using mnd.Logic.Model.Stok;
-using mnd.Logic.Model.Uretim;
-using mnd.UI.AppModules.AppModule;
-using mnd.UI.Modules.TeklifModule.Services;
-using System.Collections.Generic;
+using mnd.UI.Modules.TeklifModule;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -94,12 +91,14 @@ namespace mnd.UI.Modules._SatisModule
 
                 if (SetProperty(ref _seciliUrun, value) == true)
                 {
+                    TempKalem.UrunAdiEN = _seciliUrun.UrunAdiEN;
+                    TempKalem.UrunAdiTR = _seciliUrun.UrunAdiTR;
+                    TempKalem.BirimFiyat = _seciliUrun.BirimFiyat;
 
-                    //this.TempKalem.AlasimTipKod = value.AlasimKod;
-                    //this.TempKalem.KullanimAlanTipKod = value.UrunGrubu;
-                    //this.TempKalem.YuzeyTipKod = value.YuzeyKod;
-                    //this.TempKalem.SertlikTipKod = value.Sertlik;
+                    //var toplamTutar = TempKalem.BirimFiyat * TempKalem.Miktar;
+                    //TempKalem.Tutar = (decimal)toplamTutar;
 
+                    TempKalem.Butce = 0;
                 }
             }
         }
@@ -109,9 +108,27 @@ namespace mnd.UI.Modules._SatisModule
         public SiparisKalem TempKalem
         {
             get => tempKalem;
-            set
-            {
+            set {
                 SetProperty(ref tempKalem, value);
+                tempKalem.PropertyChanged += TempKalem_PropertyChanged;          
+            }
+        }
+
+        private void TempKalem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TempKalem.Miktar) ||
+                e.PropertyName == nameof(TempKalem.BirimFiyat))
+            {
+                if (TempKalem.BirimFiyat > 0 && TempKalem.Miktar > 0)
+                {
+                    var toplamTutar = TempKalem.BirimFiyat * TempKalem.Miktar;
+                    TempKalem.Tutar = (decimal)toplamTutar;
+                    TempKalem.Butce = 0;
+                }
+                else
+                {
+                    TempKalem.Tutar = 0;
+                }
             }
         }
 
@@ -119,6 +136,11 @@ namespace mnd.UI.Modules._SatisModule
 
         #region LookUpdata Properties
 
+        public ObservableCollection<NakliyeDurumTip> NakliyeDurumTipleri { get => nakliyeDurumTipleri; set => SetProperty(ref nakliyeDurumTipleri, value); }
+
+        public ObservableCollection<DonemGrup> DonemGrupListesi { get => donemGrupListesi; set => SetProperty(ref donemGrupListesi, value); }
+
+        public ObservableCollection<Donem> DonemListesi { get => donemListesi; set => SetProperty(ref donemListesi, value); }
 
         private ObservableCollection<TBLIHRSTK> urunler;
         private TBLIHRSTK _seciliUrun;
@@ -181,6 +203,11 @@ namespace mnd.UI.Modules._SatisModule
 
 
         private string _dovizTipKod;
+        private ObservableCollection<NakliyeDurumTip> nakliyeDurumTipleri;
+        private ObservableCollection<DonemGrup> donemGrupListesi;
+        private ObservableCollection<Donem> donemListesi;
+        private DonemGrup seciliDonemGrup;
+        private Donem seciliDonem;
 
 
 
@@ -209,8 +236,10 @@ namespace mnd.UI.Modules._SatisModule
 
         }
 
+
         public KalemViewModel()
         {
+           
 
         }
 
