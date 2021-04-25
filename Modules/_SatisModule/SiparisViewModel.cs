@@ -52,11 +52,14 @@ namespace mnd.UI.Modules._SatisModule
         public DelegateCommand KalemYeniCommand => new DelegateCommand(YeniKalem, true);
         //public DelegateCommand KalemKopyalaCommand => new DelegateCommand(KopyadanYeniKalem, canKopyadanYeniKalem);
 
-        //public DelegateCommand KalemEditCommand => new DelegateCommand(KalemEdit, canKalemEdit);
+        public DelegateCommand KalemEditCommand => new DelegateCommand(KalemEdit, canKalemEdit);
         public DelegateCommand KalemKaydetCommand => new DelegateCommand(KalemEkleYadaGuncelle, CanKalemEkleYadaGuncelle);
         public DelegateCommand KalemVazgecCommand => new DelegateCommand(KalemVazgec, canVazgec);
-        //public DelegateCommand KalemSilCommand => new DelegateCommand(KalemSil, canKalemSil);
+        public DelegateCommand KalemSilCommand => new DelegateCommand(KalemSil, canKalemSil);
 
+        private bool canKalemEdit() => SeciliKalem != null && KalemVM == null;
+
+        private bool canKalemSil() => SeciliKalem != null && KalemVM == null;
         private void SiparisEdit(string siparisKod)
         {
             UnitOfWork uow2 = new UnitOfWork();
@@ -491,7 +494,6 @@ namespace mnd.UI.Modules._SatisModule
 
             KalemLookUpYukle(KalemVM);
 
-            KalemVM.DovizTipKod = DovizTipleri.First(c => c.DovizTipKod == SeciliSiparis.TakipDovizTipKod).Simge;
             KalemVM.KayitModu = KayitModu.Edit;
 
         }
@@ -539,20 +541,8 @@ namespace mnd.UI.Modules._SatisModule
 
         private void KalemSil()
         {
-            //if (KapasitiftenSiparisMi)
-            //{
-            //    var anaSiparisKalem = IlgiliKapasitif.SiparisKalemleri.First().Miktar_kg;
-            //    SiparisKalem silinecekKalem;
 
-            //    if (SeciliKalem.SiparisKalemKod == null)
-            //        silinecekKalem = IlgiliKapasitif.SiparisKalemleri.FirstOrDefault(c => c.IlgiliKalemKod == SeciliKalem.RowGuid.ToString());
-            //    else
-            //        silinecekKalem = IlgiliKapasitif.SiparisKalemleri.FirstOrDefault(c => c.IlgiliKalemKod == SeciliKalem.SiparisKalemKod);
-
-            //    if (silinecekKalem != null) IlgiliKapasitif.KalemSil(silinecekKalem);
-            //}
-
-            //SeciliSiparis.KalemSil(SeciliKalem);
+            SeciliSiparis.KalemSil(SeciliKalem);
 
         }
 

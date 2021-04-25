@@ -30,7 +30,7 @@ namespace mnd.UI.Modules._SatisModule
         private List<string> _siparisDurumlari = new List<string>();
         private ObservableCollection<SiparisDTO> _siparisListe;
 
-        private int _toplamPaketMiktari;
+
         private ObservableCollection<AlasimMiktarDto> _alasimDurumlari;
         private bool _dataIsLoading;
 
@@ -214,7 +214,6 @@ namespace mnd.UI.Modules._SatisModule
             //    {
             //        k.KalemFaturaMiktarlariKg = dictKalem.GetValueOrDefault(k.SiparisKalemKod);
             //    }
-
             //}
 
 
@@ -292,7 +291,7 @@ namespace mnd.UI.Modules._SatisModule
                                        .Where(c => c.CariKod != cariKod)
                                        .FirstOrDefault();
 
-
+            /// MND DE CARİ KODLAR BU ŞEKİLDE SİSTEMATİK OLMADIĞI İÇİN YURTİÇİ VE YURTDIŞI MÜŞTERİLERİ BAŞKA BİR YÖNTEM İLE BİRBİRİNDEN AYIRMALIYIM - ESER
             if (cariKod.Contains("120-98-") || cariKod.Contains("120-05-") || cariKod.Contains("120-06-"))  // yurt dışı
             {
                 ikinciCarisi = PandapCariService
@@ -345,7 +344,7 @@ namespace mnd.UI.Modules._SatisModule
 
                 }
 
-                MessageBox.Show(uyariMetin, "Pandap", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(uyariMetin, "MNDApp", MessageBoxButton.OK, MessageBoxImage.Error);
                 LimitTalepFormYazdir(limitRaporModel);
 
                 return;
@@ -380,7 +379,7 @@ namespace mnd.UI.Modules._SatisModule
 
                 }
 
-                MessageBox.Show(uyariMetin, "Pandap", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(uyariMetin, "MNDApp", MessageBoxButton.OK, MessageBoxImage.Error);
                 LimitTalepFormYazdir(limitRaporModel);
 
                 return;

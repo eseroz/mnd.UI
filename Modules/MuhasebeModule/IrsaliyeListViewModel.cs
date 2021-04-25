@@ -295,7 +295,7 @@ namespace mnd.UI.Modules.MuhasebeModule
 
             if (sonuc.Contains("Hata") || sonuc.Contains("yetkisiz"))
             {
-                MessageBox.Show(sonuc, "Pandap", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(sonuc, "MNDApp", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

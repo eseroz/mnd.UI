@@ -9,31 +9,25 @@
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             
-
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"         
     xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v20.2"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:converters="clr-namespace:mnd.UI.Converters"
-
+    xmlns:converters="clr-namespace:mnd.UI.Converters"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:siparisKalem="clr-namespace:mnd.UI.Modules._SatisModule"
-             xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-             TextElement.FontWeight="Regular"
-             TextElement.FontSize="13"
-
-             TextOptions.TextFormattingMode="Ideal"
-             TextOptions.TextRenderingMode="Auto"
-             Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{DynamicResource MaterialDesignFont}"
-             
-             x:Class="mnd.UI.Modules._SatisModule.SiparisView"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:siparisKalem="clr-namespace:mnd.UI.Modules._SatisModule"
+    xmlns:controlHelpers="clr-namespace:mnd.UI.ControlHelpers"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Regular"
+    TextElement.FontSize="13"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"             
+    x:Class="mnd.UI.Modules._SatisModule.SiparisView"
     x:Name="siparisform"
-
     mc:Ignorable="d" d:DesignWidth="1262.2" d:DesignHeight="742.8"
-   d:DataContext="{d:DesignInstance siparisKalem:SiparisViewModel}">
+    d:DataContext="{d:DesignInstance siparisKalem:SiparisViewModel}">
 
     <UserControl.Resources>
 
@@ -191,7 +185,6 @@
                     <RowDefinition Height="11*"/>
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-
                 <Grid materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="5,5,4.8,4.6">
                     <StackPanel>
                         <StackPanel Name="SiparişBilgi" DataContext="{Binding SeciliSiparis}">
@@ -329,54 +322,41 @@
                                             <TextBlock VerticalAlignment="Center" Text="Yeni Kalem" />
                                         </StackPanel>
                                     </Button>
-
-
                                     <Button Padding="8" Command="{Binding KalemKaydetCommand}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{dx:DXImageOffice2013 Image=SaveTo_16x16.png}" />
                                             <TextBlock VerticalAlignment="Center" Text="Ekle/Güncelle" />
                                         </StackPanel>
                                     </Button>
-
-                                    <Button Padding="8" Command="{Binding KalemKopyalaCommand}">
+                                    <!--<Button Padding="8" Command="{Binding KalemKopyalaCommand}" Visibility="Hidden">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{dx:DXImageOffice2013 Image=Copy_16x16.png}" />
                                             <TextBlock VerticalAlignment="Center" Text="Kalem Kopyala" />
                                         </StackPanel>
-                                    </Button>
-
-
+                                    </Button>-->
                                     <Button Padding="8" Command="{Binding KalemEditCommand}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{dx:DXImage Image=PenColor_16x16.png}" />
                                             <TextBlock VerticalAlignment="Center" Text="Düzenle" />
                                         </StackPanel>
                                     </Button>
-
                                     <Button Padding="8" Command="{Binding KalemSilCommand}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{dx:DXImageOffice2013 Image=Delete_16x16.png}" />
                                             <TextBlock Width="50" TextAlignment="Center" VerticalAlignment="Center" Text="Sil" />
                                         </StackPanel>
                                     </Button>
-
                                     <Button Padding="8" Command="{Binding KalemVazgecCommand}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{dx:DXImage Image=Reset_16x16.png}" />
                                             <TextBlock VerticalAlignment="Center" Text="İptal" />
                                         </StackPanel>
                                     </Button>
-
-
-
-
-
                                 </ToolBar>
                             </ToolBarTray>
                             <ContentControl Content="{Binding KalemVM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
-                    </StackPanel>
-                 
+                    </StackPanel>                 
                 </Grid>
 
 
@@ -414,7 +394,7 @@
 
                             <dxg:GridColumn FieldName="UrunKod" Header="ÜrÜn Kod" Width="65" IsSmart="True" />
                             <dxg:GridColumn FieldName="UrunAdiEN" Header="Ürün Adı" IsSmart="True" Width="250" />
-                            <dxg:GridColumn FieldName="GR" Header="GR" IsSmart="True"  Width="55"/>
+                            <!--<dxg:GridColumn FieldName="GR" Header="GR" IsSmart="True"  Width="55"/>
                             <dxg:GridColumn FieldName="PCS" Header="PCS" Visible="False" IsSmart="True"  Width="55" />
                             <dxg:GridColumn FieldName="BOX" Header="BOX" IsSmart="True"  Width="55" />
                             <dxg:GridColumn FieldName="NETKG" Header="NETKG" IsSmart="True"   Width="55"/>
@@ -423,7 +403,7 @@
                             <dxg:GridColumn FieldName="L" Header="L" IsSmart="True"  Width="40"/>
                             <dxg:GridColumn FieldName="H" Header="H" IsSmart="True"  Width="40" />
                             <dxg:GridColumn FieldName="M3" Header="M3" Visible="False" IsSmart="True" />
-                            <dxg:GridColumn FieldName="CRTN" Header="CRTN" Visible="False" IsSmart="True" />
+                            <dxg:GridColumn FieldName="CRTN" Header="CRTN" Visible="False" IsSmart="True" />-->
                             <dxg:GridColumn FieldName="BirimFiyat" Header="Satış Fiyatı" Width="80" />
                             <dxg:GridColumn Header="Miktar" FieldName="Miktar" IsSmart="True"  Width="80">
                                 <dxg:GridColumn.EditSettings>
