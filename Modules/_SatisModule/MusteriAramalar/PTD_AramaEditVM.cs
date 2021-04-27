@@ -31,6 +31,16 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         PotansiyelDisiRepository repo = new PotansiyelDisiRepository();
         private List<MusteriGrubu> musteriGrupListesi;
 
+        private P_UlkeSabit seciliUlke;
+        public P_UlkeSabit SeciliUlke
+        {
+            get => seciliUlke;
+            set
+            {
+                SetProperty(ref seciliUlke, value);
+            }
+        }
+
         private void OnKaydet()
         {
             var hata = ValidateForm();
@@ -39,6 +49,8 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 MessageBox.Show(hata, "", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+          
+            EditModel.MusteriGrubuAdı = MusteriGrubuAdi;
 
             if (EditModel.Id == 0)
             {
@@ -58,6 +70,8 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
         }
 
+        public string MusteriGrubuAdi { get; set; }
+
         private void OnIptal()
         {
             AppPandap.pDocumentManagerService.ActiveDocument.Close();
@@ -74,12 +88,16 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             return hata;
         }
 
-        public PTD_AramaEditVM(int aramaId)
+        public PTD_AramaEditVM(int aramaId, string musteriGrubuAdi)
         {
 
-            MusteriGrupListesi = new List<MusteriGrubu>();
-            MusteriGrupListesi.Add(new MusteriGrubu { MusteriGrubuAdı = "Potansiyel" });
-            MusteriGrupListesi.Add(new MusteriGrubu { MusteriGrubuAdı = "Potansiyel Dışı" });
+  
+
+            MusteriGrubuAdi = musteriGrubuAdi;
+
+            //MusteriGrupListesi = new List<MusteriGrubu>();
+            //MusteriGrupListesi.Add(new MusteriGrubu { MusteriGrubuAdı = "Potansiyel" });
+            //MusteriGrupListesi.Add(new MusteriGrubu { MusteriGrubuAdı = "Potansiyel Dışı" });
 
             if (aramaId == 0)
             {

@@ -113,41 +113,71 @@
                     <DockPanel Margin="0,5,0,8">
                         <TextBlock HorizontalAlignment="Right" Text="Arama Tarihi:" VerticalAlignment="Center"/>
 
-                        <dxe:DateEdit AllowNullInput="True" HorizontalAlignment="Left"  Width="200"
+                        <dxe:DateEdit AllowNullInput="True" HorizontalAlignment="Left"  Width="200" Height="30"
                                     EditValue="{Binding EditModel.Tarih,Mode=TwoWay}"/>
                     </DockPanel>
 
                     <DockPanel Margin="0,8">
-                        <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
-                        <dxe:TextEdit VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                          TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.MusteriUnvan}" />
-
-                    </DockPanel>
-
-
-                    <DockPanel Margin="0,8">
-                        <TextBlock  Text="Müşteri Grubu :" VerticalAlignment="Center"  />
-
-                        <dxe:ComboBoxEdit Width="200" ItemsSource="{Binding MusteriGrupListesi}" EditValue="{Binding EditModel.MusteriGrubuAdı,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                          HorizontalAlignment="Left"
-                                          ValueMember="MusteriGrubuAdı" DisplayMember="MusteriGrubuAdı"
-                                          />
-
-                    </DockPanel>
-
-                    <DockPanel Margin="0,8">
-                        <TextBlock  Text="Ülke:" VerticalAlignment="Center"  />
-
-                        <dxe:ComboBoxEdit Width="200" EditValue="{Binding EditModel.UlkeAdi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                          HorizontalAlignment="Left" ItemsSource="{Binding Ulkeler}"
-                                          ValueMember="UlkeAdi" DisplayMember="UlkeAdi"
-                                          />
-
-                    </DockPanel>
-
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
+                                <dxe:TextEdit Width="250" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.MusteriUnvan}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  Text="Ülke :" VerticalAlignment="Center"/>
+                                <dxe:ComboBoxEdit Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
+                                SelectedItem="{Binding SeciliUlke,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                DisplayMember="UlkeAdi"  Width="270" 
+                                EditValue="{Binding EditModel.UlkeAdi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                ValueMember="UlkeAdi"                                          
+                                ItemsSource="{Binding Ulkeler,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                                HorizontalAlignment="Left">
+                                </dxe:ComboBoxEdit>
+                            </StackPanel>
+                       </StackPanel>
+                    </DockPanel>                   
 
                     <DockPanel Margin="0,8">
-                        <TextBlock Text="Konu Detay:" VerticalAlignment="Top" />
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Görüşülen Kişi :" Height="30" TextAlignment="Right" />
+                                <dxe:TextEdit Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiAdi}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Görevi :" Height="30" TextAlignment="Right" />
+                                <dxe:TextEdit Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiGorevi}" />
+                            </StackPanel> 
+                        </StackPanel>                  
+                    </DockPanel>
+                    
+                    <DockPanel Margin="0,8">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Telefon :" Height="30" TextAlignment="Right"/>
+                                <dxe:TextEdit Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiTelefon}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Eposta :" TextAlignment="Right" Height="30" />
+                                <dxe:TextEdit Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiEposta}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel Margin="0,8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Konu:" Height="30" />
+                            <dxe:TextEdit Width="655" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.Konu}" />
+                        </StackPanel>                        
+                    </DockPanel>
+
+                    <DockPanel Margin="0,8">
+                        <TextBlock Text="Detay:" VerticalAlignment="Top" />
                         <dxe:TextEdit VerticalScrollBarVisibility="Auto" Height="150" AcceptsReturn="True" VerticalContentAlignment="Top" 
                                           TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.KonuDetay}" />
 

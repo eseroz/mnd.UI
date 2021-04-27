@@ -43,7 +43,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         }
         private void OnAramaEkleDuzenle(int id)
         {
-            var vm = new PTD_AramaEditVM(id);
+            var vm = new PTD_AramaEditVM(id, MusteriGrubuAdi);
 
             var doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
             doc.Title = "Yeni Arama";

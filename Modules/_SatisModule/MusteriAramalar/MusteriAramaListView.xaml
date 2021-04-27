@@ -156,9 +156,18 @@
                     MinWidth="60"
                     MaxWidth="100"
                     HorizontalHeaderContentAlignment="Center"
+                    FieldName="SonGorusmeSuresi"
+                    Header="Son Görüşme Üzerinden Geçen Süre">
+            </dxg:GridColumn> 
+            <dxg:GridColumn
+                    Width="*"              
+                    MinWidth="60"
+                    MaxWidth="100"
+                    HorizontalHeaderContentAlignment="Center"
                     FieldName="ToplamGorusmeSayisi"
                     Header="Toplam Goruşme">
-            </dxg:GridColumn>
+            </dxg:GridColumn> 
+            
             <dxg:GridControl.DetailDescriptor>
                 <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding MusteriAramalarDTO}" ShowHeader="False">
                     <dxg:GridControl>

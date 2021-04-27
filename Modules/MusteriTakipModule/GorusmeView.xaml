@@ -293,12 +293,9 @@
                                 SelectedItem="{Binding SeciliCariEmail,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 DisplayMember="AdSoyad"  Width="270" 
                                 EditValue="{Binding Gorusme.GorusulenKisiNetsisId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                ValueMember="Id"
-                                          
+                                ValueMember="Id"                                          
                                 ItemsSource="{Binding CariGorusmeKisiListe,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                HorizontalAlignment="Left"  >
-
-
+                                HorizontalAlignment="Left">
                                 <dxe:ComboBoxEdit.PopupBottomAreaTemplate>
                                     <ControlTemplate>
                                         <Grid>
@@ -310,11 +307,7 @@
 
                                     </ControlTemplate>
                                 </dxe:ComboBoxEdit.PopupBottomAreaTemplate>
-
-
                             </dxe:ComboBoxEdit>
-
-
                             <materialDesign:PackIcon Margin="0,0,8,0" VerticalAlignment="Center"
                                                  Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Kind="Account" />
 
