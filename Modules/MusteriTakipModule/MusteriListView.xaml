@@ -115,6 +115,15 @@
                             Text="Yenile" />
                     </StackPanel>
                 </Button>
+                <!--<Button Command="{Binding DegisikligiKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="ContentSave" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Değişiklikleri Kaydet" />
+                    </StackPanel>
+                </Button>-->
                 <TextBlock
                     MinWidth="100"
                     Margin="10,0,0,0"
@@ -213,7 +222,6 @@
                             <dxg:FormatCondition Expression="[GorusmeSayisi] &gt; 0" FieldName="GorusmeSayisi" >
                                 <dx:Format Foreground="Red" FontWeight="Bold" TextDecorations="{x:Null}"/>
                             </dxg:FormatCondition>
-
                         </dxg:TableView.FormatConditions>
                     </dxg:TableView>
                 </dxg:GridControl.View>
@@ -353,11 +361,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>-->
-                <!--<dxg:GridColumn
-                    Width="50"
-                    FieldName="ToDoGuncelleyen"
-                    IsSmart="True"
-                    Visible="False" />-->
+
                 <dxg:GridControl.DetailDescriptor>
                     <dxg:ContentDetailDescriptor>
                         <dxg:ContentDetailDescriptor.ContentTemplate>
@@ -551,6 +555,19 @@
                 </dxg:GridColumn>-->
                 <dxg:GridColumn
                     Width="50"
+                    Header="Bu Müşteri Bana Ait"
+                    FieldName="PlasiyereAitMusteriMi"
+                    IsSmart="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding RowData.Row.PlasiyereAitMusteriMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                            </StackPanel>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn
+                    Width="50"
                     AutoFilterCriteria="Contains"
                     FieldName="CariKod"
                     FilterPopupMode="Excel" />
@@ -610,10 +627,10 @@
                 <dxg:GridColumn
                     Width="85"
                     AutoFilterCriteria="Contains"
-                    Header="Müşteri Sorumlusu"
-                    FieldName="PandaMusteriSorumlusu"
                     FilterPopupMode="Excel"
-                    IsSmart="True" />
+                    IsSmart="True"
+                    Header="Müşteri Sorumlusu"
+                    FieldName="PandaMusteriSorumlusu"/>
             </dxg:GridControl>
         </materialDesign:Card>
     </Grid>

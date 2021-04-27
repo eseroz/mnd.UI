@@ -7,6 +7,7 @@ using mnd.Logic.Persistence;
 using mnd.Logic.Services;
 using mnd.UI.AppModules.AppModule;
 using mnd.UI.Helper;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -20,9 +21,17 @@ namespace mnd.UI.Modules.MusteriTakipModule
         private string formUyariMesaj;
         private ObservableCollection<PandapCari> pandapCari;
         private PandapCari seciliPandapCari;
-        private bool tonajlariGorebilirMi;
         private UnitOfWork uow = new UnitOfWork();
 
+
+        //public DelegateCommand DegisikligiKaydetCommand => new DelegateCommand(OnDegisikligiKaydet);
+
+        //private void OnDegisikligiKaydet()
+        //{
+        //    uow.Commit();
+        //    MessageBox.Show("Değişiklikler Kaydedildi!");
+
+        //}
 
         public DelegateCommand<Gorusme> DuzenleCommand => new DelegateCommand<Gorusme>(OnDuzenle);
         public DelegateCommand EkranYenileCommand => new DelegateCommand(OnEkranYenile, () => true);
@@ -153,7 +162,14 @@ namespace mnd.UI.Modules.MusteriTakipModule
 
             uow = new UnitOfWork();
 
-            var bagliPlasiyerKodlari = AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';');
+            string[] bagliPlasiyerKodlari = null;
+
+            if (AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari != null)
+            {
+                bagliPlasiyerKodlari = AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';');
+            }else{
+                bagliPlasiyerKodlari = uow.PlasiyerRepo.PlasiyerKodlari();
+            }
 
             PandapCariler = await uow.PandapCariRepo.PandapCarileriBagliPlasiyerlereGoreGetir(bagliPlasiyerKodlari, AppPandap.AktifKullanici.KullaniciRol);
 

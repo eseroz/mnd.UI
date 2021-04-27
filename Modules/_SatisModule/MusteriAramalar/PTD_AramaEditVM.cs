@@ -42,6 +42,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
             if (EditModel.Id == 0)
             {
+                EditModel.PlasiyerKod = AppPandap.AktifKullanici.PlasiyerKod;
                 repo.Ekle(EditModel);
                 repo.Kaydet();
                 Messenger.Default.Send(new PTD_MusteriAramaEklendiEvents(EditModel));

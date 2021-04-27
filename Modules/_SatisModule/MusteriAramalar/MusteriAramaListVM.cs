@@ -9,28 +9,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using mnd.UI.Modules._SatisModule.MusteriAramalar.Events;
+using mnd.Logic.Persistence;
 
 namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 {
     public class MusteriAramaListVM : MyBindableBase
     {
-        public ObservableCollection<PotansiyelDisiMusteriArama>  MusteriAramalar
-                    { get => musteriAramalar; set => SetProperty(ref musteriAramalar,value); }
-
+        public string[] bagliPlasiyerKodlari = null;
+        private UnitOfWork uow = new UnitOfWork();
         PotansiyelDisiRepository repo = new PotansiyelDisiRepository();
-        private PotansiyelDisiMusteriArama seciliarama;
-        private ObservableCollection<PotansiyelDisiMusteriArama> musteriAramalar;
-
-        public DelegateCommand<int> AramaAddEditCommand => new DelegateCommand<int>(OnAramaEkleDuzenle, c => true);
-
-        public PotansiyelDisiMusteriArama SeciliArama { get => seciliarama; set => SetProperty(ref seciliarama, value); }
 
 
+        private ObservableCollection<PotansiyelMusteriDTO> potansyelMusteriler;
+        public ObservableCollection<PotansiyelMusteriDTO>  PotansyelMusteriler                   
+        { 
+            get => potansyelMusteriler;             
+            set => SetProperty(ref potansyelMusteriler, value); 
+        }
+
+    
+        private PotansiyelMusteriDTO seciliarama;
+        public PotansiyelMusteriDTO SeciliArama { get => seciliarama; set => SetProperty(ref seciliarama, value); }
+
+        #region Delegates
+        public DelegateCommand<int> AramaAddEditCommand => new DelegateCommand<int>(OnAramaEkleDuzenle, c => true);      
         public DelegateCommand EkranYenileCommand => new DelegateCommand(OnEkranYenile);
+        #endregion
 
         private void OnEkranYenile()
         {
-            MusteriAramalar = repo.PTD_Aramalari_Getir();
+            PotansyelMusteriler = new ObservableCollection<PotansiyelMusteriDTO>();
+               PotansyelMusteriler = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
         }
         private void OnAramaEkleDuzenle(int id)
         {
@@ -41,10 +50,20 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             doc.DestroyOnClose = true;
             doc.Show();
         }
-
+        public string MusteriGrubuAdi { get; set; }
         public MusteriAramaListVM(string FormAd)
         {
-            MusteriAramalar = repo.PTD_Aramalari_Getir();
+            MusteriGrubuAdi = FormAd;
+            if (AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari != null)
+            {
+                bagliPlasiyerKodlari = AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';');
+            }
+            else
+            {
+                bagliPlasiyerKodlari = uow.PlasiyerRepo.PlasiyerKodlari();
+            }
+
+            PotansyelMusteriler = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
 
             Messenger.Default.Register<PTD_MusteriAramaEklendiEvents>(this, OnAramaEklendi);
             Messenger.Default.Register<PTD_MusteriAramaGuncellendiEvent>(this, OnAramaGuncellendi);
@@ -53,23 +72,23 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
         private void OnAramaGuncellendi(PTD_MusteriAramaGuncellendiEvent obj)
         {
-            var arama = MusteriAramalar.FirstOrDefault(x => x.Id == obj.Arama.Id);
+            //var arama = PotansyelMusteriler.FirstOrDefault(x => x.Id == obj.Arama.Id);
 
-            var indexRow = MusteriAramalar.IndexOf(arama);
+            //var indexRow = PotansyelMusteriler.IndexOf(arama);
 
-            MusteriAramalar.Remove(arama);
+            //MusteriAramalar.Remove(arama);
 
-            var guncel_seyahat = repo.Ptd_AramaGetirNoTrack(obj.Arama.Id);
+            //var guncel_seyahat = repo.Ptd_AramaGetirNoTrack(obj.Arama.Id);
 
-            MusteriAramalar.Insert(indexRow, guncel_seyahat);
+            //MusteriAramalar.Insert(indexRow, guncel_seyahat);
 
-            SeciliArama = guncel_seyahat;
+            //SeciliArama = guncel_seyahat;
         }
 
         private void OnAramaEklendi(PTD_MusteriAramaEklendiEvents obj)
         {
-            MusteriAramalar.Insert(0, obj.Arama);
-            SeciliArama = obj.Arama;
+            //MusteriAramalar.Insert(0, obj.Arama);
+            //SeciliArama = obj.Arama;
         }
     }
 }
