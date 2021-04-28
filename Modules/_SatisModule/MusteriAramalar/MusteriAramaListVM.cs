@@ -32,18 +32,20 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public PotansiyelMusteriDTO SeciliArama { get => seciliarama; set => SetProperty(ref seciliarama, value); }
 
         #region Delegates
-        public DelegateCommand<int> AramaAddEditCommand => new DelegateCommand<int>(OnAramaEkleDuzenle, c => true);      
+        public DelegateCommand<string> AramaAddEditCommand => new DelegateCommand<string>(OnAramaEkleDuzenle, c => true);      
         public DelegateCommand EkranYenileCommand => new DelegateCommand(OnEkranYenile);
         #endregion
 
         private void OnEkranYenile()
         {
             PotansyelMusteriler = new ObservableCollection<PotansiyelMusteriDTO>();
-               PotansyelMusteriler = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
+            PotansyelMusteriler = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
         }
-        private void OnAramaEkleDuzenle(int id)
+        private void OnAramaEkleDuzenle(string Id)
         {
-            var vm = new PTD_AramaEditVM(id, MusteriGrubuAdi);
+            var vm = new PTD_AramaEditVM();
+            vm.MusteriGrubuAdi = MusteriGrubuAdi;
+            vm.PotansiyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
 
             var doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
             doc.Title = "Yeni Arama";

@@ -22,7 +22,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
     {
         public PTD_AramaEditView()
         {
-            PTD_AramaEditVM vm = new PTD_AramaEditVM(0, "");
+            PTD_AramaEditVM vm = new PTD_AramaEditVM();
             InitializeComponent();
             this.DataContext = vm;
         }

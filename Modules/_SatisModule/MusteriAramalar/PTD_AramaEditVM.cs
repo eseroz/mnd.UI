@@ -4,6 +4,7 @@ using mnd.Logic.Model;
 using mnd.UI.Modules._SatisModule.MusteriAramalar.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace mnd.UI.Modules._SatisModule.MusteriAramalar
@@ -12,16 +13,33 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
     {
         public string MusteriGrubuAdı { get; set; }
     }
-    public class PTD_AramaEditVM: MyBindableBase
+
+    public class PTD_AramaEditVM : MyBindableBase
     {
         private int id;
         public List<P_UlkeSabit> Ulkeler { get; }
-        public PotansiyelDisiMusteriArama EditModel { get; set; }
+        public PotansiyelDisiMusteriArama EditModel
+        {
+            get => editModel;
+            set { SetProperty(ref editModel, value); }
+        }
 
-        public List<MusteriGrubu> MusteriGrupListesi {
+        public List<MusteriGrubu> MusteriGrupListesi
+        {
             get => musteriGrupListesi;
-            set { 
-               SetProperty(ref musteriGrupListesi, value);
+            set
+            {
+                SetProperty(ref musteriGrupListesi, value);
+            }
+        }
+
+        public ObservableCollection<PotansiyelMusteriDTO> PotansiyelMusteriListesi
+        {
+            get => potansiyelMusteriListesi;
+            set
+            {
+                SetProperty(ref potansiyelMusteriListesi, value);
+                potansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), MusteriGrubuAdi);
             }
         }
 
@@ -32,6 +50,10 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         private List<MusteriGrubu> musteriGrupListesi;
 
         private P_UlkeSabit seciliUlke;
+        private PotansiyelDisiMusteriArama editModel;
+        private ObservableCollection<PotansiyelMusteriDTO> potansiyelMusteriListesi;
+        private string musteriGrubuAdi;
+
         public P_UlkeSabit SeciliUlke
         {
             get => seciliUlke;
@@ -49,7 +71,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 MessageBox.Show(hata, "", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-          
+
             EditModel.MusteriGrubuAdı = MusteriGrubuAdi;
 
             if (EditModel.Id == 0)
@@ -70,7 +92,10 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
         }
 
-        public string MusteriGrubuAdi { get; set; }
+        public string MusteriGrubuAdi { 
+            get => musteriGrubuAdi;
+            set => SetProperty(ref musteriGrubuAdi, value);
+        }
 
         private void OnIptal()
         {
@@ -88,25 +113,24 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             return hata;
         }
 
-        public PTD_AramaEditVM(int aramaId, string musteriGrubuAdi)
+        public PTD_AramaEditVM()
         {
 
-  
+        }
+        public PTD_AramaEditVM(string _musteriGrubuAdı, int Id)
+        {
+            PotansiyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
+            MusteriGrubuAdi = _musteriGrubuAdı;
+            PotansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), MusteriGrubuAdi);
 
-            MusteriGrubuAdi = musteriGrubuAdi;
-
-            //MusteriGrupListesi = new List<MusteriGrubu>();
-            //MusteriGrupListesi.Add(new MusteriGrubu { MusteriGrubuAdı = "Potansiyel" });
-            //MusteriGrupListesi.Add(new MusteriGrubu { MusteriGrubuAdı = "Potansiyel Dışı" });
-
-            if (aramaId == 0)
+            if (Id == 0)
             {
                 EditModel = new PotansiyelDisiMusteriArama();
                 EditModel.Ekleyen = AppPandap.AktifKullanici.KullaniciId;
             }
             else
             {
-                EditModel = repo.Ptd_AramaGetir(aramaId);
+                EditModel = repo.Ptd_AramaGetir(Id);
             }
 
 

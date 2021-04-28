@@ -92,13 +92,13 @@
                 ItemsSource="{Binding PotansyelMusteriler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
             <dxg:GridControl.Resources>
-                  <Style BasedOn="{StaticResource MaviSutunBaslikSitil}"  TargetType="dxg:GridColumnHeader" />
+                <!--<Style BasedOn="{StaticResource YeniBaslikStili}"  TargetType="dxg:GridColumnHeader"  />-->
                 <Style TargetType="dxg:GridColumn">
                     <Setter Property="ReadOnly" Value="True" />
                 </Style>
             </dxg:GridControl.Resources>
 
-  
+
             <dxg:GridControl.View>
                 <dxg:TableView
                         x:Name="View1"
@@ -110,19 +110,9 @@
                         ShowAutoFilterRow="True"
                         ShowGroupPanel="False"
                         ShowTotalSummary="True">
-                    <dxg:TableView.FormatConditions>
-                        <dxg:FormatCondition
-                                Expression="[SevkHaftaGectiMi] = 'True'"
-                                FieldName="SevkHaftasi"
-                                ValueRule="Expression">
-                            <dx:Format
-                                    Background="Red"
-                                    Foreground="White"
-                                    TextDecorations="{x:Null}" />
-                        </dxg:FormatCondition>
-                    </dxg:TableView.FormatConditions>
                     <dxg:TableView.ColumnHeaderTemplate>
                         <DataTemplate>
+                            <!--BURASI EN ÜST-->
                             <TextBlock
                                     Height="35"
                                     Margin="1"
@@ -136,47 +126,44 @@
             </dxg:GridControl.View>
 
             <dxg:GridColumn
-                    Width="*"
-                    MinWidth="250"
+
                     AutoFilterCondition="Contains"
                     FieldName="MusteriUnvan"
                     FilterPopupMode="Excel"
                     Header="Müşteri">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="10,5,5,5" Background="LightSteelBlue">
                             <Image Width="24" Source="{Binding RowData.Row.UlkeKodu, Converter={StaticResource ImageFromAssemblyCnv}, ConverterParameter='Binding  RowData.Row'}" />
-                            <TextBlock Padding="2" Text="{Binding RowData.Row.MusteriUnvan}" />
+                            <TextBlock Padding="2" Text="{Binding RowData.Row.MusteriUnvan}" FontWeight="Bold" Foreground="Black" />
                         </StackPanel>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn
-                    Width="*"              
-                    MinWidth="60"
-                    MaxWidth="100"
+             Width="100"
+                    MaxWidth="120"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="SonGorusmeSuresi"
-                    Header="Son Görüşme Üzerinden Geçen Süre">
-            </dxg:GridColumn> 
+                    Header="Geçen Süre">
+            </dxg:GridColumn>
             <dxg:GridColumn
-                    Width="*"              
-                    MinWidth="60"
-                    MaxWidth="100"
+                    Width="80"
+                    MaxWidth="80"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="ToplamGorusmeSayisi"
-                    Header="Toplam Goruşme">
-            </dxg:GridColumn> 
-            
+                    Header="Goruşme Sayısı">
+            </dxg:GridColumn>
+
             <dxg:GridControl.DetailDescriptor>
-                <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding MusteriAramalarDTO}" ShowHeader="False">
+                <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding MusteriAramalarDTO}" ShowHeader="True">
                     <dxg:GridControl>
                         <dxg:GridControl.Resources>
                             <Style TargetType="dxg:GridColumn">
                                 <Setter Property="ReadOnly" Value="True" />
                             </Style>
-                            <Style TargetType="dxg:GridColumnHeader" BasedOn="{StaticResource BandSutunBaslikSitil}">
-                                
+                            <Style TargetType="dxg:GridColumnHeader">
+                                <Setter Property="Background" Value="DarkRed" />
                             </Style>
                         </dxg:GridControl.Resources>
                         <dxg:GridControl.View>
@@ -185,20 +172,22 @@
                                     AllowEditing="True"
                                     AutoWidth="True"
                                     ShowBandsPanel="False"
-                                    ShowGroupPanel="False"
+                                    ShowGroupPanel="False"                             
                                     ShowTotalSummary="True">
                                 <dxg:TableView.ColumnHeaderContentStyle>
                                     <Style TargetType="dxg:HeaderContentControl">
                                         <Setter Property="FontWeight" Value="DemiBold" />
                                         <Setter Property="HorizontalContentAlignment" Value="Center" />
                                         <Setter Property="VerticalContentAlignment" Value="Top" />
+                                        <Setter Property="MaxHeight" Value="50"></Setter>
                                     </Style>
                                 </dxg:TableView.ColumnHeaderContentStyle>
+
                                 <dxg:TableView.ColumnHeaderTemplate>
                                     <DataTemplate>
                                         <TextBlock
-                                                Height="25"
-                                                Margin="0,4"
+                                                Height="20"
+                                                Padding="0,4"
                                                 HorizontalAlignment="Center"
                                                 Text="{Binding ''}"
                                                 TextAlignment="Center"
@@ -222,16 +211,15 @@
                                             <DockPanel>
                                                 <Button  Style="{StaticResource MyLinkButton2}" Margin="4" Width="50" Height="40" 
                                                Command="{Binding DataContext.AramaAddEditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                               CommandParameter="{Binding RowData.Row.Id}"
+                                               CommandParameter="{Binding RowData.Row}"
                                                Content="Düzenle" FontSize="12"
                                                HorizontalAlignment="Center" />
                                             </DockPanel>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>
-                                <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>
-                                <dxg:GridColumn Header="Müşteri Grubu" FieldName="MusteriGrubuAdı" IsSmart="True" Visible="False"/>
-                                <dxg:GridColumn Header="Konu" FieldName="KonuDetay" IsSmart="True"/>
+                                <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>                            
+                                <dxg:GridColumn Header="Konu" FieldName="Konu" IsSmart="True"/>
                                 <dxg:GridColumn Header="Görüşülen Kişi" FieldName="GorusulenKisiAdi" IsSmart="True"/>
                                 <dxg:GridColumn Header="Görüşülen Kişi Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
                                 <dxg:GridColumn Header="Görüşülen Kişi Telefon" FieldName="GorusulenKisiTelefon" IsSmart="True"/>

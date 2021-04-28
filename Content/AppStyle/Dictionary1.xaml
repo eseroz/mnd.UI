@@ -116,16 +116,16 @@
     </Style>
 
 
-    <Style x:Key="BandSutunBaslikSitil" TargetType="dxg:GridColumnHeader">
+    <Style x:Key="YeniBaslikStili" TargetType="dxg:GridColumnHeader">
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Offset="0.261" Color="Bisque" />
-                    <GradientStop Offset="1" Color="#000000" />
+                    <GradientStop Offset="0.261" Color="LightGray" />
+                    <GradientStop Offset="1" Color="Gray" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="Black" />
     </Style>
     
     

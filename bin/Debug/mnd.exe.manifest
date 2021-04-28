@@ -248,14 +248,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="mnd.exe" size="7257088">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="mnd.exe" size="7260160">
       <assemblyIdentity name="mnd" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MqBABpAX1Yiq06SmOPGn7C6VxoYHpoKJGGw3quXTMLc=</dsig:DigestValue>
+        <dsig:DigestValue>/vbWFwJtsEhCFLavN+6K4hcO1mugLsc/O9dgOay8nqg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -279,7 +279,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mVY3XDLnhTktjxcFwPeQxOkl1+DQXit4IIv1EGpg4oE=</dsig:DigestValue>
+        <dsig:DigestValue>lTTA+GGlG1C/N1sRA698k9umH+LtFm7xe890TesdMkI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

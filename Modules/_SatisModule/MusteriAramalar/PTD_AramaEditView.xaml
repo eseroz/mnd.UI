@@ -114,15 +114,36 @@
                         <TextBlock HorizontalAlignment="Right" Text="Arama Tarihi:" VerticalAlignment="Center"/>
 
                         <dxe:DateEdit AllowNullInput="True" HorizontalAlignment="Left"  Width="200" Height="30"
-                                    EditValue="{Binding EditModel.Tarih,Mode=TwoWay}"/>
+                                    EditValue="{Binding EditModel.Tarih, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DockPanel>
 
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
-                                <dxe:TextEdit Width="250" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.MusteriUnvan}" />
+                                <dxg:LookUpEdit Width="400" HorizontalAlignment="Left" AutoPopulateColumns="False"
+                            DisplayMember="MusteriUnvan"
+                            EditValue="{Binding EditModel.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding SecilenPotansiyelMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding PotansiyelMusteriListesi}"
+                            ValueMember="MusteriUnvan">
+
+                                    <dxg:LookUpEdit.StyleSettings>
+                                        <dxg:SearchLookUpEditStyleSettings />
+                                    </dxg:LookUpEdit.StyleSettings>
+                                    <dxg:LookUpEdit.PopupContentTemplate>
+                                        <ControlTemplate>
+                                            <dxg:GridControl x:Name="PART_GridControl">
+                                                <dxg:GridControl.View>
+                                                    <dxg:TableView SearchPanelCriteriaOperatorType="And" AutoWidth="False" />
+                                                </dxg:GridControl.View>
+                                                <dxg:GridColumn Header="Firma Adı" FieldName="MusteriUnvan" />
+                                            </dxg:GridControl>
+                                        </ControlTemplate>
+                                    </dxg:LookUpEdit.PopupContentTemplate>
+                                </dxg:LookUpEdit>
+
+
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock  Text="Ülke :" VerticalAlignment="Center"/>
@@ -143,12 +164,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Görüşülen Kişi :" Height="30" TextAlignment="Right" />
                                 <dxe:TextEdit Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiAdi}" />
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiAdi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Görevi :" Height="30" TextAlignment="Right" />
                                 <dxe:TextEdit Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiGorevi}" />
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiGorevi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel> 
                         </StackPanel>                  
                     </DockPanel>
@@ -158,12 +179,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Telefon :" Height="30" TextAlignment="Right"/>
                                 <dxe:TextEdit Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiTelefon}" />
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiTelefon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Eposta :" TextAlignment="Right" Height="30" />
                                 <dxe:TextEdit Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiEposta}" />
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiEposta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
@@ -172,14 +193,14 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Konu:" Height="30" />
                             <dxe:TextEdit Width="655" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.Konu}" />
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.Konu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>                        
                     </DockPanel>
 
                     <DockPanel Margin="0,8">
                         <TextBlock Text="Detay:" VerticalAlignment="Top" />
                         <dxe:TextEdit VerticalScrollBarVisibility="Auto" Height="150" AcceptsReturn="True" VerticalContentAlignment="Top" 
-                                          TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.KonuDetay}" />
+                                          TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.KonuDetay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     </DockPanel>
 
