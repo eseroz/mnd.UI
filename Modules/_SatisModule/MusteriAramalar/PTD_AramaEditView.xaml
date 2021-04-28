@@ -16,11 +16,10 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="14"
-
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{DynamicResource MaterialDesignFont}" d:DesignWidth="825" d:DesignHeight="675">
+             FontFamily="{DynamicResource MaterialDesignFont}" d:DesignWidth="825" Height="810.395">
 
 
     <dxmvvm:Interaction.Behaviors>
@@ -47,10 +46,11 @@
 
 
 
-    <Grid  VerticalAlignment="Top">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="489.6"/>
+            <RowDefinition/>
 
         </Grid.RowDefinitions>
 
@@ -60,9 +60,7 @@
             </Style>
         </Grid.Resources>
 
-      
-
-        <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
+        <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}" Margin="0,0,-0.2,478.2" Grid.RowSpan="2">
 
             <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
@@ -82,7 +80,7 @@
             </Button>
         </ToolBar>
 
-        <md:Card VerticalAlignment="Top" Grid.Row="1" Margin="4" Padding="4">
+        <md:Card VerticalAlignment="Top" Grid.Row="1" Margin="4,4.4,3.8,0" Padding="4" Height="479">
             <Grid >
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
@@ -106,13 +104,8 @@
                                     Text="{Binding EditModel.Id}"/>
                     </DockPanel>
 
-
-
-
-
                     <DockPanel Margin="0,5,0,8">
                         <TextBlock HorizontalAlignment="Right" Text="Arama Tarihi:" VerticalAlignment="Center"/>
-
                         <dxe:DateEdit AllowNullInput="True" HorizontalAlignment="Left"  Width="200" Height="30"
                                     EditValue="{Binding EditModel.Tarih, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DockPanel>
@@ -121,26 +114,26 @@
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
-                                <dxg:LookUpEdit Width="400" HorizontalAlignment="Left" AutoPopulateColumns="False"
-                            DisplayMember="MusteriUnvan"
-                            EditValue="{Binding EditModel.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                            SelectedItem="{Binding SecilenPotansiyelMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
-                            ItemsSource="{Binding PotansiyelMusteriListesi}"
-                            ValueMember="MusteriUnvan">
-
-                                    <dxg:LookUpEdit.StyleSettings>
-                                        <dxg:SearchLookUpEditStyleSettings />
-                                    </dxg:LookUpEdit.StyleSettings>
+                                <dxg:LookUpEdit Name="musteriLookup"
+                                                Width="250" HorizontalAlignment="Left" AutoPopulateColumns="False"
+                                                DisplayMember="MusteriUnvan"
+                                                EditValue="{Binding EditModel.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedItem="{Binding SecilenPotansiyelMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding PotansiyelMusteriListesi}"                            
+                                                ValueMember="MusteriUnvan" AddNewButtonPlacement="Popup">
                                     <dxg:LookUpEdit.PopupContentTemplate>
                                         <ControlTemplate>
                                             <dxg:GridControl x:Name="PART_GridControl">
                                                 <dxg:GridControl.View>
                                                     <dxg:TableView SearchPanelCriteriaOperatorType="And" AutoWidth="False" />
                                                 </dxg:GridControl.View>
-                                                <dxg:GridColumn Header="Firma Adı" FieldName="MusteriUnvan" />
+                                                <dxg:GridColumn Header="Firma Adı" FieldName="MusteriUnvan" Width="230" />
                                             </dxg:GridControl>
                                         </ControlTemplate>
                                     </dxg:LookUpEdit.PopupContentTemplate>
+                                    <dxmvvm:Interaction.Triggers>
+                                        <dxmvvm:EventToCommand EventName="ProcessNewValue" Command="{Binding Musteri_ProcessNewValue}" CommandParameter="{Binding ElementName=musteriLookup, Path=DisplayText}" />
+                                    </dxmvvm:Interaction.Triggers>
                                 </dxg:LookUpEdit>
 
 
@@ -148,7 +141,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock  Text="Ülke :" VerticalAlignment="Center"/>
                                 <dxe:ComboBoxEdit Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
-                                SelectedItem="{Binding SeciliUlke,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                SelectedItem="{Binding SeciliUlke, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 DisplayMember="UlkeAdi"  Width="270" 
                                 EditValue="{Binding EditModel.UlkeAdi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 ValueMember="UlkeAdi"                                          
@@ -156,8 +149,8 @@
                                 HorizontalAlignment="Left">
                                 </dxe:ComboBoxEdit>
                             </StackPanel>
-                       </StackPanel>
-                    </DockPanel>                   
+                        </StackPanel>
+                    </DockPanel>
 
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
@@ -170,10 +163,10 @@
                                 <TextBlock Text="Görevi :" Height="30" TextAlignment="Right" />
                                 <dxe:TextEdit Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
                                                   TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiGorevi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            </StackPanel> 
-                        </StackPanel>                  
+                            </StackPanel>
+                        </StackPanel>
                     </DockPanel>
-                    
+
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
@@ -194,7 +187,7 @@
                             <TextBlock Text="Konu:" Height="30" />
                             <dxe:TextEdit Width="655" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
                                                   TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.Konu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>                        
+                        </StackPanel>
                     </DockPanel>
 
                     <DockPanel Margin="0,8">
@@ -211,6 +204,65 @@
 
 
             </Grid>
+        </md:Card>
+
+        <md:Card Grid.Row="2" Margin="4,4.4,3.8,0" Padding="4" VerticalAlignment="Top">
+
+            <dxg:GridControl Grid.Row="1"
+                x:Name="grdListe"
+                dx:DXSerializer.SerializationID="grid"
+                dx:DXSerializer.StoreLayoutMode="All"
+                dxg:GridSerializationOptions.AddNewColumns="True"
+                dxg:GridSerializationOptions.RemoveOldColumns="True"
+                AllowLiveDataShaping="True"
+                SelectedItem="{Binding SeciliArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding SecilenPotansiyelMusteri.MusteriAramalarDTO, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="ReadOnly" Value="True" />
+                    </Style>
+                </dxg:GridControl.Resources>
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        x:Name="View1"
+                        AllowCascadeUpdate="True"
+                        AllowEditing="True"
+                        AllowGrouping="True"
+                        AllowPerPixelScrolling="False"
+                        AutoWidth="True"
+                        ShowAutoFilterRow="True"
+                        ShowGroupPanel="False"
+                        ShowTotalSummary="True" Margin="0,0,0.2,49.6">
+                        <dxg:TableView.FormatConditions>
+                            <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Greater" IsEnabled="True">
+                                <dx:Format Icon="{dx:IconSet Name=Triangles3_3}" TextDecorations="{x:Null}"/>
+                            </dxg:FormatCondition>
+                            <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Less">
+                                <dx:Format Icon="{dx:IconSet Name=Symbols23_1}"/>
+                            </dxg:FormatCondition>
+                        </dxg:TableView.FormatConditions>
+                        <dxg:TableView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <!--BURASI EN ÜST-->
+                                <TextBlock
+                                    Height="35"
+                                    Margin="1"
+                                    HorizontalAlignment="Center"
+                                    Text="{Binding}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </dxg:TableView.ColumnHeaderTemplate>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>
+                <dxg:GridColumn Header="Konu" FieldName="Konu" IsSmart="True"/>
+                <dxg:GridColumn Header="Görüşülen Kişi" FieldName="GorusulenKisiAdi" IsSmart="True"/>
+                <dxg:GridColumn Header="Görüşülen Kişi Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
+                <dxg:GridColumn Header="Görüşülen Kişi Telefon" FieldName="GorusulenKisiTelefon" IsSmart="True"/>
+                <dxg:GridColumn Header="Görüşülen Kişi Eposta" FieldName="GorusulenKisiEposta" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Ekleyen"/>
+            </dxg:GridControl>
         </md:Card>
 
     </Grid>

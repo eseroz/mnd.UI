@@ -32,7 +32,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public PotansiyelMusteriDTO SeciliArama { get => seciliarama; set => SetProperty(ref seciliarama, value); }
 
         #region Delegates
-        public DelegateCommand<string> AramaAddEditCommand => new DelegateCommand<string>(OnAramaEkleDuzenle, c => true);      
+        public DelegateCommand<string> AramaAddEditCommand => new DelegateCommand<string>(OnAramaEkleDuzenle, true);      
         public DelegateCommand EkranYenileCommand => new DelegateCommand(OnEkranYenile);
         #endregion
 
@@ -41,14 +41,34 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             PotansyelMusteriler = new ObservableCollection<PotansiyelMusteriDTO>();
             PotansyelMusteriler = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
         }
-        private void OnAramaEkleDuzenle(string Id)
+        private void OnAramaEkleDuzenle(string id)
         {
-            var vm = new PTD_AramaEditVM();
-            vm.MusteriGrubuAdi = MusteriGrubuAdi;
-            vm.PotansiyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
 
-            var doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
-            doc.Title = "Yeni Arama";
+            PTD_AramaEditVM vm;
+            IDocument doc = null;
+
+            if (id != "0")
+            {
+                int Id = int.Parse(id); 
+                vm = new PTD_AramaEditVM(Id);
+                vm.MusteriGrubuAdi = MusteriGrubuAdi;
+                vm.PotansiyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
+
+                doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
+                doc.Title = vm.UC_Title;
+            }
+            else
+            {
+                vm = new PTD_AramaEditVM();
+                vm.MusteriGrubuAdi = MusteriGrubuAdi;
+                vm.PotansiyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
+
+                doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
+                doc.Title = "Yeni Arama";
+            }
+           
+
+
             doc.DestroyOnClose = true;
             doc.Show();
         }

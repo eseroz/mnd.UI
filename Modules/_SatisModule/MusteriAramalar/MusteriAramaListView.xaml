@@ -14,34 +14,26 @@
              FontSize="14"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
-
-
     <UserControl.Resources>
         <Style TargetType="{x:Type Button}" x:Key="MyLinkButton2">
-
             <Setter Property="Foreground" Value="Blue"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-
                         <StackPanel Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF2B7AD2" x:Name="TextBlock"><InlineUIContainer>
                                     <ContentPresenter />
                                 </InlineUIContainer></TextBlock>
                         </StackPanel>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
                                 <Setter TargetName="TextBlock" Property="TextDecorations" Value="Underline" />
                                 <Setter  Property="Cursor" Value="Hand" />
                                 <Setter Property="Foreground" Value="Firebrick"/>
                             </Trigger>
-
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="TextBlock" Property="TextBlock.Foreground" Value="Gray" />
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -49,13 +41,11 @@
         </Style>
         <converters:ImageFromAssemblyConverter x:Key="ImageFromAssemblyCnv" />
     </UserControl.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <ToolBar Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
             <Button Command="{Binding AramaAddEditCommand}" CommandParameter="0" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
@@ -63,16 +53,12 @@
                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Yeni Arama Kaydı" />
                 </StackPanel>
             </Button>
-
-
-
             <Button  Padding="0" Command="{Binding EkranYenileCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon VerticalAlignment="Center" Kind="Refresh" />
                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Ekran Yenile" />
                 </StackPanel>
             </Button>
-
             <Button Command="{Binding ExcelExportCommand}" Style="{DynamicResource MaterialDesignFlatButton}" CommandParameter="XLSX">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon VerticalAlignment="Center" Kind="FileExcel" />
@@ -80,7 +66,6 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-
         <dxg:GridControl Grid.Row="1"
                 x:Name="grdListe"
                 dx:DXSerializer.SerializationID="grid"
@@ -90,15 +75,11 @@
                 AllowLiveDataShaping="True"
                 SelectedItem="{Binding SeciliArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{Binding PotansyelMusteriler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-
             <dxg:GridControl.Resources>
-                <!--<Style BasedOn="{StaticResource YeniBaslikStili}"  TargetType="dxg:GridColumnHeader"  />-->
                 <Style TargetType="dxg:GridColumn">
                     <Setter Property="ReadOnly" Value="True" />
                 </Style>
             </dxg:GridControl.Resources>
-
-
             <dxg:GridControl.View>
                 <dxg:TableView
                         x:Name="View1"
@@ -108,8 +89,16 @@
                         AllowPerPixelScrolling="False"
                         AutoWidth="True"
                         ShowAutoFilterRow="True"
-                        ShowGroupPanel="False"
+                        ShowGroupPanel="True"
                         ShowTotalSummary="True">
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Greater" IsEnabled="True">
+                            <dx:Format Icon="{dx:IconSet Name=Triangles3_3}" TextDecorations="{x:Null}"/>
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Less">
+                            <dx:Format Icon="{dx:IconSet Name=Symbols23_1}"/>
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
                     <dxg:TableView.ColumnHeaderTemplate>
                         <DataTemplate>
                             <!--BURASI EN ÜST-->
@@ -124,9 +113,9 @@
                     </dxg:TableView.ColumnHeaderTemplate>
                 </dxg:TableView>
             </dxg:GridControl.View>
-
             <dxg:GridColumn
-
+                    Width="*"
+                MinWidth="920"
                     AutoFilterCondition="Contains"
                     FieldName="MusteriUnvan"
                     FilterPopupMode="Excel"
@@ -141,20 +130,74 @@
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn
-             Width="100"
-                    MaxWidth="120"
+                    Width="*"
+                    MaxWidth="90"
+                MinWidth="90"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="SonGorusmeSuresi"
                     Header="Geçen Süre">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="10,5,5,5">
+                            <TextBlock Padding="2" Text="{Binding RowData.Row.SonGorusmeSuresi}" FontWeight="Bold" Foreground="Black" />
+                            <TextBlock Padding="0,2,0,0" FontWeight="Bold"> Gün</TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn
-                    Width="80"
-                    MaxWidth="80"
+                    Width="*"
+                    MaxWidth="70"
+                MinWidth="70"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="ToplamGorusmeSayisi"
                     Header="Goruşme Sayısı">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Width="70" Padding="2" Text="{Binding RowData.Row.ToplamGorusmeSayisi}" TextAlignment="Center" FontWeight="Bold" Foreground="Black" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
 
+            <dxg:GridColumn
+                    Width="50"
+                    MinWidth="50"
+                    HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <md:PopupBox>
+                            <StackPanel>
+                                <Button
+                                    Margin="4"
+                                    Command="{Binding View.DataContext.PotansiyelYapCommand}"
+                                    Content="Potansiyel Yap" />
+                                <Button
+                                    Margin="4"
+                                    Command="{Binding View.DataContext.PotansiyelDisiYapCommand}"
+                                    Content="Potansiyel Dışı Yap" />
+                            </StackPanel>
+                        </md:PopupBox>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn
+                    Width="*"
+                    MaxWidth="100"
+                    MinWidth="100"
+                    HorizontalHeaderContentAlignment="Center"
+                    FieldName="Ekleyen"
+               GroupIndex="1"
+                    Header="Plasiyer">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding RowData.Row.MusteriAramalarDTO[0].Ekleyen}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
             <dxg:GridControl.DetailDescriptor>
                 <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding MusteriAramalarDTO}" ShowHeader="True">
                     <dxg:GridControl>
@@ -182,7 +225,6 @@
                                         <Setter Property="MaxHeight" Value="50"></Setter>
                                     </Style>
                                 </dxg:TableView.ColumnHeaderContentStyle>
-
                                 <dxg:TableView.ColumnHeaderTemplate>
                                     <DataTemplate>
                                         <TextBlock
@@ -209,16 +251,17 @@
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
                                             <DockPanel>
-                                                <Button  Style="{StaticResource MyLinkButton2}" Margin="4" Width="50" Height="40" 
+                                                <Button  Style="{StaticResource MyLinkButton2}" Margin="4" Width="60" Height="40" 
                                                Command="{Binding DataContext.AramaAddEditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                               CommandParameter="{Binding RowData.Row}"
-                                               Content="Düzenle" FontSize="12"
-                                               HorizontalAlignment="Center" />
+                                               CommandParameter="{Binding RowData.Row.Id}"
+                                               Content="Görüntüle" FontSize="12"
+                                               HorizontalAlignment="Center">
+                                                </Button>
                                             </DockPanel>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>
-                                <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>                            
+                                <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>
                                 <dxg:GridColumn Header="Konu" FieldName="Konu" IsSmart="True"/>
                                 <dxg:GridColumn Header="Görüşülen Kişi" FieldName="GorusulenKisiAdi" IsSmart="True"/>
                                 <dxg:GridColumn Header="Görüşülen Kişi Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
