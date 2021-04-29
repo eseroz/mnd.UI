@@ -248,14 +248,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="mnd.exe" size="7265792">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="mnd.exe" size="7266816">
       <assemblyIdentity name="mnd" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kOySODM5/rO/P5tDBFdIoo27i6Pr0qqFwfoW/WQvTSQ=</dsig:DigestValue>
+        <dsig:DigestValue>XpMZgkVgLQPvfAjgI+kCCy4v50whspjWrjbspjF/SbE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -284,7 +284,7 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Pandap.Logic.dll" size="909824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Pandap.Logic.dll" size="911360">
       <assemblyIdentity name="Pandap.Logic" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
     </dependentAssembly>
   </dependency>

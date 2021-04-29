@@ -1,5 +1,4 @@
-﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -72,9 +71,9 @@
                 dx:DXSerializer.StoreLayoutMode="All"
                 dxg:GridSerializationOptions.AddNewColumns="True"
                 dxg:GridSerializationOptions.RemoveOldColumns="True"
-                AllowLiveDataShaping="True"
+                AllowLiveDataShaping="True"                         
                 SelectedItem="{Binding SeciliArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                ItemsSource="{Binding PotansyelMusteriler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                ItemsSource="{Binding PotansyelMusteriler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsRecursiveExpand="True">
             <dxg:GridControl.Resources>
                 <Style TargetType="dxg:GridColumn">
                     <Setter Property="ReadOnly" Value="True" />
@@ -85,12 +84,14 @@
                         x:Name="View1"
                         AllowCascadeUpdate="True"
                         AllowEditing="True"
-                        AllowGrouping="True"
-                        AllowPerPixelScrolling="False"
-                        AutoWidth="True"
+                        AllowGrouping="{Binding  YoneticiMi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        SearchPanelAllowFilter="True"                
+                        AutoWidth="True"                        
                         ShowAutoFilterRow="True"
-                        ShowGroupPanel="True"
-                        ShowTotalSummary="True">
+                        ShowTotalSummary="True"
+                        AllowPerPixelScrolling="True"
+                        NewItemRowPosition="None"
+                        AllowDataUpdateFormatConditionMenu="True">
                     <dxg:TableView.FormatConditions>
                         <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Greater" IsEnabled="True">
                             <dx:Format Icon="{dx:IconSet Name=Triangles3_3}" TextDecorations="{x:Null}"/>
@@ -115,7 +116,7 @@
             </dxg:GridControl.View>
             <dxg:GridColumn
                     Width="*"
-                MinWidth="920"
+                    MinWidth="920"
                     AutoFilterCondition="Contains"
                     FieldName="MusteriUnvan"
                     FilterPopupMode="Excel"
@@ -132,7 +133,7 @@
             <dxg:GridColumn
                     Width="*"
                     MaxWidth="90"
-                MinWidth="90"
+                    MinWidth="90"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="SonGorusmeSuresi"
                     Header="Geçen Süre">
@@ -148,7 +149,7 @@
             <dxg:GridColumn
                     Width="*"
                     MaxWidth="70"
-                MinWidth="70"
+                    MinWidth="70"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="ToplamGorusmeSayisi"
                     Header="Goruşme Sayısı">
@@ -160,7 +161,6 @@
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-
             <dxg:GridColumn
                     Width="50"
                     MinWidth="50"
@@ -183,20 +183,9 @@
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn
-                    Width="*"
-                    MaxWidth="100"
-                    MinWidth="100"
-                    HorizontalHeaderContentAlignment="Center"
-                    FieldName="Ekleyen"
-               GroupIndex="1"
+                Visible="{Binding  YoneticiMi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    FieldName="Plasiyer"            
                     Header="Plasiyer">
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding RowData.Row.MusteriAramalarDTO[0].Ekleyen}"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridControl.DetailDescriptor>
                 <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding MusteriAramalarDTO}" ShowHeader="True">

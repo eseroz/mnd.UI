@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Linq;
 using System.Windows.Input;
+using mnd.Common.Helpers;
 
 namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 {
@@ -33,6 +34,9 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 SetProperty(ref musteriGrupListesi, value);
             }
         }
+
+        public bool YoneticiMi { get => yoneticiMi; set => SetProperty(ref yoneticiMi, value); }
+
         public ObservableCollection<PotansiyelMusteriDTO> PotansiyelMusteriListesi
         {
             get => potansiyelMusteriListesi;
@@ -118,6 +122,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         private PotansiyelMusteriDTO secilenPotansiyelMusteri;
         private PotansiyelDisiMusteriArama seciliArama;
         private string uC_Title;
+        private bool yoneticiMi;
 
         public string UC_Title { get => uC_Title; set => SetProperty(ref uC_Title, value); }
 
@@ -187,6 +192,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         }
         public PTD_AramaEditVM(int Id = 0)
         {
+            YoneticiMi = (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI);
             PotansiyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
 
             PotansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), MusteriGrubuAdi);
@@ -199,7 +205,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             else
             {
                 EditModel = repo.Ptd_AramaGetir(Id);
-                UC_Title = EditModel.MusteriGrubuAdı +"=>"+ EditModel.MusteriUnvan + " Arama Geçmişi..";
+               
             }
 
             Ulkeler = repo.UlkeleriGetir();

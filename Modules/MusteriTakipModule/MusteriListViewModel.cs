@@ -48,9 +48,6 @@ namespace mnd.UI.Modules.MusteriTakipModule
 
         public DelegateCommand<PandapCari> MusteriBilgiAcCommand => new DelegateCommand<PandapCari>(OnMusteriBilgiAc);
 
-    
-
-
         public bool FormLoaded { get; private set; }
 
         public string FormUyariMesaj { get => formUyariMesaj; set => SetProperty(ref formUyariMesaj, value); }
@@ -66,7 +63,9 @@ namespace mnd.UI.Modules.MusteriTakipModule
         public ObservableCollection<PandapCari> PandapCariler
         {
             get => pandapCari;
-            set => SetProperty(ref pandapCari, value);
+            set { 
+                SetProperty(ref pandapCari, value);
+            }
         }
 
         public PandapCari SeciliPandapCari
@@ -86,13 +85,6 @@ namespace mnd.UI.Modules.MusteriTakipModule
                 }
             }
         }
-
-        public bool TonajlariGorebilirMi
-        {
-            get => AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI
-                || AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.SATINALMA_YONETICI;
-        }
-
 
         public MusteriListViewModel()
         {
@@ -174,6 +166,8 @@ namespace mnd.UI.Modules.MusteriTakipModule
             PandapCariler = await uow.PandapCariRepo.PandapCarileriBagliPlasiyerlereGoreGetir(bagliPlasiyerKodlari, AppPandap.AktifKullanici.KullaniciRol);
 
 
+
+            uow.Dispose();
 
             FormUyariMesaj = "";
         }
