@@ -174,9 +174,9 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             if (String.IsNullOrEmpty(EditModel.UlkeAdi)) hata += "Ülke boş olamaz" + Environment.NewLine;
 
             if (EditModel.GorusulenKisiAdi == null) hata += "Görüşülen kişi adı boş olamaz" + Environment.NewLine;
-            if (EditModel.GorusulenKisiEposta == null) hata += "Görüşülen kişi eposta adresi boş olamaz" + Environment.NewLine;
-            if (EditModel.GorusulenKisiTelefon == null) hata += "Görüşülen kişi telefon numarası boş olamaz" + Environment.NewLine;
-            if (EditModel.GorusulenKisiGorevi == null) hata += "Görüşülen kişi görevi boş olamaz" + Environment.NewLine;
+            if (EditModel.GorusulenKisiEposta == null && EditModel.GorusulenKisiTelefon == null) hata += "Görüşülen kişiye ait en az bir adet iletişim bilgisi girmelisiniz." + Environment.NewLine;
+
+            //if (EditModel.GorusulenKisiGorevi == null) hata += "Görüşülen kişi görevi boş olamaz" + Environment.NewLine;
 
             if (EditModel.Konu == null) hata += "Konu boş olamaz" + Environment.NewLine;
             if (EditModel.KonuDetay == null) hata += "Konu detay boş olamaz" + Environment.NewLine;
