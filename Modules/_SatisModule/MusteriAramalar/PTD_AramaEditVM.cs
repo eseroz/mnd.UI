@@ -23,7 +23,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         {
             get
             {
-                potansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.MusteriGrubuAdi);
+                potansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), MusteriGrubuAdi);
                 return potansiyelMusteriListesi;
             }
             set => SetProperty(ref potansiyelMusteriListesi, value);
@@ -52,17 +52,39 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             {
                 if (PotansiyelMusteriListesi.Where(p => p.MusteriUnvan == newValue).Count() == 0)
                 {
-                    PotansiyelMusteriListesi.Add(new PotansiyelDisiMusteri { MusteriUnvan = newValue });
-                    //SecilenPotansiyelMusteri = PotansiyelMusteriListesi.Where(p => p.MusteriUnvan == newValue).FirstOrDefault();
+                    var yeniMüsteri = new PotansiyelDisiMusteri { 
+                        MusteriUnvan = newValue, 
+                        PlasiyerAd = AppPandap.AktifKullanici.AdSoyad,
+                        PlasiyerKod = AppPandap.AktifKullanici.PlasiyerKod,
+                        MusteriGrubuAdi = MusteriGrubuAdi 
+                    };
+
+                    PotansiyelMusteriListesi.Add(yeniMüsteri);
+                    repo.MusteriEkle(yeniMüsteri);
                 }
             }
         }
         public PotansiyelDisiMusteriArama SeciliPotansiyelDisiMusteriArama
         {
             get => seciliPotansiyelDisiMusteriArama;
-            set { SetProperty(ref seciliPotansiyelDisiMusteriArama, value); }
+            set {
+                SetProperty(ref seciliPotansiyelDisiMusteriArama, value);
+                if (seciliPotansiyelDisiMusteriArama != null)
+                {
+                    seciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri = new PotansiyelDisiMusteri { };
+                }
+            }
+        }
+
+        public PotansiyelDisiMusteri SeciliPotansiyelMusteri {
+            get {
+                seciliPotansiyelMusteri = SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri;
+                return seciliPotansiyelMusteri; }
+            set => SetProperty(ref seciliPotansiyelMusteri, value);
         }
         public bool YoneticiMi { get { return (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); } }
+        public bool YetkiliMi { get { return !(AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); } }
+        public string MusteriGrubuAdi { get; set; }
         public PTD_AramaEditVM(PotansiyelDisiRepository _repo)
         {
             repo = _repo;
@@ -81,7 +103,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
             if (SeciliPotansiyelDisiMusteriArama.Id == 0)
             {
-                repo.Ekle(SeciliPotansiyelDisiMusteriArama);
+                repo.AramaEkle(SeciliPotansiyelDisiMusteriArama);
                 repo.Kaydet();
                 Messenger.Default.Send(new PTD_MusteriAramaEklendiEvents(SeciliPotansiyelDisiMusteriArama));
             }
@@ -120,5 +142,6 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         private PotansiyelDisiMusteriArama seciliPotansiyelDisiMusteriArama;
         private ObservableCollection<PotansiyelDisiMusteri> potansiyelMusteriListesi;
         private PotansiyelDisiRepository repo1;
+        private PotansiyelDisiMusteri seciliPotansiyelMusteri;
     }
 }

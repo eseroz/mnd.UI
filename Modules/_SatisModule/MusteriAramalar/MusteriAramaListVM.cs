@@ -4,24 +4,38 @@ using mnd.Logic.BC_Satis._PotansiyelDisi;
 using mnd.Logic.Model;
 using mnd.Logic.Persistence;
 using mnd.UI.Modules._SatisModule.MusteriAramalar.Events;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 {
     public class MusteriAramaListVM : MyBindableBase
     {
+        private ObservableCollection<PotansiyelDisiMusteri> potansyelMusteriListesi;
+        private PotansiyelDisiMusteri seciliPotansiyelDisiMusteri;
+        private Visibility potansiyelDisi;
+        private Visibility potansiyel;
+
         private UnitOfWork uow = new UnitOfWork();
         PotansiyelDisiRepository repo = new PotansiyelDisiRepository();
 
         public string[] bagliPlasiyerKodlari = null;
         public string MusteriGrubuAdi { get; set; }
-        private bool yoneticiMi;
-        public bool YoneticiMi { get => yoneticiMi; set => SetProperty(ref yoneticiMi, value); }
+        public Visibility Potansiyel { get => potansiyel; set => SetProperty(ref potansiyel, value); }
+        public Visibility PotansiyelDisi { get => potansiyelDisi; set => SetProperty(ref potansiyelDisi, value); }
 
-        private ObservableCollection<PotansiyelDisiMusteri> potansyelMusteriListesi;
-        private PotansiyelDisiMusteri seciliPotansiyelDisiMusteri;
-        private PotansiyelDisiMusteriArama seciliArama;
+        private bool yoneticiMi;
+        public bool YoneticiMi
+        {
+            get
+            {
+                yoneticiMi = (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); return yoneticiMi;
+            }
+            set { SetProperty(ref yoneticiMi, value); }
+        }
+
 
         public ObservableCollection<PotansiyelDisiMusteri> PotansyelMusteriListesi
         {
@@ -35,14 +49,44 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             set => SetProperty(ref seciliPotansiyelDisiMusteri, value);
         }
 
+        public DelegateCommand<object> PotansiyelYapCommand => new DelegateCommand<object>(OnPotansiyelYap, true);
+
+        private void OnPotansiyelYap(object _row)
+        {
+            var musteri = (PotansiyelDisiMusteri)_row;
+            musteri.MusteriGrubuAdi = "Potansiyel";
+            PotansyelMusteriListesi.Remove(musteri);
+            repo.Kaydet();
+        }
+
+        public DelegateCommand<object> PotansiyelDisiYapCommand => new DelegateCommand<object>(OnPotansiyelDisiYap, true);
+
+        private void OnPotansiyelDisiYap(object _row)
+        {
+            var musteri = (PotansiyelDisiMusteri)_row;
+            musteri.MusteriGrubuAdi = "Potansiyel Disi";
+            PotansyelMusteriListesi.Remove(musteri);
+            repo.Kaydet();
+        }
+
         public DelegateCommand<object> AramaAddEditCommand => new DelegateCommand<object>(OnAramaEkleDuzenle, true);
         public DelegateCommand EkranYenileCommand => new DelegateCommand(OnEkranYenile);
 
         public MusteriAramaListVM(string FormAd)
         {
-            MusteriGrubuAdi = FormAd;
+            MusteriGrubuAdi = FormAd.Trim();
+            Potansiyel = Visibility.Hidden;
+            PotansiyelDisi = Visibility.Hidden;
 
-            YoneticiMi = (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI);
+            if (MusteriGrubuAdi == "Potansiyel") {
+                Potansiyel = Visibility.Hidden;
+                PotansiyelDisi = Visibility.Visible;
+            }
+
+            if (MusteriGrubuAdi == "Potansiyel Disi") {
+                Potansiyel = Visibility.Visible;
+                PotansiyelDisi = Visibility.Hidden; 
+            }
 
             if (AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari != null)
             {
@@ -55,38 +99,46 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
             PotansyelMusteriListesi = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
 
-
             Messenger.Default.Register<PTD_MusteriAramaEklendiEvents>(this, OnAramaEklendi);
             Messenger.Default.Register<PTD_MusteriAramaGuncellendiEvent>(this, OnAramaGuncellendi);
 
         }
         private void OnEkranYenile()
         {
-            repo.Kaydet();
-            Messenger.Default.Send(new PTD_MusteriAramaGuncellendiEvent(SeciliArama));
-            //PotansyelMusteriListesi = new ObservableCollection<PotansiyelMusteriDTO>();
-            //PotansyelMusteriListesi = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
+            PotansyelMusteriListesi = new ObservableCollection<PotansiyelDisiMusteri>();
+            PotansyelMusteriListesi = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
         }
-        public PotansiyelDisiMusteriArama SeciliArama { get => seciliArama; set => SetProperty(ref seciliArama, value); }
         private void OnAramaEkleDuzenle(object _row)
         {
+            if (_row == null) {
+                _row = new PotansiyelDisiMusteriArama();
+            }
 
             PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
-            SeciliArama = _seciliarama;
+
             PTD_AramaEditVM vm = new PTD_AramaEditVM(repo);
-            vm.SeciliPotansiyelDisiMusteriArama = SeciliArama;            
+            vm.MusteriGrubuAdi = MusteriGrubuAdi;
 
+            vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
             IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
-            doc.Title = MusteriGrubuAdi + ">" + _seciliarama.PotansiyelDisiMusteri.MusteriUnvan + " Arama geçmişi..";
+            var Title2 = "";
 
+            if(_seciliarama.PotansiyelDisiMusteri == null)
+            {
+                Title2 = "Yeni arama";
+            }else{
+                Title2 = _seciliarama.PotansiyelDisiMusteri.MusteriUnvan;
+            }
+
+            doc.Title = MusteriGrubuAdi + ">" + Title2;
 
             doc.DestroyOnClose = true;
             doc.Show();
         }
 
-
         private void OnAramaGuncellendi(PTD_MusteriAramaGuncellendiEvent obj)
         {
+            //bunlar ne?????
             //var arama = PotansyelMusteriler.FirstOrDefault(x => x.Id == obj.Arama.Id);
 
             //var indexRow = PotansyelMusteriler.IndexOf(arama);
@@ -100,7 +152,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             //SeciliArama = guncel_seyahat;
         }
         private void OnAramaEklendi(PTD_MusteriAramaEklendiEvents obj)
-        {
+        {     //bunlar ne????? 
             //MusteriAramalar.Insert(0, obj.Arama);
             //SeciliArama = obj.Arama;
         }

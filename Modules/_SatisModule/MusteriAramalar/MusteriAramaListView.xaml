@@ -46,7 +46,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
-            <Button Command="{Binding AramaAddEditCommand}" CommandParameter="0" Style="{DynamicResource MaterialDesignFlatButton}">
+            <Button Command="{Binding AramaAddEditCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon  VerticalAlignment="Center" Kind="FileDocument" />
                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Yeni Arama Kaydı" />
@@ -78,6 +78,13 @@
             <dxg:GridControl.Resources>
                 <Style TargetType="dxg:GridColumn">
                     <Setter Property="ReadOnly" Value="True" />
+                </Style>
+                <Style TargetType="dxg:GridColumnHeader">
+                    <Setter Property="Background" Value="Indigo"  />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
                 </Style>
             </dxg:GridControl.Resources>
             <dxg:GridControl.View>
@@ -133,8 +140,8 @@
             </dxg:GridColumn>
             <dxg:GridColumn
                     Width="*"
-                    MaxWidth="90"
-                    MinWidth="90"
+                    MaxWidth="70"
+                    MinWidth="70"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="SonGorusmeSuresi"
                     Header="Geçen Süre">
@@ -168,15 +175,19 @@
                     HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <md:PopupBox>
+                        <md:PopupBox Height="auto" Width="auto">
                             <StackPanel>
                                 <Button
                                     Margin="4"
+                                    Visibility="{Binding DataContext.Potansiyel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
                                     Command="{Binding View.DataContext.PotansiyelYapCommand}"
+                                    CommandParameter="{Binding RowData.Row}"
                                     Content="Potansiyel Yap" />
                                 <Button
                                     Margin="4"
+                                     Visibility="{Binding DataContext.PotansiyelDisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
                                     Command="{Binding View.DataContext.PotansiyelDisiYapCommand}"
+                                    CommandParameter="{Binding RowData.Row}"
                                     Content="Potansiyel Dışı Yap" />
                             </StackPanel>
                         </md:PopupBox>
@@ -185,7 +196,7 @@
             </dxg:GridColumn>
             <dxg:GridColumn
                 Visible="{Binding YoneticiMi}"
-                    FieldName="Plasiyer"
+                    FieldName="PlasiyerAd"
                     Header="Plasiyer">
             </dxg:GridColumn>
             <dxg:GridControl.DetailDescriptor>
@@ -198,7 +209,11 @@
                                 <Setter Property="ReadOnly" Value="True" />
                             </Style>
                             <Style TargetType="dxg:GridColumnHeader">
-                                <Setter Property="Background" Value="DarkRed" />
+                                <Setter Property="Background" Value="#FF673AB7"  />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Height" Value="40" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
                             </Style>
                         </dxg:GridControl.Resources>
                         <dxg:GridControl.View>
