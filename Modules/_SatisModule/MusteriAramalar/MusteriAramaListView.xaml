@@ -72,8 +72,9 @@
                 dxg:GridSerializationOptions.AddNewColumns="True"
                 dxg:GridSerializationOptions.RemoveOldColumns="True"
                 AllowLiveDataShaping="True"                         
-                SelectedItem="{Binding SeciliArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                ItemsSource="{Binding PotansyelMusteriler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsRecursiveExpand="True">
+                ItemsSource="{Binding PotansyelMusteriListesi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                SelectedItem="{Binding SecilenMusteri}"
+                IsRecursiveExpand="True">
             <dxg:GridControl.Resources>
                 <Style TargetType="dxg:GridColumn">
                     <Setter Property="ReadOnly" Value="True" />
@@ -84,7 +85,7 @@
                         x:Name="View1"
                         AllowCascadeUpdate="True"
                         AllowEditing="True"
-                        AllowGrouping="{Binding  YoneticiMi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        AllowGrouping="{Binding YoneticiMi}"
                         SearchPanelAllowFilter="True"                
                         AutoWidth="True"                        
                         ShowAutoFilterRow="True"
@@ -183,12 +184,14 @@
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn
-                Visible="{Binding  YoneticiMi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                    FieldName="Plasiyer"            
+                Visible="{Binding YoneticiMi}"
+                    FieldName="Plasiyer"
                     Header="Plasiyer">
             </dxg:GridColumn>
             <dxg:GridControl.DetailDescriptor>
-                <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding MusteriAramalarDTO}" ShowHeader="True">
+                <dxg:DataControlDetailDescriptor                    
+                    ItemsSourceBinding="{Binding PotansiyelDisiMusteriArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    ShowHeader="True">
                     <dxg:GridControl>
                         <dxg:GridControl.Resources>
                             <Style TargetType="dxg:GridColumn">
@@ -242,7 +245,7 @@
                                             <DockPanel>
                                                 <Button  Style="{StaticResource MyLinkButton2}" Margin="4" Width="60" Height="40" 
                                                Command="{Binding DataContext.AramaAddEditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                               CommandParameter="{Binding RowData.Row.Id}"
+                                               CommandParameter="{Binding RowData.Row}"
                                                Content="Görüntüle" FontSize="12"
                                                HorizontalAlignment="Center">
                                                 </Button>

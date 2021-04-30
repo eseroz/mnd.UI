@@ -1,36 +1,30 @@
-﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"  x:Class="mnd.UI.Modules._SatisModule.MusteriAramalar.PTD_AramaEditView"
+﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"  
+             x:Class="mnd.UI.Modules._SatisModule.MusteriAramalar.PTD_AramaEditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:mnd.UI.Modules._SatisModule.MusteriAramalar"
-               xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:converters="clr-namespace:mnd.UI.Converters"
-               xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              mc:Ignorable="d"
-
-
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="14"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{DynamicResource MaterialDesignFont}" d:DesignWidth="825" Height="810.395">
-
-
+             FontFamily="{DynamicResource MaterialDesignFont}" >
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService/>
         <dxmvvm:EventToCommand EventName="Loaded"  Command="{Binding FormLoadedCommand}"  />
         <dxmvvm:EventToCommand EventName="Unloaded" Command="{Binding FormUnLoadedCommand}"/>
-
         <dxmvvm:EventToCommand EventName="Closing" PassEventArgsToCommand="True" Command="{Binding ClosingCommand}" />
-
         <dx:DXMessageBoxService/>
-
         <dxmvvm:WindowService  WindowShowMode="Dialog">
             <dxmvvm:WindowService.WindowStyle>
                 <Style TargetType="dx:DXWindow">
@@ -41,37 +35,25 @@
                 </Style>
             </dxmvvm:WindowService.WindowStyle>
         </dxmvvm:WindowService>
-
     </dxmvvm:Interaction.Behaviors>
-
-
-
-    <Grid>
+    <Grid Margin="0,0,-0.2,240.4">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="489.6"/>
-            <RowDefinition/>
 
         </Grid.RowDefinitions>
-
         <Grid.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
         </Grid.Resources>
-
         <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}" Margin="0,0,-0.2,478.2" Grid.RowSpan="2">
-
             <Button Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center"  Text="Kaydet" />
                 </StackPanel>
             </Button>
-
-
-
-
             <Button Command="{Binding IptalCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon VerticalAlignment="Center" Kind="Cancel" />
@@ -79,8 +61,7 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-
-        <md:Card VerticalAlignment="Top" Grid.Row="1" Margin="4,4.4,3.8,0" Padding="4" Height="479">
+        <md:Card Grid.Row="1" Padding="4">
             <Grid >
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
@@ -90,35 +71,29 @@
                         <Setter Property="TextAlignment" Value="Right"/>
                     </Style>
                 </Grid.Resources>
-
                 <StackPanel VerticalAlignment="Top" Grid.Column="0" Margin="5">
-
                     <DockPanel Margin="5"/>
-
                     <DockPanel Margin="5"/>
-
                     <DockPanel Margin="0,5,0,20">
                         <TextBlock HorizontalAlignment="Right" Text="Id:" VerticalAlignment="Center"/>
                         <TextBlock VerticalAlignment="Center" TextAlignment="Center" 
                                    HorizontalAlignment="Left" Background="LightGray" Width="50" Height="25"
-                                    Text="{Binding EditModel.Id}"/>
+                                    Text="{Binding SeciliPotansiyelDisiMusteriArama.Id}"/>
                     </DockPanel>
-
                     <DockPanel Margin="0,5,0,8">
                         <TextBlock HorizontalAlignment="Right" Text="Arama Tarihi:" VerticalAlignment="Center"/>
                         <dxe:DateEdit AllowNullInput="True" HorizontalAlignment="Left"  Width="200" Height="30"
-                                    EditValue="{Binding EditModel.Tarih, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    EditValue="{Binding SeciliPotansiyelDisiMusteriArama.Tarih, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DockPanel>
-
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
                                 <dxg:LookUpEdit Name="musteriLookup"
-                                                IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                IsReadOnly="{Binding YoneticiMi}"
                                                 Width="250" HorizontalAlignment="Left" AutoPopulateColumns="False"
                                                 DisplayMember="MusteriUnvan"
-                                                EditValue="{Binding EditModel.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                 SelectedItem="{Binding SecilenPotansiyelMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                                 ItemsSource="{Binding PotansiyelMusteriListesi}"                            
                                                 ValueMember="MusteriUnvan" AddNewButtonPlacement="Popup">
@@ -136,144 +111,62 @@
                                         <dxmvvm:EventToCommand EventName="ProcessNewValue" Command="{Binding Musteri_ProcessNewValue}" CommandParameter="{Binding ElementName=musteriLookup, Path=DisplayText}" />
                                     </dxmvvm:Interaction.Triggers>
                                 </dxg:LookUpEdit>
-
-
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock  Text="Ülke :" VerticalAlignment="Center"/>
-                                <dxe:ComboBoxEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
-                                SelectedItem="{Binding SeciliUlke, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                <dxe:ComboBoxEdit IsReadOnly="{Binding YoneticiMi}" Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
                                 DisplayMember="UlkeAdi"  Width="270" 
-                                EditValue="{Binding EditModel.UlkeAdi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.UlkeAdi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 ValueMember="UlkeAdi"                                          
-                                ItemsSource="{Binding Ulkeler,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                                ItemsSource="{Binding Ulkeler}"
                                 HorizontalAlignment="Left">
                                 </dxe:ComboBoxEdit>
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
-
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Görüşülen Kişi :" Height="30" TextAlignment="Right" />
-                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiAdi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.GorusulenKisiAdi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Görevi :" Height="30" TextAlignment="Right" />
-                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiGorevi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.GorusulenKisiGorevi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
-
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Telefon :" Height="30" TextAlignment="Right"/>
-                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiTelefon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" Width="250" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.GorusulenKisiTelefon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Eposta :" TextAlignment="Right" Height="30" />
-                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.GorusulenKisiEposta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" Width="270" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.GorusulenKisiEposta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
-
                     <DockPanel Margin="0,8">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Konu:" Height="30" />
-                            <dxe:TextEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="655" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
-                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.Konu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" Width="655" Height="30"  VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" 
+                                                  TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.Konu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </DockPanel>
-
                     <DockPanel Margin="0,8">
                         <TextBlock Text="Detay:" VerticalAlignment="Top" />
-                        <dxe:TextEdit IsReadOnly="{Binding YoneticiMi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" Height="150" AcceptsReturn="True" VerticalContentAlignment="Top" 
-                                          TextWrapping="Wrap" FontSize="14"  EditValue="{Binding EditModel.KonuDetay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
+                        <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" VerticalScrollBarVisibility="Auto" Height="150" AcceptsReturn="True" VerticalContentAlignment="Top" 
+                                          TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.KonuDetay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </DockPanel>
-
-
-
                 </StackPanel>
-
-
-
             </Grid>
         </md:Card>
 
-        <md:Card Grid.Row="2" Margin="4,4.4,3.8,0" Padding="4" VerticalAlignment="Top">
-            <dxlc:GroupBox>
-                <dxlc:GroupBox.HeaderTemplate>
-                    <DataTemplate>
-                        <StackPanel Height="30">
-                            <TextBlock Padding="10,0,0,0" Margin="0,7,0,0" Text="Geçmiş görüşmeler" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </dxlc:GroupBox.HeaderTemplate>
-                <dxg:GridControl Grid.Row="1"
-                x:Name="grdListe"
-                dx:DXSerializer.SerializationID="grid"
-                dx:DXSerializer.StoreLayoutMode="All"
-                dxg:GridSerializationOptions.AddNewColumns="True"
-                dxg:GridSerializationOptions.RemoveOldColumns="True"
-                AllowLiveDataShaping="True"
-                SelectedItem="{Binding SeciliArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                ItemsSource="{Binding SecilenPotansiyelMusteri.MusteriAramalarDTO, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <dxg:GridControl.Resources>
-                        <Style TargetType="dxg:GridColumn">
-                            <Setter Property="ReadOnly" Value="True" />
-                        </Style>
-                    </dxg:GridControl.Resources>
-                    <dxg:GridControl.View>
-                        <dxg:TableView
-                        x:Name="View1"
-                        AllowCascadeUpdate="True"
-                        AllowEditing="True"
-                        AllowGrouping="True"
-                        AllowPerPixelScrolling="False"
-                        AutoWidth="True"
-                        ShowAutoFilterRow="True"
-                        ShowGroupPanel="False"
-                        ShowTotalSummary="True" Margin="10">
-                            <dxg:TableView.FormatConditions>
-                                <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Greater" IsEnabled="True">
-                                    <dx:Format Icon="{dx:IconSet Name=Triangles3_3}" TextDecorations="{x:Null}"/>
-                                </dxg:FormatCondition>
-                                <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Less">
-                                    <dx:Format Icon="{dx:IconSet Name=Symbols23_1}"/>
-                                </dxg:FormatCondition>
-                            </dxg:TableView.FormatConditions>
-                            <dxg:TableView.ColumnHeaderTemplate>
-                                <DataTemplate>
-                                    <!--BURASI EN ÜST-->
-                                    <TextBlock
-                                    Height="35"
-                                    Margin="1"
-                                    HorizontalAlignment="Center"
-                                    Text="{Binding}"
-                                    TextAlignment="Center"
-                                    TextWrapping="Wrap" />
-                                </DataTemplate>
-                            </dxg:TableView.ColumnHeaderTemplate>
-                        </dxg:TableView>
-                    </dxg:GridControl.View>
-                    <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"></dxg:GridColumn>
-                    <dxg:GridColumn Header="Konu" FieldName="Konu" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi" FieldName="GorusulenKisiAdi" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi Telefon" FieldName="GorusulenKisiTelefon" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi Eposta" FieldName="GorusulenKisiEposta" IsSmart="True"/>
-                    <dxg:GridColumn FieldName="Ekleyen"/>
-                </dxg:GridControl>
-            </dxlc:GroupBox>          
-        </md:Card>
-
     </Grid>
-
 </UserControl>
