@@ -107,6 +107,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         }
         private void OnEkranYenile()
         {
+            repo = new PotansiyelDisiRepository();
             PotansyelMusteriListesi = new ObservableCollection<PotansiyelDisiMusteri>();
             PotansyelMusteriListesi = repo.PTD_Aramalari_Getir(bagliPlasiyerKodlari, MusteriGrubuAdi);
         }
