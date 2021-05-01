@@ -36,7 +36,6 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             set { SetProperty(ref yoneticiMi, value); }
         }
 
-
         public ObservableCollection<PotansiyelDisiMusteri> PotansyelMusteriListesi
         {
             get => potansyelMusteriListesi;
@@ -111,43 +110,70 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         private void OnAramaEkleDuzenle(object _row)
         {
             if (_row == null) {
+
                 _row = new PotansiyelDisiMusteriArama();
-            }
 
-            PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
+                PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
+                PTD_AramaEditVM vm = new PTD_AramaEditVM(repo, PotansyelMusteriListesi);
+                vm.MusteriGrubuAdi = MusteriGrubuAdi;
 
-            PTD_AramaEditVM vm = new PTD_AramaEditVM(repo);
-            vm.MusteriGrubuAdi = MusteriGrubuAdi;
+                vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
+                IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
 
-            vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
-            IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
-            var Title2 = "";
+                var Title2 = "";
 
-            if(_seciliarama.PotansiyelDisiMusteri == null)
-            {
-                Title2 = "Yeni arama";
-            }else{
-                Title2 = _seciliarama.PotansiyelDisiMusteri.MusteriUnvan;
-            }
+                if (_seciliarama.PotansiyelDisiMusteri == null)
+                {
+                    Title2 = "Yeni arama";
+                } else {
+                    Title2 = _seciliarama.PotansiyelDisiMusteri.MusteriUnvan;
+                }
 
-            doc.Title = MusteriGrubuAdi + ">" + Title2;
+                doc.Title = MusteriGrubuAdi + ">" + Title2;
 
-            doc.DestroyOnClose = true;
-            doc.Show();
+                doc.DestroyOnClose = true;
+                doc.Show();
+            } else {
+
+                PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
+                PTD_AramaEditVM vm = new PTD_AramaEditVM(repo, PotansyelMusteriListesi);
+                vm.MusteriGrubuAdi = MusteriGrubuAdi;
+                vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
+                //vm.SeciliPotansiyelDisiMusteri = _seciliarama.PotansiyelDisiMusteri;
+     
+                IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
+
+                var Title2 = "";
+
+                if (_seciliarama.PotansiyelDisiMusteri == null)
+                {
+                    Title2 = "Yeni arama";
+                }
+                else
+                {
+                    Title2 = _seciliarama.PotansiyelDisiMusteri.MusteriUnvan;
+                }
+
+                doc.Title = MusteriGrubuAdi + ">" + Title2;
+
+                doc.DestroyOnClose = true;
+                doc.Show();
+
+            } 
         }
 
         private void OnAramaGuncellendi(PTD_MusteriAramaGuncellendiEvent obj)
         {
             //bunlar ne?????
-            //var arama = PotansyelMusteriler.FirstOrDefault(x => x.Id == obj.Arama.Id);
+            //var arama = PotansyelMusteriListesi.FirstOrDefault(x => x.Id == obj.Arama.Id);
 
-            //var indexRow = PotansyelMusteriler.IndexOf(arama);
+            //var indexRow = PotansyelMusteriListesi.IndexOf(arama);
 
             //MusteriAramalar.Remove(arama);
 
-            //var guncel_seyahat = repo.Ptd_AramaGetirNoTrack(obj.Arama.Id);
+            //var guncel= repo.Ptd_AramaGetirNoTrack(obj.Arama.Id);
 
-            //MusteriAramalar.Insert(indexRow, guncel_seyahat);
+            //PotansyelMusteriListesi.Insert(indexRow, guncel);
 
             //SeciliArama = guncel_seyahat;
         }

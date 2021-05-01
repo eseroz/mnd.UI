@@ -38,7 +38,7 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
@@ -94,7 +94,7 @@
                                                 Width="250" HorizontalAlignment="Left" AutoPopulateColumns="False"
                                                 DisplayMember="MusteriUnvan"
                                                 EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                SelectedItem="{Binding SecilenPotansiyelMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedItem="{Binding SeciliPotansiyelDisiMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                                 ItemsSource="{Binding PotansiyelMusteriListesi}"                            
                                                 ValueMember="MusteriUnvan" AddNewButtonPlacement="Popup">
                                     <dxg:LookUpEdit.PopupContentTemplate>
@@ -117,7 +117,8 @@
                                 <dxe:ComboBoxEdit IsReadOnly="{Binding YoneticiMi}" Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
                                 DisplayMember="UlkeAdi"  Width="270" 
                                 EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.UlkeAdi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                ValueMember="UlkeAdi"                                          
+                                ValueMember="UlkeAdi"      
+                                SelectedItem="{Binding SeciliUlke}"
                                 ItemsSource="{Binding Ulkeler}"
                                 HorizontalAlignment="Left">
                                 </dxe:ComboBoxEdit>
@@ -168,77 +169,7 @@
             </Grid>
         </md:Card>
         <md:Card Grid.Row="2">
-            <Grid>
-                <dxg:GridControl Grid.Row="0"
-                x:Name="grdListe"
-                dx:DXSerializer.SerializationID="grid"
-                dx:DXSerializer.StoreLayoutMode="All"
-                dxg:GridSerializationOptions.AddNewColumns="True"
-                dxg:GridSerializationOptions.RemoveOldColumns="True"
-                AllowLiveDataShaping="True"                         
-                ItemsSource="{Binding SeciliPotansiyelMusteri.PotansiyelDisiMusteriArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                SelectedItem="{Binding SeciliPotansiyelDisiMusteriArama}"
-                IsRecursiveExpand="True">
-                    <dxg:GridControl.Resources>
-                        <Style TargetType="dxg:GridColumn">
-                            <Setter Property="ReadOnly" Value="True" />
-                        </Style>
-                        <Style TargetType="dxg:GridColumnHeader">
-                            <Setter Property="Background" Value="#FF673AB7"  />
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter Property="Height" Value="40" />
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
-                        </Style>
-                    </dxg:GridControl.Resources>
-                    <dxg:GridControl.View>
-                        <dxg:TableView
-                        x:Name="View1"
-                        AllowCascadeUpdate="True"
-                        AllowEditing="True"
-                        AllowGrouping="False"
-                        ShowGroupPanel="False"
-                        SearchPanelAllowFilter="True"                
-                        AutoWidth="True"                        
-                        ShowAutoFilterRow="True"
-                        ShowTotalSummary="True"
-                        AllowPerPixelScrolling="True"
-                        NewItemRowPosition="None"
-                        AllowDataUpdateFormatConditionMenu="True">
-                            <dxg:TableView.FormatConditions>
-                                <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Greater" IsEnabled="True">
-                                    <dx:Format Icon="{dx:IconSet Name=Triangles3_3}" TextDecorations="{x:Null}"/>
-                                </dxg:FormatCondition>
-                                <dxg:FormatCondition FieldName="SonGorusmeSuresi" Value1="29" ValueRule="Less">
-                                    <dx:Format Icon="{dx:IconSet Name=Symbols23_1}"/>
-                                </dxg:FormatCondition>
-                            </dxg:TableView.FormatConditions>
-                            <dxg:TableView.ColumnHeaderTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock
-                                        Height="35"
-                                        Margin="1"
-                                        HorizontalAlignment="Center"
-                                        Text="{Binding}"
-                                        FontWeight="Bold"
-                                        TextAlignment="Center"
-                                        TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </dxg:TableView.ColumnHeaderTemplate>
-                        </dxg:TableView>
-                    </dxg:GridControl.View>
-
-                    <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>
-                    <dxg:GridColumn Header="Konu" FieldName="Konu" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi" FieldName="GorusulenKisiAdi" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi Telefon" FieldName="GorusulenKisiTelefon" IsSmart="True"/>
-                    <dxg:GridColumn Header="Görüşülen Kişi Eposta" FieldName="GorusulenKisiEposta" IsSmart="True"/>
-                    <dxg:GridColumn FieldName="Ekleyen"/>
-                </dxg:GridControl>
-            </Grid>
+   
         </md:Card>
     </Grid>
 </UserControl>

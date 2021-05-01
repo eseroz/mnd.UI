@@ -15,22 +15,29 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
     {
         public string MusteriGrubuAdı { get; set; }
     }
-
     public class PTD_AramaEditVM : MyBindableBase
     {
         public PotansiyelDisiRepository repo { get => repo1; set => SetProperty(ref repo1, value); }
         public ObservableCollection<PotansiyelDisiMusteri> PotansiyelMusteriListesi
         {
-            get
-            {
-                potansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), MusteriGrubuAdi);
-                return potansiyelMusteriListesi;
-            }
+            get => potansiyelMusteriListesi;
             set => SetProperty(ref potansiyelMusteriListesi, value);
         }
         public List<P_UlkeSabit> Ulkeler { get { return repo.UlkeleriGetir(); } }
         public DelegateCommand KaydetCommand => new DelegateCommand(OnKaydet);
         public DelegateCommand IptalCommand => new DelegateCommand(OnIptal);
+        public DelegateCommand FormLoadedCommand => new DelegateCommand(FormLoaded);
+
+        public P_UlkeSabit SeciliUlke
+        {
+            get => seciliUlke;
+            set
+            {
+                SetProperty(ref seciliUlke, value);
+
+                //gökmen abi beni neden aramıyor olabilir? bilmiyorum ve anlayamıyorum.
+            }
+        }
 
         private ICommand<string> _Musteri_ProcessNewValue;
         public ICommand<string> Musteri_ProcessNewValue
@@ -44,30 +51,51 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         }
         private void Musteri_AddNewValue(string newValue)
         {
-            var comm = MessageBox.Show("Yeni Firma Eklensin mi?",
+            var dialogResult = MessageBox.Show("Yeni Firma Eklensin mi?",
                   "Yeni Firma Oluştur",
                  System.Windows.MessageBoxButton.YesNo,
                   MessageBoxImage.Question);
-            if (comm == MessageBoxResult.Yes)
+            if (dialogResult == MessageBoxResult.Yes)
             {
-                if (PotansiyelMusteriListesi.Where(p => p.MusteriUnvan == newValue).Count() == 0)
+                if (PotansiyelMusteriListesi.Where(p => p.MusteriUnvan == newValue.Trim()).Count() == 0)
                 {
-                    var yeniMüsteri = new PotansiyelDisiMusteri { 
-                        MusteriUnvan = newValue, 
+                    var yeniMüsteri = new PotansiyelDisiMusteri
+                    {
+                        MusteriUnvan = newValue.Trim(),
                         PlasiyerAd = AppPandap.AktifKullanici.AdSoyad,
                         PlasiyerKod = AppPandap.AktifKullanici.PlasiyerKod,
-                        MusteriGrubuAdi = MusteriGrubuAdi 
+                        MusteriGrubuAdi = MusteriGrubuAdi
                     };
-
+                    yeniMüsteri.PotansiyelDisiMusteriArama.Add(SeciliPotansiyelDisiMusteriArama);
                     PotansiyelMusteriListesi.Add(yeniMüsteri);
                     repo.MusteriEkle(yeniMüsteri);
+
+                }
+            }
+        }
+
+        public PotansiyelDisiMusteri SeciliPotansiyelDisiMusteri
+        {
+            get => seciliPotansiyelDisiMusteri;
+            set
+            {
+                SetProperty(ref seciliPotansiyelDisiMusteri, value);
+                if (seciliPotansiyelDisiMusteri != null)
+                {
+                    var sonArama = repo.Ptd_SonAramaGetir(seciliPotansiyelDisiMusteri.Id);
+                    SeciliPotansiyelDisiMusteriArama.GorusulenKisiAdi = sonArama.GorusulenKisiAdi;
+                    SeciliPotansiyelDisiMusteriArama.GorusulenKisiEposta = sonArama.GorusulenKisiEposta;
+                    SeciliPotansiyelDisiMusteriArama.GorusulenKisiGorevi = sonArama.GorusulenKisiGorevi;
+                    SeciliPotansiyelDisiMusteriArama.GorusulenKisiTelefon = sonArama.GorusulenKisiTelefon;
+                    SeciliPotansiyelMusteri.UlkeAdi = Ulkeler.Where(p => p.UlkeAdi == SeciliPotansiyelDisiMusteri.UlkeAdi).FirstOrDefault()?.UlkeAdi;
                 }
             }
         }
         public PotansiyelDisiMusteriArama SeciliPotansiyelDisiMusteriArama
         {
             get => seciliPotansiyelDisiMusteriArama;
-            set {
+            set
+            {
                 SetProperty(ref seciliPotansiyelDisiMusteriArama, value);
                 if (seciliPotansiyelDisiMusteriArama != null)
                 {
@@ -75,21 +103,32 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 }
             }
         }
-
-        public PotansiyelDisiMusteri SeciliPotansiyelMusteri {
-            get {
+        public PotansiyelDisiMusteri SeciliPotansiyelMusteri
+        {
+            get
+            {
                 seciliPotansiyelMusteri = SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri;
-                return seciliPotansiyelMusteri; }
+                return seciliPotansiyelMusteri;
+            }
             set => SetProperty(ref seciliPotansiyelMusteri, value);
         }
         public bool YoneticiMi { get { return (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); } }
         public bool YetkiliMi { get { return !(AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); } }
-        public string MusteriGrubuAdi { get; set; }
-        public PTD_AramaEditVM(PotansiyelDisiRepository _repo)
+        public string MusteriGrubuAdi { get => musteriGrubuAdi; set => SetProperty(ref musteriGrubuAdi, value); }
+        public ObservableCollection<PotansiyelDisiMusteri> GelenMusteriListesi { 
+            get => gelenMusteriListesi;
+            set => SetProperty(ref gelenMusteriListesi, value);
+        }
+        public PTD_AramaEditVM(PotansiyelDisiRepository _repo, ObservableCollection<PotansiyelDisiMusteri> _gelenMusteriListesi)
         {
+            GelenMusteriListesi = _gelenMusteriListesi;
             repo = _repo;
         }
 
+        private void FormLoaded()
+        {
+            PotansiyelMusteriListesi = repo.PTD_Aramalari_Getir(AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';'), MusteriGrubuAdi);
+        }
         private void OnKaydet()
         {
             var hata = ValidateForm();
@@ -103,8 +142,20 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
             if (SeciliPotansiyelDisiMusteriArama.Id == 0)
             {
-                repo.AramaEkle(SeciliPotansiyelDisiMusteriArama);
+                SeciliPotansiyelMusteri.UlkeKodu = SeciliUlke.UlkeKodu;
+                repo.AramaEkle(SeciliPotansiyelMusteri, SeciliPotansiyelDisiMusteriArama);
                 repo.Kaydet();
+
+               var musteri = GelenMusteriListesi.FirstOrDefault(p => p.Id == SeciliPotansiyelDisiMusteri.Id);
+                if(musteri == null)
+                {
+                    GelenMusteriListesi.Add(SeciliPotansiyelMusteri);
+                }
+                else
+                {
+                    musteri = SeciliPotansiyelMusteri;
+                }
+
                 Messenger.Default.Send(new PTD_MusteriAramaEklendiEvents(SeciliPotansiyelDisiMusteriArama));
             }
             else
@@ -138,10 +189,13 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
             return hata;
         }
-
         private PotansiyelDisiMusteriArama seciliPotansiyelDisiMusteriArama;
         private ObservableCollection<PotansiyelDisiMusteri> potansiyelMusteriListesi;
         private PotansiyelDisiRepository repo1;
         private PotansiyelDisiMusteri seciliPotansiyelMusteri;
+        private string musteriGrubuAdi;
+        private PotansiyelDisiMusteri seciliPotansiyelDisiMusteri;
+        private P_UlkeSabit seciliUlke;
+        private ObservableCollection<PotansiyelDisiMusteri> gelenMusteriListesi;
     }
 }
