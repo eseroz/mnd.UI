@@ -27,6 +27,13 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public DelegateCommand KaydetCommand => new DelegateCommand(OnKaydet);
         public DelegateCommand IptalCommand => new DelegateCommand(OnIptal);
         public DelegateCommand FormLoadedCommand => new DelegateCommand(FormLoaded);
+        public DelegateCommand FormUnLoadedCommand => new DelegateCommand(FormUnLoaded);
+        public DelegateCommand ClosingCommand => new DelegateCommand(Closing);
+        private void Closing()
+        {
+           
+        }
+
         public P_UlkeSabit SeciliUlke
         {
             get => seciliUlke;
@@ -106,7 +113,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         }
         public bool YoneticiMi { get { return (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); } }
         public bool YetkiliMi { get { return !(AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); } }
-
+        public IDocument AramaEditDocument { get; set; }
         public bool MusteriLookupReadyOnly { 
             get {
                 if (YoneticiMi) return YoneticiMi;
@@ -135,6 +142,31 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             //var x2 = SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteriId;
             //var x3 = SeciliPotansiyelMusteri;
         }
+
+        private void FormUnLoaded()
+        {
+            if (repo.DegisiklikVarMi())
+            {
+                var dialogResult = MessageBox.Show("Değişiklikler kaydedilsin mi?",
+                    "Bilgi",
+                    MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                switch (dialogResult)
+                {
+                    case MessageBoxResult.Yes:
+                        repo.Kaydet();
+                        break;
+                    case MessageBoxResult.No:
+                        //repo.Dispose();
+                        break;
+                    case MessageBoxResult.Cancel:
+                        AramaEditDocument.Show();
+                        break;
+                }
+
+            }
+        }
+
         private void OnKaydet()
         {
             var hata = ValidateForm();
@@ -179,17 +211,17 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         private string ValidateForm()
         {
             var hata = "";
-            if (SeciliPotansiyelDisiMusteriArama.Tarih == null) hata += "Tarih boş olamaz" + Environment.NewLine;
+            if (SeciliPotansiyelDisiMusteriArama.Tarih == null) hata += "Tarih alanı boş olamaz" + Environment.NewLine;
             //if (SeciliArama.MusteriUnvan == null) hata += "Müşteri Ünvanı boş olamaz" + Environment.NewLine;
             //if (String.IsNullOrEmpty(SeciliArama.UlkeAdi)) hata += "Ülke boş olamaz" + Environment.NewLine;
 
-            if (SeciliPotansiyelDisiMusteriArama.GorusulenKisiAdi == null) hata += "Görüşülen kişi adı boş olamaz" + Environment.NewLine;
+            if (SeciliPotansiyelDisiMusteriArama.GorusulenKisiAdi == null) hata += "Görüşülen kişi adı alanı boş olamaz" + Environment.NewLine;
             if (SeciliPotansiyelDisiMusteriArama.GorusulenKisiEposta == null && SeciliPotansiyelDisiMusteriArama.GorusulenKisiTelefon == null) hata += "Görüşülen kişiye ait en az bir adet iletişim bilgisi girmelisiniz." + Environment.NewLine;
 
             //if (EditModel.GorusulenKisiGorevi == null) hata += "Görüşülen kişi görevi boş olamaz" + Environment.NewLine;
 
-            if (SeciliPotansiyelDisiMusteriArama.Konu == null) hata += "Konu boş olamaz" + Environment.NewLine;
-            if (SeciliPotansiyelDisiMusteriArama.KonuDetay == null) hata += "Konu detay boş olamaz" + Environment.NewLine;
+            if (SeciliPotansiyelDisiMusteriArama.Konu == null) hata += "Konu alanı boş olamaz" + Environment.NewLine;
+            if (SeciliPotansiyelDisiMusteriArama.KonuDetay == null) hata += "Detay alanı boş olamaz" + Environment.NewLine;
 
 
 

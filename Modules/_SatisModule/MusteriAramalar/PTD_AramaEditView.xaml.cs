@@ -23,6 +23,8 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public PTD_AramaEditView()
         {
             InitializeComponent();
-        } 
+        }
+
+
     }
 }

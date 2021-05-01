@@ -17,10 +17,12 @@
              TextElement.FontSize="14"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
+             
              Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{DynamicResource MaterialDesignFont}" >
+             FontFamily="{DynamicResource MaterialDesignFont}">
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService/>
+        <dxmvvm:EventToCommand EventName=""  Command="{Binding FormLoadedCommand}"  />
         <dxmvvm:EventToCommand EventName="Loaded"  Command="{Binding FormLoadedCommand}"  />
         <dxmvvm:EventToCommand EventName="Unloaded" Command="{Binding FormUnLoadedCommand}"/>
         <dxmvvm:EventToCommand EventName="Closing" PassEventArgsToCommand="True" Command="{Binding ClosingCommand}" />

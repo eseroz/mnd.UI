@@ -398,7 +398,7 @@
                                             </dxg:TableView.ColumnHeaderTemplate>
                                         </dxg:TableView>
                                     </dxg:GridControl.View>
-                                    <!--<dxg:GridColumn
+                                    <dxg:GridColumn
                                         Width="15"
                                         MaxWidth="15"
                                         AutoFilterCriteria="Contains"
@@ -421,7 +421,7 @@
                                                 </Button>
                                             </DataTemplate>
                                         </dxg:GridColumn.CellTemplate>
-                                    </dxg:GridColumn>-->
+                                    </dxg:GridColumn>
                                     <dxg:GridColumn
                                         Width="25"
                                         FieldName="GorusmeTarih"
@@ -523,7 +523,7 @@
                         </dxg:ContentDetailDescriptor.ContentTemplate>
                     </dxg:ContentDetailDescriptor>
                 </dxg:GridControl.DetailDescriptor>
-                <!--<dxg:GridColumn
+                <dxg:GridColumn
                     Width="45"
                     MaxWidth="35"
                     AutoFilterCriteria="Contains"
@@ -552,8 +552,8 @@
                             </Button>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
-                </dxg:GridColumn>-->
-                <dxg:GridColumn
+                </dxg:GridColumn>
+                <!--<dxg:GridColumn
                     Width="50"
                     Header="Bu Müşteri Bana Ait"
                     FieldName="PlasiyereAitMusteriMi"
@@ -565,7 +565,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
-                </dxg:GridColumn>
+                </dxg:GridColumn>-->
                 <dxg:GridColumn
                     Width="50"
                     AutoFilterCriteria="Contains"

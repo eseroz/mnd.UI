@@ -3,6 +3,7 @@ using mnd.Common.Helpers;
 using mnd.Logic.BC_Satis._PotansiyelDisi;
 using mnd.Logic.Model;
 using mnd.Logic.Persistence;
+using mnd.UI.Helper;
 using mnd.UI.Modules._SatisModule.MusteriAramalar.Events;
 using System;
 using System.Collections.ObjectModel;
@@ -11,21 +12,18 @@ using System.Windows;
 
 namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 {
-    public class MusteriAramaListVM : MyBindableBase
+    public class MusteriAramaListVM : MyDxViewModelBase
     {
         private ObservableCollection<PotansiyelDisiMusteri> potansyelMusteriListesi;
         private PotansiyelDisiMusteri seciliPotansiyelDisiMusteri;
         private Visibility potansiyelDisi;
         private Visibility potansiyel;
-
         private UnitOfWork uow = new UnitOfWork();
         PotansiyelDisiRepository repo = new PotansiyelDisiRepository();
-
         public string[] bagliPlasiyerKodlari = null;
         public string MusteriGrubuAdi { get; set; }
         public Visibility Potansiyel { get => potansiyel; set => SetProperty(ref potansiyel, value); }
         public Visibility PotansiyelDisi { get => potansiyelDisi; set => SetProperty(ref potansiyelDisi, value); }
-
         private bool yoneticiMi;
         public bool YoneticiMi
         {
@@ -36,12 +34,12 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             set { SetProperty(ref yoneticiMi, value); }
         }
 
+        public IExportService ExportService1 => ServiceContainer.GetService<IExportService>("servis1");
         public ObservableCollection<PotansiyelDisiMusteri> PotansyelMusteriListesi
         {
             get => potansyelMusteriListesi;
             set => SetProperty(ref potansyelMusteriListesi, value);
         }
-
         public PotansiyelDisiMusteri SeciliPotansiyelDisiMusteri
         {
             get => seciliPotansiyelDisiMusteri;
@@ -50,9 +48,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 SetProperty(ref seciliPotansiyelDisiMusteri, value);
             }
         }
-
         public DelegateCommand<object> PotansiyelYapCommand => new DelegateCommand<object>(OnPotansiyelYap, true);
-
         private void OnPotansiyelYap(object _row)
         {
             var musteri = (PotansiyelDisiMusteri)_row;
@@ -60,9 +56,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             PotansyelMusteriListesi.Remove(musteri);
             repo.Kaydet();
         }
-
         public DelegateCommand<object> PotansiyelDisiYapCommand => new DelegateCommand<object>(OnPotansiyelDisiYap, true);
-
         private void OnPotansiyelDisiYap(object _row)
         {
             var musteri = (PotansiyelDisiMusteri)_row;
@@ -70,9 +64,15 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             PotansyelMusteriListesi.Remove(musteri);
             repo.Kaydet();
         }
-
         public DelegateCommand<object> AramaAddEditCommand => new DelegateCommand<object>(OnAramaEkleDuzenle, true);
         public DelegateCommand EkranYenileCommand => new DelegateCommand(OnEkranYenile);
+        public DelegateCommand YerlesimiKaydetCommand => new DelegateCommand(YerlesimiKaydet);
+
+
+        public void YerlesimiKaydet()
+        {
+            ExportService1.SaveLayout("MusteriAramaList.xml");
+        }
 
         public MusteriAramaListVM(string FormAd)
         {
@@ -124,6 +124,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
                 IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
 
+                vm.AramaEditDocument = doc;
 
 
                 doc.Title = MusteriGrubuAdi + "> Yeni Arama"; 
@@ -141,8 +142,9 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
                 
                 vm.KayitEditMi = true;
-                IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);  
-                            
+                IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
+                vm.AramaEditDocument = doc;
+
                 doc.Title = MusteriGrubuAdi + "> " + musteri.MusteriUnvan;
 
                 doc.DestroyOnClose = true;
@@ -150,7 +152,6 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
             } 
         }
-
         private void OnAramaGuncellendi(PTD_MusteriAramaGuncellendiEvent obj)
         {
             //bunlar ne?????
@@ -171,5 +172,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             //MusteriAramalar.Insert(0, obj.Arama);
             //SeciliArama = obj.Arama;
         }
+
+
     }
 }

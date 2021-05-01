@@ -70,7 +70,21 @@ namespace mnd.UI.AppModules.NavMenuModule
                                                ViewName = s.ViewName,
                                                ParameterObj = s.VM_ParamObj,
                                                Icon = s.IconPath,
-                                               SubItems = null
+                                               SubItems = menuListe.Where(f => f.ParentMenuId == s.MenuId && f.ParentMenuId != f.MenuId && YetkiliMi(f.YetkiliRoller))
+                                                           .Select(y => new MenuItem
+                                                           {
+                                                               IsBadge = y.IsBadge,
+                                                               MenuId = y.MenuId,
+                                                               Name = y.FormAd,
+                                                               Caption = y.FormAd,
+                                                               ViewModelName = y.VM_Name,
+                                                               ViewName = y.ViewName,
+                                                               ParameterObj = y.VM_ParamObj,
+                                                               Icon = y.IconPath,
+                                                               SubItems = null
+
+                                                           })
+                                                           .ToList()
 
                                            })
                                            .ToList()

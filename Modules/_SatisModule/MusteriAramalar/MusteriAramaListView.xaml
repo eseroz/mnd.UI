@@ -64,6 +64,14 @@
                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Excele Aktar" />
                 </StackPanel>
             </Button>
+            <Button  Padding="0" Command="{Binding YerlesimiKaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{dx:DXImage Image=VerticalGridlinesMajor_32x32.png}" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Yerleşimi Kaydet" />
+                </StackPanel>
+            </Button>
+
+            
         </ToolBar>
         <dxg:GridControl Grid.Row="1"
                 x:Name="grdListe"
@@ -140,8 +148,8 @@
             </dxg:GridColumn>
             <dxg:GridColumn
                     Width="*"
-                    MaxWidth="70"
-                    MinWidth="70"
+                    MaxWidth="90"
+                    MinWidth="90"
                     HorizontalHeaderContentAlignment="Center"
                     FieldName="SonGorusmeSuresi"
                     Header="Geçen Süre">
