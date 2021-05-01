@@ -45,7 +45,10 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public PotansiyelDisiMusteri SeciliPotansiyelDisiMusteri
         {
             get => seciliPotansiyelDisiMusteri;
-            set => SetProperty(ref seciliPotansiyelDisiMusteri, value);
+            set
+            {
+                SetProperty(ref seciliPotansiyelDisiMusteri, value);
+            }
         }
 
         public DelegateCommand<object> PotansiyelYapCommand => new DelegateCommand<object>(OnPotansiyelYap, true);
@@ -116,45 +119,30 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
                 PTD_AramaEditVM vm = new PTD_AramaEditVM(repo, PotansyelMusteriListesi);
                 vm.MusteriGrubuAdi = MusteriGrubuAdi;
-
+                vm.KayitEditMi = false;
                 vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
                 IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
 
-                var Title2 = "";
 
-                if (_seciliarama.PotansiyelDisiMusteri == null)
-                {
-                    Title2 = "Yeni arama";
-                } else {
-                    Title2 = _seciliarama.PotansiyelDisiMusteri.MusteriUnvan;
-                }
 
-                doc.Title = MusteriGrubuAdi + ">" + Title2;
-
+                doc.Title = MusteriGrubuAdi + "> Yeni Arama"; 
+                    
                 doc.DestroyOnClose = true;
                 doc.Show();
+
             } else {
 
                 PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
                 PTD_AramaEditVM vm = new PTD_AramaEditVM(repo, PotansyelMusteriListesi);
                 vm.MusteriGrubuAdi = MusteriGrubuAdi;
+
+                var musteri = repo.getMusteri(_seciliarama.PotansiyelDisiMusteriId);
                 vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
-                //vm.SeciliPotansiyelDisiMusteri = _seciliarama.PotansiyelDisiMusteri;
-     
-                IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
-
-                var Title2 = "";
-
-                if (_seciliarama.PotansiyelDisiMusteri == null)
-                {
-                    Title2 = "Yeni arama";
-                }
-                else
-                {
-                    Title2 = _seciliarama.PotansiyelDisiMusteri.MusteriUnvan;
-                }
-
-                doc.Title = MusteriGrubuAdi + ">" + Title2;
+                
+                vm.KayitEditMi = true;
+                IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);  
+                            
+                doc.Title = MusteriGrubuAdi + "> " + musteri.MusteriUnvan;
 
                 doc.DestroyOnClose = true;
                 doc.Show();

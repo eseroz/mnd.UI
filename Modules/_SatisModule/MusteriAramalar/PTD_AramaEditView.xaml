@@ -90,13 +90,13 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
                                 <dxg:LookUpEdit Name="musteriLookup"
-                                                IsReadOnly="{Binding YoneticiMi}"
+                                                IsReadOnly="{Binding MusteriLookupReadyOnly}"
                                                 Width="250" HorizontalAlignment="Left" AutoPopulateColumns="False"
                                                 DisplayMember="MusteriUnvan"
-                                                EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.MusteriUnvan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteriId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                 SelectedItem="{Binding SeciliPotansiyelDisiMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                                 ItemsSource="{Binding PotansiyelMusteriListesi}"                            
-                                                ValueMember="MusteriUnvan" AddNewButtonPlacement="Popup">
+                                                ValueMember="Id" AddNewButtonPlacement="Popup">
                                     <dxg:LookUpEdit.PopupContentTemplate>
                                         <ControlTemplate>
                                             <dxg:GridControl x:Name="PART_GridControl">
@@ -114,9 +114,9 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock  Text="Ülke :" VerticalAlignment="Center"/>
-                                <dxe:ComboBoxEdit IsReadOnly="{Binding YoneticiMi}" Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
+                                <dxe:ComboBoxEdit IsReadOnly="{Binding MusteriLookupReadyOnly}" Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
                                 DisplayMember="UlkeAdi"  Width="270" 
-                                EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteri.UlkeAdi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                EditValue="{Binding SeciliPotansiyelDisiMusteri.UlkeAdi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 ValueMember="UlkeAdi"      
                                 SelectedItem="{Binding SeciliUlke}"
                                 ItemsSource="{Binding Ulkeler}"

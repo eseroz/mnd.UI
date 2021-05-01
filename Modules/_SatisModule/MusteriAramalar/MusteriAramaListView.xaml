@@ -73,7 +73,7 @@
                 dxg:GridSerializationOptions.RemoveOldColumns="True"
                 AllowLiveDataShaping="True"                         
                 ItemsSource="{Binding PotansyelMusteriListesi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                SelectedItem="{Binding SecilenMusteri}"
+                SelectedItem="{Binding SeciliPotansiyelDisiMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                 IsRecursiveExpand="True">
             <dxg:GridControl.Resources>
                 <Style TargetType="dxg:GridColumn">
