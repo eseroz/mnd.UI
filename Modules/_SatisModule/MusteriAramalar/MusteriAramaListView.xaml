@@ -183,7 +183,7 @@
                     HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <md:PopupBox Height="auto" Width="auto">
+                        <md:PopupBox  Height="auto" Width="auto">
                             <StackPanel>
                                 <Button
                                     Margin="4"
@@ -203,7 +203,8 @@
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn
-                Visible="{Binding YoneticiMi}"
+                    Visible="{Binding PlasiyerColumn.Visible}"
+                    GroupIndex="{Binding PlasiyerColumn.GroupIndex}"
                     FieldName="PlasiyerAd"
                     Header="Plasiyer">
             </dxg:GridColumn>

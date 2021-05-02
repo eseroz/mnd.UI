@@ -42,16 +42,22 @@ namespace mnd.UI.Modules.MusteriTakipModule
         public string GridYerlesimDosyaAd => "Gorusme1.xml";
 
         private UnitOfWork uow = new UnitOfWork();
+        private string toolbarMesaj;
+
+        public string ToolbarMesaj { get => toolbarMesaj; set =>SetProperty(ref toolbarMesaj, value); }
 
         private async void OnEkranYenile()
         {
             IsLoading = true;
 
+            var bagliPlasiyerKodlari = AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';');
 
-            var glist = await repo.GorusmeleriGetir();
+            var glist = await repo.GorusmeleriPlasiyereGoreGetir(bagliPlasiyerKodlari, FormMenuAd);
 
             Gorusmeler = glist.ToObservableCollection();
             Gorusmeler.MesajSayilariniGuncelle(AppPandap.AktifKullanici.KullaniciId);
+           
+
             IsLoading = false;
         }
 
@@ -69,12 +75,14 @@ namespace mnd.UI.Modules.MusteriTakipModule
         {
             GorusmeViewModel vm = new GorusmeViewModel(0);
             vm.KayitMod = KayitModu.Add;
+            vm.FormMenuAd = FormMenuAd;
             var yeniGorusme = new Gorusme();
             yeniGorusme.RowGuid = Guid.NewGuid();
 
             yeniGorusme.GorusmeTarih = DateTime.Now;
             yeniGorusme.RandevuTarih = DateTime.Now;
             yeniGorusme.ModifiedDate = DateTime.Now;
+            yeniGorusme.GorusmeListeTipi = FormMenuAd;
 
 
             if (SeciliGorusme != null) yeniGorusme.MusteriCariKod = SeciliGorusme.MusteriCariKod;
@@ -100,7 +108,21 @@ namespace mnd.UI.Modules.MusteriTakipModule
         }
 
 
-        public ObservableCollection<Gorusme> Gorusmeler { get => _gorusmeler; set => SetProperty(ref _gorusmeler, value); }
+        public ObservableCollection<Gorusme> Gorusmeler {
+            get => _gorusmeler;
+            set { 
+
+                SetProperty(ref _gorusmeler, value);
+                if (_gorusmeler.Count == 0)
+                {
+                    ToolbarMesaj = "Listelenecek görüşme yok.";
+                }
+                else
+                {
+                    ToolbarMesaj = "";
+                }
+            }
+        }
 
         public DelegateCommand FormLoadedCommand => new DelegateCommand(OnFormLoaded, () => true);
 
@@ -115,7 +137,6 @@ namespace mnd.UI.Modules.MusteriTakipModule
         public GorusmeListViewModel(string formMenuAd)
         {
             FormMenuAd = formMenuAd;
-
             FormPermissions = uow.AppRepo.FormPermissions(AppPandap.AktifKullanici.KullaniciRol, FormMenuAd);
         }
 
@@ -134,7 +155,7 @@ namespace mnd.UI.Modules.MusteriTakipModule
 
             var bagliPlasiyerKodlari = AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari.Split(';');
 
-            var glist = await repo.GorusmeleriPlasiyereGoreGetir(bagliPlasiyerKodlari);
+            var glist = await repo.GorusmeleriPlasiyereGoreGetir(bagliPlasiyerKodlari, FormMenuAd);
 
             Gorusmeler = glist.ToObservableCollection();
 

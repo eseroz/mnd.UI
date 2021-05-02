@@ -19,6 +19,8 @@ namespace mnd.UI.Modules.MusteriTakipModule
 {
     public class GorusmeViewModel : MyDxViewModelBase
     {
+
+        public string FormMenuAd { get; set; }
         public DelegateCommand FormLoadedCommand => new DelegateCommand(OnFormLoaded, () => true);
         public DelegateCommand FormUnLoadedCommand => new DelegateCommand(OnFormUnLoaded);
         public DelegateCommand KaydetCommand => new DelegateCommand(OnKaydet, CanKaydet);

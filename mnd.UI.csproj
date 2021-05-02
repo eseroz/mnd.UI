@@ -450,6 +450,7 @@
       <DependentUpon>YuklemeEmirleriView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\DepoModule\YuklemeEmirleriViewModel.cs" />
+    <Compile Include="Modules\_SatisModule\MusteriAramalar\dxGridCustomizedForMusteriArama.cs" />
     <Compile Include="Modules\FinansModule\ImageConverterFinans.cs" />
     <Compile Include="Modules\FinansModule\KonsolideFinansalRaporView.xaml.cs">
       <DependentUpon>KonsolideFinansalRaporView.xaml</DependentUpon>

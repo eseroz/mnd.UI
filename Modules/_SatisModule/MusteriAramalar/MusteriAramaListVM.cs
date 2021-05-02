@@ -14,6 +14,25 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 {
     public class MusteriAramaListVM : MyDxViewModelBase
     {
+        private CustomColum plasiyerColumn;
+        public CustomColum PlasiyerColumn {
+            get {
+                plasiyerColumn = new CustomColum();
+                if (YoneticiMi)
+                {
+                    plasiyerColumn.Visible = true;
+                    plasiyerColumn.GroupIndex = 0;
+                }
+                else
+                {
+                    plasiyerColumn.Visible = false;
+                    plasiyerColumn.GroupIndex =-1;
+                }
+                return plasiyerColumn;
+            } 
+            set =>SetProperty(ref plasiyerColumn, value); 
+        }
+
         private ObservableCollection<PotansiyelDisiMusteri> potansyelMusteriListesi;
         private PotansiyelDisiMusteri seciliPotansiyelDisiMusteri;
         private Visibility potansiyelDisi;
@@ -25,11 +44,14 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public Visibility Potansiyel { get => potansiyel; set => SetProperty(ref potansiyel, value); }
         public Visibility PotansiyelDisi { get => potansiyelDisi; set => SetProperty(ref potansiyelDisi, value); }
         private bool yoneticiMi;
+ 
+
         public bool YoneticiMi
         {
             get
             {
-                yoneticiMi = (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); return yoneticiMi;
+                yoneticiMi = (AppPandap.AktifKullanici.KullaniciRol == KULLANICIROLLERI.YONETICI); 
+                return yoneticiMi;
             }
             set { SetProperty(ref yoneticiMi, value); }
         }
@@ -80,14 +102,16 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             Potansiyel = Visibility.Hidden;
             PotansiyelDisi = Visibility.Hidden;
 
-            if (MusteriGrubuAdi == "Potansiyel") {
+            if (MusteriGrubuAdi == "Potansiyel")
+            {
                 Potansiyel = Visibility.Hidden;
                 PotansiyelDisi = Visibility.Visible;
             }
 
-            if (MusteriGrubuAdi == "Potansiyel Disi") {
+            if (MusteriGrubuAdi == "Potansiyel Disi")
+            {
                 Potansiyel = Visibility.Visible;
-                PotansiyelDisi = Visibility.Hidden; 
+                PotansiyelDisi = Visibility.Hidden;
             }
 
             if (AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari != null)
@@ -113,7 +137,8 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         }
         private void OnAramaEkleDuzenle(object _row)
         {
-            if (_row == null) {
+            if (_row == null)
+            {
 
                 _row = new PotansiyelDisiMusteriArama();
 
@@ -127,12 +152,14 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 vm.AramaEditDocument = doc;
 
 
-                doc.Title = MusteriGrubuAdi + "> Yeni Arama"; 
-                    
+                doc.Title = MusteriGrubuAdi + "> Yeni Arama";
+
                 doc.DestroyOnClose = true;
                 doc.Show();
 
-            } else {
+            }
+            else
+            {
 
                 PotansiyelDisiMusteriArama _seciliarama = (PotansiyelDisiMusteriArama)_row;
                 PTD_AramaEditVM vm = new PTD_AramaEditVM(repo, PotansyelMusteriListesi);
@@ -140,7 +167,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
 
                 var musteri = repo.getMusteri(_seciliarama.PotansiyelDisiMusteriId);
                 vm.SeciliPotansiyelDisiMusteriArama = _seciliarama;
-                
+
                 vm.KayitEditMi = true;
                 IDocument doc = AppPandap.pDocumentManagerService.CreateDocument("PTD_AramaEditView", vm);
                 vm.AramaEditDocument = doc;
@@ -150,7 +177,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
                 doc.DestroyOnClose = true;
                 doc.Show();
 
-            } 
+            }
         }
         private void OnAramaGuncellendi(PTD_MusteriAramaGuncellendiEvent obj)
         {

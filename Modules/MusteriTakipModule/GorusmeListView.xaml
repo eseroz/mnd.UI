@@ -94,7 +94,9 @@
                     </StackPanel>
                 </Button>
 
-
+                <StackPanel>
+                    <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding ToolbarMesaj}" Margin="10,15,10,10"></TextBlock>
+                </StackPanel>
 
 
 
