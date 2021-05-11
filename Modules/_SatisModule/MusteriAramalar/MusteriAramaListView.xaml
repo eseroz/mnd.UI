@@ -183,20 +183,14 @@
                     HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <md:PopupBox  Height="auto" Width="auto">
+                        <md:PopupBox>
                             <StackPanel>
                                 <Button
                                     Margin="4"
-                                    Visibility="{Binding DataContext.Potansiyel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                    Command="{Binding View.DataContext.PotansiyelYapCommand}"
-                                    CommandParameter="{Binding RowData.Row}"
-                                    Content="Potansiyel Yap" />
-                                <Button
-                                    Margin="4"
-                                     Visibility="{Binding DataContext.PotansiyelDisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
                                     Command="{Binding View.DataContext.PotansiyelDisiYapCommand}"
                                     CommandParameter="{Binding RowData.Row}"
-                                    Content="Potansiyel Dışı Yap" />
+                                    Content="{Binding DataContext.PotansiyelPopupBoxMenuText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+
                             </StackPanel>
                         </md:PopupBox>
                     </DataTemplate>
@@ -280,10 +274,10 @@
                                 <dxg:GridColumn Header="Tarih" FieldName="Tarih" IsSmart="True"/>
                                 <dxg:GridColumn Header="Konu" FieldName="Konu" IsSmart="True"/>
                                 <dxg:GridColumn Header="Görüşülen Kişi" FieldName="GorusulenKisiAdi" IsSmart="True"/>
-                                <dxg:GridColumn Header="Görüşülen Kişi Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
-                                <dxg:GridColumn Header="Görüşülen Kişi Telefon" FieldName="GorusulenKisiTelefon" IsSmart="True"/>
-                                <dxg:GridColumn Header="Görüşülen Kişi Eposta" FieldName="GorusulenKisiEposta" IsSmart="True"/>
-                                <dxg:GridColumn FieldName="Ekleyen"/>
+                                <dxg:GridColumn Header="Görevi" FieldName="GorusulenKisiGorevi" IsSmart="True"/>
+                                <dxg:GridColumn Header="Telefon" FieldName="GorusulenKisiTelefon" IsSmart="True"/>
+                                <dxg:GridColumn Header="Eposta" FieldName="GorusulenKisiEposta" IsSmart="True"/>
+                                <dxg:GridColumn Visible="{Binding YoneticiMi}" FieldName="Ekleyen"/>
                             </dxg:GridControlBand>
                         </dxg:GridControl.Bands>
                     </dxg:GridControl>

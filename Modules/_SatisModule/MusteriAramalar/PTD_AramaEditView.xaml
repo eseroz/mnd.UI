@@ -16,8 +16,7 @@
              TextElement.FontWeight="Regular"
              TextElement.FontSize="14"
              TextOptions.TextFormattingMode="Ideal"
-             TextOptions.TextRenderingMode="Auto"
-             
+             TextOptions.TextRenderingMode="Auto"             
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}">
     <dxmvvm:Interaction.Behaviors>
@@ -40,7 +39,7 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
@@ -49,7 +48,7 @@
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
         </Grid.Resources>
-        <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}" Margin="0,0,-0.2,478.2" Grid.RowSpan="2">
+        <ToolBar FocusManager.IsFocusScope="False"  Grid.Row="0" MinHeight="50" MaxHeight="50" ClipToBounds="False" Style="{DynamicResource MaterialDesignToolBar}">
             <Button IsEnabled="{Binding YetkiliMi}" Command="{Binding KaydetCommand}" Style="{DynamicResource MaterialDesignFlatButton}">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon  VerticalAlignment="Center" Kind="ContentSave" />
@@ -63,7 +62,7 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-        <md:Card Grid.Row="1" Padding="4" Margin="0,0.4,0.4,10.6">
+        <md:Card Padding="4" Margin="0" Grid.Row="1">
             <Grid >
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
@@ -92,12 +91,11 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Müşteri Ünvan:" VerticalAlignment="Top" />
                                 <dxg:LookUpEdit Name="musteriLookup"
-                                                IsReadOnly="{Binding MusteriLookupReadyOnly}"
                                                 Width="250" HorizontalAlignment="Left" AutoPopulateColumns="False"
                                                 DisplayMember="MusteriUnvan"
                                                 EditValue="{Binding SeciliPotansiyelDisiMusteriArama.PotansiyelDisiMusteriId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                SelectedItem="{Binding SeciliPotansiyelDisiMusteri, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
-                                                ItemsSource="{Binding PotansiyelMusteriListesi}"                            
+                                                SelectedItem="{Binding SeciliMusteri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding PotansiyelMusteriListesi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                            
                                                 ValueMember="Id" AddNewButtonPlacement="Popup">
                                     <dxg:LookUpEdit.PopupContentTemplate>
                                         <ControlTemplate>
@@ -116,11 +114,11 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock  Text="Ülke :" VerticalAlignment="Center"/>
-                                <dxe:ComboBoxEdit IsReadOnly="{Binding MusteriLookupReadyOnly}" Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
+                                <dxe:ComboBoxEdit Name="cbo1" Height="28" AutoComplete="True" ImmediatePopup="True"
                                 DisplayMember="UlkeAdi"  Width="270" 
-                                EditValue="{Binding SeciliPotansiyelDisiMusteri.UlkeAdi, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                ValueMember="UlkeAdi"      
-                                SelectedItem="{Binding SeciliUlke}"
+                                EditValue="{Binding SeciliPotansiyelDisiMusteriArama.UlkeKodu, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                ValueMember="UlkeKodu"      
+                                SelectedItem="{Binding SeciliUlke, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 ItemsSource="{Binding Ulkeler}"
                                 HorizontalAlignment="Left">
                                 </dxe:ComboBoxEdit>
@@ -171,7 +169,7 @@
             </Grid>
         </md:Card>
         <md:Card Grid.Row="2">
-   
+
         </md:Card>
     </Grid>
 </UserControl>

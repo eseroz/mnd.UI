@@ -450,6 +450,10 @@
       <DependentUpon>YuklemeEmirleriView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\DepoModule\YuklemeEmirleriViewModel.cs" />
+    <Compile Include="Modules\MusteriTakipModule\FuarGorusmeListView.xaml.cs">
+      <DependentUpon>FuarGorusmeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MusteriTakipModule\FuarGorusmeListViewModel.cs" />
     <Compile Include="Modules\_SatisModule\MusteriAramalar\dxGridCustomizedForMusteriArama.cs" />
     <Compile Include="Modules\FinansModule\ImageConverterFinans.cs" />
     <Compile Include="Modules\FinansModule\KonsolideFinansalRaporView.xaml.cs">
@@ -1072,6 +1076,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Modules\MusteriTakipModule\FirmaYetkiliKisiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\MusteriTakipModule\FuarGorusmeListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
