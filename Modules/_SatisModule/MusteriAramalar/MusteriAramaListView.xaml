@@ -8,12 +8,21 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
               xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
              xmlns:converters="clr-namespace:mnd.UI.Converters"
-             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="mnd.UI.Modules._SatisModule.MusteriAramalar.MusteriAramaListView"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+             x:Class="mnd.UI.Modules._SatisModule.MusteriAramalar.MusteriAramaListView"
+              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              d:DataContext="{d:DesignInstance {x:Type local:MusteriAramaListVM}}"
+             xmlns:helper="clr-namespace:mnd.UI.Helper"
              FontSize="14"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService />
+        <helper:ExportService x:Name="servis1" View="{x:Reference grdListe}" />
+        <dxmvvm:EventToCommand Command="{Binding FormLoadCommand}" EventName="Loaded" />
+    </dxmvvm:Interaction.Behaviors>
     <UserControl.Resources>
+        
         <Style TargetType="{x:Type Button}" x:Key="MyLinkButton2">
             <Setter Property="Foreground" Value="Blue"/>
             <Setter Property="Template">
@@ -74,8 +83,7 @@
             
         </ToolBar>
         <dxg:GridControl Grid.Row="1"
-                x:Name="grdListe"
-                dx:DXSerializer.SerializationID="grid"
+                dx:DXSerializer.SerializationID="grdListe"
                 dx:DXSerializer.StoreLayoutMode="All"
                 dxg:GridSerializationOptions.AddNewColumns="True"
                 dxg:GridSerializationOptions.RemoveOldColumns="True"
@@ -97,7 +105,7 @@
             </dxg:GridControl.Resources>
             <dxg:GridControl.View>
                 <dxg:TableView
-                        x:Name="View1"
+                        x:Name="grdListe"
                         AllowCascadeUpdate="True"
                         AllowEditing="True"
                         AllowGrouping="{Binding YoneticiMi}"
@@ -131,8 +139,8 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridColumn
-                    Width="*"
-                    MinWidth="920"
+                MinWidth="350"
+                    Width="Auto"
                     AutoFilterCondition="Contains"
                     FieldName="MusteriUnvan"
                     FilterPopupMode="Excel"

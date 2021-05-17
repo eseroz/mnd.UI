@@ -125,7 +125,7 @@
                         AutoWidth="True"
                         NewItemRowPosition="None"
                         ShowAutoFilterRow="True"
-                        ShowGroupPanel="False"
+                        ShowGroupPanel="True"
                         ShowTotalSummary="True">
 
                         <dxg:TableView.ColumnHeaderTemplate>
@@ -190,6 +190,7 @@
                     AutoFilterCondition="Contains"
                     FieldName="CariIsim"
                     FilterPopupMode="Excel"
+                    GroupIndex="0"
                     Header="Müşteri">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>

@@ -52,6 +52,12 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             }
             set { SetProperty(ref yoneticiMi, value); }
         }
+        public DelegateCommand<object> FormLoadCommand => new DelegateCommand(OnLoad);
+
+        private void OnLoad()
+        {
+            ExportService1.RestoreLayout("MusteriAramaList.xml");
+        }
 
         public DelegateCommand<object> PotansiyelDisiYapCommand => new DelegateCommand<object>(OnPotansiyelDisiYap, true);
         private void OnPotansiyelDisiYap(object _row)
@@ -116,22 +122,10 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public IExportService ExportService1 => ServiceContainer.GetService<IExportService>("servis1");
         public MusteriAramaListVM(string FormAd)
         {
+         
 
             MusteriGrubuAdi = FormAd.Trim();
 
-
-
-            //if (MusteriGrubuAdi == "Potansiyel")
-            //{
-            //    Potansiyel = Visibility.Hidden;
-            //    PotansiyelDisi = Visibility.Visible;
-            //}
-
-            //if (MusteriGrubuAdi == "Potansiyel Disi")
-            //{
-            //    Potansiyel = Visibility.Visible;
-            //    PotansiyelDisi = Visibility.Hidden;
-            //}
 
             if (AppPandap.AktifKullanici.BagliNetsisPlasiyerKodlari != null)
             {
@@ -151,6 +145,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
         public void YerlesimiKaydet()
         {
             ExportService1.SaveLayout("MusteriAramaList.xml");
+            MessageBoxService.ShowMessage("Yerleşim Kaydedildi!", "Bilgi", MessageButton.OK, MessageIcon.Information);
         }
         private void OnEkranYenile()
         {
