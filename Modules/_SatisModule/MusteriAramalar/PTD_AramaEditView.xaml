@@ -18,7 +18,7 @@
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"             
              Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{DynamicResource MaterialDesignFont}">
+             FontFamily="{DynamicResource MaterialDesignFont}" Height="Auto" Width="Auto">
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService/>
         <dxmvvm:EventToCommand EventName=""  Command="{Binding FormLoadedCommand}"  />
@@ -39,9 +39,9 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="49.6"/>
             <RowDefinition/>
-            <RowDefinition Height="200"/>
+
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -62,7 +62,7 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-        <md:Card Padding="4" Margin="0" Grid.Row="1">
+        <md:Card Padding="4" Grid.Row="1">
             <Grid >
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
@@ -72,7 +72,11 @@
                         <Setter Property="TextAlignment" Value="Right"/>
                     </Style>
                 </Grid.Resources>
-                <StackPanel VerticalAlignment="Top" Grid.Column="0" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="297.6"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="0,0,-0.4,0.2" Grid.RowSpan="2">
                     <DockPanel Margin="5"/>
                     <DockPanel Margin="5"/>
                     <DockPanel Margin="0,5,0,20">
@@ -160,16 +164,19 @@
                                                   TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.Konu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </DockPanel>
-                    <DockPanel Margin="0,8">
-                        <TextBlock Text="Detay:" VerticalAlignment="Top" />
-                        <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" VerticalScrollBarVisibility="Auto" Height="150" AcceptsReturn="True" VerticalContentAlignment="Top" 
-                                          TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.KonuDetay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </DockPanel>
                 </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="134"/>
+                        <ColumnDefinition Width="655"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Detay:" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,7.8,0" />
+                    <dxe:TextEdit IsReadOnly="{Binding YoneticiMi}" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" HorizontalContentAlignment="Stretch" Margin="0,0,0,15"    TextWrapping="Wrap" FontSize="14"  EditValue="{Binding SeciliPotansiyelDisiMusteriArama.KonuDetay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" />
+
+                </Grid>
             </Grid>
         </md:Card>
-        <md:Card Grid.Row="2">
 
-        </md:Card>
     </Grid>
 </UserControl>
