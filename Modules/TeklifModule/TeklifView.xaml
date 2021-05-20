@@ -270,7 +270,7 @@
                                   Text="{Binding SeciliTeklif.CariDovizTipKod,UpdateSourceTrigger=PropertyChanged}"
                                   />
 
-                            <ComboBox Margin="15,0,0,0" Width="100" HorizontalAlignment="Left" ItemsSource="{Binding OlcuBirimleri}" Background="White" 
+                            <ComboBox Visibility="Hidden" Margin="15,0,0,0" Width="100" HorizontalAlignment="Left" ItemsSource="{Binding OlcuBirimleri}" Background="White" 
                                   SelectedValue="{Binding SeciliTeklif.MiktarOlcuBirim}"
                                   DisplayMemberPath="Aciklama"
                                   SelectedValuePath="BirimTipKod"
