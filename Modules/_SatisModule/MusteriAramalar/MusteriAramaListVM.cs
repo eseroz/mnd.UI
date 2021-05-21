@@ -5,6 +5,7 @@ using mnd.Logic.Model;
 using mnd.Logic.Persistence;
 using mnd.UI.Helper;
 using mnd.UI.Modules._SatisModule.MusteriAramalar.Events;
+using mnd.UI.Modules.Dashboard;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             set
             {
                 SetProperty(ref musteriGrubuAdi, value);
-                if (musteriGrubuAdi == "Potansiyel")
+                if (musteriGrubuAdi == "Potansiyel Müsteri")
                 {
                     PotansiyelPopupBoxMenuText = "Potansiyel Dışı Yap";
                 }
@@ -65,15 +66,39 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             var musteri = (PotansiyelDisiMusteri)_row;
             if (PotansiyelPopupBoxMenuText == "Potansiyel Dışı Yap")
             {
-                musteri.MusteriGrubuAdi = "Potansiyel Disi";
+                musteri.MusteriGrubuAdi = "Potansiyel Disi Müsteri";
                 PotansyelMusteriListesi.Remove(musteri);
+
+                string icerik = musteri.MusteriUnvan +
+                    " İSİMLİ MÜŞTERİ " +
+                    AppPandap.AktifKullanici.AdSoyad +
+                    " TARAFINDAN POTANSİYEL LİSTESİNDEN POTANSİYEL DIŞI LİSTESİNE TAŞINDI.";
+
+                var sonuc = SendMail.Send(
+                    "mndapp@mndgida.com.tr",
+                    "Puq50786",
+                    "CRM Bilgilendirme",
+                    MailAddress.EMRE_SEHERLI,
+                    "Potansiyel Değişimi", icerik, "");
             }
 
             if (PotansiyelPopupBoxMenuText == "Potansiyel Yap")
             {
-                musteri.MusteriGrubuAdi = "Potansiyel";
+                musteri.MusteriGrubuAdi = "Potansiyel Müsteri";
                 PotansyelMusteriListesi.Remove(musteri);
+                string icerik = musteri.MusteriUnvan +
+                    " İSİMLİ MÜŞTERİ " +
+                    AppPandap.AktifKullanici.AdSoyad +
+                    " TARAFINDAN POTANSİYEL DIŞI LİSTESİNDEN POTANSİYEL LİSTESİNE TAŞINDI.";
+
+                var sonuc = SendMail.Send(
+                    "mndapp@mndgida.com.tr",
+                    "Puq50786",
+                    "CRM Bildirim",
+                    MailAddress.EMRE_SEHERLI,
+                    "Potansiyel Değişimi", icerik, "");
             }
+
             repo.Kaydet();
 
         }
@@ -120,6 +145,7 @@ namespace mnd.UI.Modules._SatisModule.MusteriAramalar
             set => SetProperty(ref plasiyerColumn, value);
         }
         public IExportService ExportService1 => ServiceContainer.GetService<IExportService>("servis1");
+       
         public MusteriAramaListVM(string FormAd)
         {
          

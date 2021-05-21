@@ -9,9 +9,17 @@ namespace mnd.UI.Modules.Dashboard
 {
     public static class SendMail
     {
-        public static bool Send(string MailHesabi, string MailHesapSifresi, string MailUnvan, string MailAdresi,
-            string MailKonu, string MailIcerik, string MailEkleri)
+        public static string GONDERILECEK_EPOSTA { get; set; }
+        public static bool Send(
+            string MailHesabi, 
+            string MailHesapSifresi, 
+            string MailUnvan, 
+            string MailAdresi,
+            string MailKonu, 
+            string MailIcerik, 
+            string MailEkleri)
         {
+
 
             var smtpUri = "smtp.office365.com";
             var port = 587;

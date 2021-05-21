@@ -356,8 +356,8 @@ namespace mnd.UI.Modules.MusteriTakipModule
             }
 
 
-            try
-            {
+            //try
+            //{
                 Musteri.KontratDonemDeger = kontratDonemDeger;
                 servis.PandaCariGuncelle(Musteri);
 
@@ -376,12 +376,12 @@ namespace mnd.UI.Modules.MusteriTakipModule
                  );
 
                 IsEditMode = false;
-            }
-            catch (Exception ex)
-            {
-                var hata = "Hata:" + ex.Message + Environment.NewLine + "Detay:" + ex.InnerException?.Message;
-                MessageBox.Show(hata);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    var hata = "Hata:" + ex.Message + Environment.NewLine + "Detay:" + ex.InnerException?.Message;
+            //    MessageBox.Show(hata);
+            //}
 
 
 

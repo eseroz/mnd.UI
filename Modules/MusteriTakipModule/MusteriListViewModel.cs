@@ -8,6 +8,7 @@ using mnd.Logic.Services;
 using mnd.UI.AppModules.AppModule;
 using mnd.UI.Helper;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -41,7 +42,6 @@ namespace mnd.UI.Modules.MusteriTakipModule
 
         [YetkiKontrol]
         public DelegateCommand<object> ExcelExportCommand => new DelegateCommand<object>(OnExcelExport, c => YetkiliMi_FromDb(nameof(ExcelExportCommand)));
-
 
         [YetkiKontrol]
         public DelegateCommand<object> KaydetCommand => new DelegateCommand<object>(OnKaydet, c => true);
@@ -163,8 +163,7 @@ namespace mnd.UI.Modules.MusteriTakipModule
                 bagliPlasiyerKodlari = uow.PlasiyerRepo.PlasiyerKodlari();
             }
 
-            PandapCariler = await uow.PandapCariRepo.PandapCarileriBagliPlasiyerlereGoreGetir(bagliPlasiyerKodlari, AppPandap.AktifKullanici.KullaniciRol);
-
+            PandapCariler = await uow.PandapCariRepo.PandapCarileriBagliPlasiyerlereGoreGetir(bagliPlasiyerKodlari, AppPandap.AktifKullanici);
 
 
             uow.Dispose();
